@@ -1,0 +1,80 @@
+---
+title: "Figures and tables for main paper text"
+author: "Witold Więcek"
+date: "`r Sys.Date()`"
+output: 
+    pdf_document:
+      keep_tex: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(patchwork)
+library(baggr)
+library(kableExtra)
+load("c:/github/vitamin-a/rerun.Rdata")
+```
+
+# Latex table for the main model
+
+```{r}
+left_join(
+  select(mayo, group, RR, lci, uci),
+  group_effects(bg_mayo_partial, s=T, transform = exp)[,,1] %>%  
+    round(2) %>% 
+    as.data.frame() %>% 
+    rownames_to_column() %>% 
+    select(rowname, mean, lci, uci) %>% rename(group = rowname),
+  by = "group"
+) %>% 
+  kbl(booktabs = TRUE,
+      col.names = c("Study", "mean", "LCI", "UCI", "mean", "LCI", "UCI")) %>% 
+  add_header_above(c("", "Observed (risk ratio)" = 3, "Posterior (risk ratio)" = 3))
+```
+
+```{r}
+library(wwmisc)
+bgc_all <- baggr_compare(
+  "Partial, all data" = bg_mayo_partial,
+  "Partial, no DEVTA" = bg_mayond_partial,
+  "Full, all data" = bg_mayo_full,
+  "Full, no DEVTA" = bg_mayond_full
+)
+bgc_exp <- baggr_compare(
+  "Partial, all data" = bg_mayo_partial,
+  "Partial, no DEVTA" = bg_mayond_partial,
+  "Full, all data" = bg_mayo_full,
+  "Full, no DEVTA" = bg_mayond_full,
+  transform = exp
+)
+bgc_table <- function(x, sd=TRUE,pooling = TRUE){
+  if(sd){
+    ll <- lapply(
+      list(x$mean_trt, x$sd_trt, x$posteriorpd_trt), function(ll) {
+        apply(ll, 1, function(x) paste3(x[2],x[1],x[3]))
+      }) %>% data.frame() %>% setNames(c("Hypermean", "Hyper-SD", "p.p.d."))
+  }else{
+    ll <- lapply(
+      list(x$mean_trt, x$posteriorpd_trt), function(ll) {
+        apply(ll, 1, function(x) paste3(x[2],x[1],x[3]))
+      }) %>% data.frame() %>% setNames(c("Hypermean", "p.p.d."))
+    # rownames(ll) <- outcome_names_short[rownames(ll)]
+  }
+  if(pooling)
+    ll$Pooling <- lapply(x$models, function(x) {
+      p <- pooling(x, type = "total", metric = "isq")[,,1]
+      paste3(p[2], p[1], p[3])
+    })
+  ll
+}
+bgc_table(bgc_all) %>% 
+  kbl(booktabs = TRUE) %>% 
+  row_spec(1, bold=T) %>% 
+  kable_styling(latex_options = c("scale_down"))
+
+bgc_table(bgc_exp,sd=FALSE,pooling=FALSE) %>% 
+  kbl(booktabs = TRUE) %>% 
+  row_spec(1, bold=T)
+
+```
