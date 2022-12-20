@@ -1,0 +1,157 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Figures and tables for main paper text},
+  pdfauthor={Witold Więcek},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Figures and tables for main paper text}
+\author{Witold Więcek}
+\date{2022-12-20}
+
+\begin{document}
+\maketitle
+
+\hypertarget{latex-table-for-the-main-model}{%
+\section{Latex table for the main
+model}\label{latex-table-for-the-main-model}}
+
+\begin{tabular}[t]{lrrrrrr}
+\toprule
+\multicolumn{1}{c}{} & \multicolumn{3}{c}{Observed (risk ratio)} & \multicolumn{3}{c}{Posterior (risk ratio)} \\
+\cmidrule(l{3pt}r{3pt}){2-4} \cmidrule(l{3pt}r{3pt}){5-7}
+Study & mean & LCI & UCI & mean & LCI & UCI\\
+\midrule
+Dibley 1996 & 0.33 & 0.01 & 7.99 & 0.72 & 0.37 & 1.27\\
+Barreto 1994 & 1.00 & 0.14 & 7.08 & 0.75 & 0.41 & 1.32\\
+Chowdhury 2002 & 0.14 & 0.03 & 0.62 & 0.61 & 0.29 & 1.01\\
+Venkatarao 1996 & 0.37 & 0.09 & 1.37 & 0.67 & 0.36 & 1.11\\
+Benn 1997 & 0.46 & 0.14 & 1.47 & 0.68 & 0.37 & 1.10\\
+\addlinespace
+Donnen 1998 & 0.60 & 0.23 & 1.55 & 0.70 & 0.41 & 1.11\\
+Ross 1993 (health) & 0.30 & 0.12 & 0.74 & 0.59 & 0.31 & 0.94\\
+Agarwal 1995 & 1.22 & 0.66 & 2.25 & 0.90 & 0.61 & 1.43\\
+Vilayaraghvan 1990 & 1.02 & 0.57 & 1.82 & 0.85 & 0.58 & 1.29\\
+Pant 1996 & 0.57 & 0.37 & 0.88 & 0.64 & 0.44 & 0.89\\
+\addlinespace
+Rahmatullah 1990 & 0.46 & 0.30 & 0.71 & 0.57 & 0.38 & 0.81\\
+Sommer 1986 & 0.74 & 0.54 & 1.00 & 0.74 & 0.57 & 0.96\\
+Daulaire 1992 & 0.74 & 0.55 & 0.99 & 0.74 & 0.57 & 0.96\\
+Herrera 1992 & 1.06 & 0.82 & 1.37 & 0.97 & 0.77 & 1.25\\
+West 1991 & 0.70 & 0.56 & 0.88 & 0.71 & 0.57 & 0.87\\
+\addlinespace
+Ross 1993 (survival) & 0.81 & 0.67 & 0.97 & 0.80 & 0.67 & 0.95\\
+DEVTA 2013 & 0.96 & 0.89 & 1.03 & 0.95 & 0.88 & 1.03\\
+\bottomrule
+\end{tabular}
+
+\begin{verbatim}
+## 
+## Attaching package: 'wwmisc'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:baggr':
+## 
+##     mint
+\end{verbatim}
+
+\begin{table}
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tabular}[t]{lllll}
+\toprule
+  & Hypermean & Hyper-SD & p.p.d. & Pooling\\
+\midrule
+\textbf{Partial, all data} & \textbf{-0.31 (-0.54, -0.13)} & \textbf{0.27 (0.1, 0.53)} & \textbf{-0.31 (-0.96, 0.28)} & \textbf{0.17 (0.027, 0.44)}\\
+Partial, no DEVTA & -0.34 (-0.58, -0.16) & 0.25 (0.038, 0.56) & -0.35 (-1, 0.25) & 0.15 (0.0038, 0.45)\\
+Full, all data & -0.13 (-0.18, -0.068) & 0 (0, 0) & -0.13 (-0.18, -0.068) & 1 (1, 1)\\
+Full, no DEVTA & -0.28 (-0.37, -0.18) & 0 (0, 0) & -0.28 (-0.37, -0.18) & 1 (1, 1)\\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{tabular}[t]{lll}
+\toprule
+  & Hypermean & p.p.d.\\
+\midrule
+\textbf{Partial, all data} & \textbf{0.74 (0.58, 0.88)} & \textbf{0.77 (0.38, 1.3)}\\
+Partial, no DEVTA & 0.71 (0.56, 0.85) & 0.74 (0.36, 1.3)\\
+Full, all data & 0.88 (0.83, 0.93) & 0.88 (0.83, 0.93)\\
+Full, no DEVTA & 0.76 (0.69, 0.83) & 0.76 (0.69, 0.83)\\
+\bottomrule
+\end{tabular}
+
+\end{document}
