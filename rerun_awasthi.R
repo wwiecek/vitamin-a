@@ -35,8 +35,7 @@ bg_a <- baggr(awasthi, pooling = "partial", refresh = 0)
 bg_mayo <- baggr(mayo, iter = 1e04)
 
 plot(bg_mayo_partial)
-baggr_compare(bg_mayo_partial, bg_a) %>% plot
-
+baggr_compare("Mayo-Wilson" = bg_mayo, "Awasthi" = bg_a) %>% plot
 
 # The difference in pooling metrics are not just a quirk of 
 # baggr calculations, which take mean(SE)
