@@ -1,11 +1,21 @@
-## Updated from monte_carlos_display_graphics_heat_map.R
+# Script to generate figure(s) summarising simulation results
+# Author: Hannah Balikci, based on code by Rachael Meager
+# Date: August 2023
+
+# Run this script only after running simulations using script XXX.R
+# Running XXX.R will save the relevant outputs in simulations_results/
+# and these are the only files that this script uses
+
+
+library(reshape2) #for melt()
+library(ggplot2)
 
 ### FIGURE 1: Heat map Normal-Normal Simulations ###
 
 # load in the data with your pathname
-load("/Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma.RData")
+load("simulations_results/meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma.RData")
 
-# prep table row and column names
+# prep table row and column names for all plots
 greeks=c(alpha='\u03b1', 
          tau='\u03c4', 
          sigma='\u03c3',
@@ -39,33 +49,21 @@ zp1 <- ggplot(longData,
               xlab("Standard errors of point estimates") +
               ylab("Standard deviation of true effects")
 
-print(zp1)
 
 ### FIGURE 2: heat map student t ###
 
-rm(list = ls())
-
 # load in the data with your pathname
-load("/Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_student_t_16_cells.RData")
+load("simulations_results/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_student_t_16_cells.RData")
 
-# prep table row and column names
-greeks=c(alpha='\u03b1', tau='\u03c4', sigma='\u03c3',
-         beta='\u03b2',
-         gamma='\u03b3')
-
-col_names_vector <- c("SE : 0-5","5-10","10-15","15-20")
-row_names_vector <- c(paste0(greeks['sigma']," : 0-5"),"5-10","10-15","15-20")
 
 ### Organise the data into a matrix of heat values ###
 
 fe_mse_divided_by_bhm_mse_student_t <- fe_tau_error/bhm_tau_error
 rownames(fe_mse_divided_by_bhm_mse_student_t) <- c("0-5", "5-10","10-15","15-20")
 colnames(fe_mse_divided_by_bhm_mse_student_t) <- c("0-5","5-10","10-15","15-20")
-
 longData <- melt(fe_mse_divided_by_bhm_mse_student_t)
 
 ### define palate and make graphic ##
-
 zp2 <- ggplot(longData,
               aes(x = Var2, y = Var1, fill = value)) +
               geom_tile(aes(fill = value), colour = "wheat") + 
@@ -76,22 +74,11 @@ zp2 <- ggplot(longData,
               xlab("Standard errors of point estimates") +
               ylab("Standard deviation of true effects")
 
-print(zp2)
 
 ### FIGURE 3: heat map with location outliers ###
 
-rm(list = ls())
-
 # load in the data with your pathname
-load("/Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_location_outlier_16_cells.RData")
-
-# prep table row and column names
-greeks=c(alpha='\u03b1', tau='\u03c4', sigma='\u03c3',
-         beta='\u03b2',
-         gamma='\u03b3')
-
-col_names_vector <- c("SE : 0-5","5-10","10-15","15-20")
-row_names_vector <- c(paste0(greeks['sigma']," : 0-5"),"5-10","10-15","15-20")
+load("simulations_results/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_location_outlier_16_cells.RData")
 
 ### Organise the data into a matrix of heat values ###
 
@@ -112,22 +99,12 @@ zp3 <- ggplot(longData,
               theme_bw() +
               xlab("Standard errors of point estimates") +
               ylab("Standard deviation of true effects")
-print(zp3)
 
 ### FIGURE 4: heat map with precision outliers ###
 
-rm(list = ls())
 
 # load in the data with your pathname
-load("/Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_precision_outlier_16_cells.RData")
-
-# prep table row and column names
-greeks=c(alpha='\u03b1', tau='\u03c4', sigma='\u03c3',
-         beta='\u03b2',
-         gamma='\u03b3')
-
-col_names_vector <- c("SE : 0-5","5-10","10-15","15-20")
-row_names_vector <- c(paste0(greeks['sigma']," : 0-5"),"5-10","10-15","15-20")
+load("simulations_results/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_precision_outlier_16_cells.RData")
 
 ### Organise the data into a matrix of heat values ###
 
@@ -149,4 +126,5 @@ zp4 <- ggplot(longData,
   xlab("Standard errors of point estimates") +
   ylab("Standard deviation of true effects")
 
-print(zp4)
+
+
