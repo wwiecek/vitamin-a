@@ -6,7 +6,8 @@ library(metafor)
 set.seed(1990)
 theme_set(theme_minimal(base_size = 10))
 # baggr_theme_update(base_size = NULL)
-load("c:/github/vitamin-a/rerun.Rdata")
+# load("c:/github/vitamin-a/rerun.Rdata")
+load("rerun.Rdata")
 
 # Check intervals in input data -----
 mayo <- read_excel("input/mayo_wilson_fig3.xlsx") %>%
@@ -172,4 +173,5 @@ for(i in 1:nrow(df)) {
   i2[[i]] <- summary(mf)$I2
 }
 
-save.image("c:/github/vitamin-a/rerun.Rdata")
+# save.image("c:/github/vitamin-a/rerun.Rdata")
+save.image("rerun.Rdata")
