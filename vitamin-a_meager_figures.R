@@ -47,10 +47,10 @@ generate_heatmap <- function(data_path, title) {
 
 # List of data paths and corresponding titles
 data_paths <- c(
-  "/Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma.RData",
-  "/Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_student_t_16_cells.RData",
-  "/Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_location_outlier_16_cells.RData",
-  "/Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_precision_outlier_16_cells.RData"
+  "simulations_results/meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma.RData",
+  "simulations_results/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_student_t_16_cells.RData",
+  "simulations_results/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_location_outlier_16_cells.RData",
+  "simulations_results/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_precision_outlier_16_cells.RData"
 )
 titles <- c(
   "Normal-Normal Simulations",
