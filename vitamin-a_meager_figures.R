@@ -46,12 +46,13 @@ generate_heatmap <- function(data_path, title) {
 }
 
 # List of data paths and corresponding titles
-data_paths <- c(
-  "/Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma.RData",
-  "/Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_student_t_16_cells.RData",
-  "/Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_location_outlier_16_cells.RData",
-  "/Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_precision_outlier_16_cells.RData"
-)
+data_paths <- paste0("simulations_results/", c(
+  "meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma.RData",
+  "meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_student_t_16_cells.RData",
+  "meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_location_outlier_16_cells.RData",
+  "meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_precision_outlier_16_cells.RData"
+))
+
 titles <- c(
   "Normal-Normal Simulations",
   "With Student t distributed effects",
@@ -78,7 +79,7 @@ grid <- plot_grid(plotlist = heatmap_plots, ncol = 2)
 # Extract figure 4s legend
 legend <- get_legend(heatmap_plots_with_legends[[4]])
 
-final_plot <- plot_grid(grid, legend, ncol = 2, rel_widths = c(0.8, 0.2))
+final_plot <- plot_grid(grid, legend, ncol = 2, rel_widths = c(0.9, 0.1))
 
 # Combine the combined plot with a common legend and common labels
 final_plot <- final_plot +
@@ -89,4 +90,4 @@ final_plot <- final_plot +
   labs(fill = "Ratio")
 
 # Save the final plot
-ggsave("heatmap_plots.png", plot = final_plot)
+ggsave("figures/heatmap_plots.pdf", plot = final_plot, height = 7, width = 7)
