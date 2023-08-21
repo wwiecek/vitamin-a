@@ -2,8 +2,10 @@
 # Author: Hannah Balikci, based on code by Rachael Meager
 # Date: August 2023
 
-# Run this script only after running simulations using script XXX.R
-# Running XXX.R will save the relevant outputs in simulations_results/
+# Run this script only after running simulations using script 
+# meta_analysis_monte_carlo_rubin_grid_simulations.R
+# Running meta_analysis_monte_carlo_rubin_grid_simulations.R 
+# will save the relevant outputs in simulations_results/
 # and these are the only files that this script uses
 
 
