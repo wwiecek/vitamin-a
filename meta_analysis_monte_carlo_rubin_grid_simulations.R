@@ -21,6 +21,7 @@ library(gridExtra)
 library(ggplot2)
 library(parallel)
 library(rstan)
+library(gridExtra)
 
 # function to convert stan to coda
 stan2coda <- function(fit2) {
@@ -33,23 +34,28 @@ stan2coda <- function(fit2) {
 set.seed(20)
 
 # meta-parameters and storage
-S <- 5 # number of simulations
+S <- 5000 # number of simulations
 K <- 9 # number of studies
 
 bhm_tau_error <- matrix(rep(NA,16),nrow=4,ncol=4)
 fe_tau_error <- matrix(rep(NA,16),nrow=4,ncol=4)
 
-# these define the grid cells for the comparative performance evaluations
-
+# Define the grid cells for the comparative performance evaluations
 se_min <- c(0.1,5,10,15)
 se_max <- c(5,10,15,20)
 sigma_min <- c(0.1,5,10,15)
 sigma_max <- c(5,10,15,20)
 
-# Call the stan model "rubin_model_code.stan" which must be placed in same directory
+table_rownames <- c("Sigma : 0-5","5-10","10-15","15-20")
+table_colnames <- c("SE : 0-5","5-10","10-15","15-20")
 
-model_file <- file.path('/Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-A_dropbox/rubin_model_code.stan')
+# Call the stan model "rubin_model_code.stan" which must be placed in same directory
+model_file <- file.path('simulations_results/rubin_model_code.stan')
 model <- stan_model(model_file)
+
+# Define the desired file path for outputs
+desired_path <- "simulations_results/"
+
 
 sim_types <- c("student_t_16_cells", "location_outlier_16_cells", "precision_outlier_16_cells", "normal")
 
@@ -60,12 +66,12 @@ for (sim_type in sim_types) {
       
       tau_k_draws <- matrix(rep(0,K*S), nrow=S, ncol=K) # k-specific effects
       hat_tau_k_draws <- matrix(rep(0,K*S), nrow=S, ncol=K) # k-specific estimates
-      se_k_draws <- matrix(rep(0,K*S), nrow=S, ncol=K) #k-specific standard errors
+      se_k_draws <- matrix(rep(0,K*S), nrow=S, ncol=K) # k-specific standard errors
       
       seed <- (i+1)*(j+1)
       
-      tau_draws <- rnorm(n=S,mean=3,sd=1) # parent mean!
-      sigma_tau_draws <- runif(n=S,min=sigma_min[i],max=sigma_max[i]) # parent standard deviation!
+      tau_draws <- rnorm(n=S,mean=3,sd=1) # parent mean
+      sigma_tau_draws <- runif(n=S,min=sigma_min[i],max=sigma_max[i]) # parent standard deviation
       
       for (s in 1:S) {
         seed <- 2*(i+1)*(j+1)
@@ -162,7 +168,7 @@ for (sim_type in sim_types) {
         posterior_mean_tau[s] <- textable_stanfit_temp[1,1]
         posterior_sd_tau[s] <- textable_stanfit_temp[1,3]
         posterior_sigma_tau[s] <- textable_stanfit_temp[2,1]
-        posterior_mean_tau_ks[s,] <- textable_stanfit_temp[3:(K+2),1]
+        posterior_mean_tau_ks[s,] <- textable_stanfit_temp[3:(K+2),1] # adjusted to allow for higher K
         print(textable_stanfit_temp)
         stan_output_summaries[[s]] <- textable_stanfit_temp
         rm(stanfit_temp)
@@ -180,7 +186,7 @@ for (sim_type in sim_types) {
     } # close the j-loop
   } # close the i-loop
   
-  # Print and save results
+  # Save results
   bhm_error_table <- data.frame(bhm_tau_error)
   rownames(bhm_error_table) <- table_rownames
   colnames(bhm_error_table) <- table_colnames
@@ -189,19 +195,22 @@ for (sim_type in sim_types) {
   rownames(fe_error_table) <- table_rownames
   colnames(fe_error_table) <- table_colnames
   
-  print(fe_error_table, digits = 3)
-  print(bhm_error_table, digits = 3)
+  # Convert data frames to tables
+  fe_table <- tableGrob(format(round(fe_error_table, 3), nsmall = 3))
+  bhm_table <- tableGrob(format(round(bhm_error_table, 3), nsmall = 3))
   
-  # Save objects
-  save(fe_error_table, bhm_error_table, file = paste0(sim_type, "_tables.RData"))
-  pdf("fe_error_table", sim_type, ".pdf")
-  grid.table(data)
-  dev.off()
+  # Define the base filename for the tables
+  base_filename <- paste0(sim_type, "_tables")
   
-  pdf("bhm_error_table", sim_type, ".pdf")
-  grid.table(data)
-  dev.off()
+  fe_pdf_path <- file.path(desired_path, paste0(base_filename, "_fe.pdf"))
+  ggsave(fe_pdf_path, plot = fe_table, device = "pdf")
   
-  save.image(file = paste0("meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma_", sim_type, ".RData"))
+  bhm_pdf_path <- file.path(desired_path, paste0(base_filename, "_bhm.pdf"))
+  ggsave(bhm_pdf_path, plot = bhm_table, device = "pdf")
+  
+  # Save the simulation data as RData files
+  filename <- paste0("meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma_", sim_type, ".RData")
+  full_file_path <- file.path(desired_path, filename)
+  save.image(file = full_file_path)
+  
 } #close sim_type loop
-
