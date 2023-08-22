@@ -54,8 +54,8 @@ model_file <- file.path('simulations_results/rubin_model_code.stan')
 model <- stan_model(model_file)
 
 # Define the desired file path for outputs
+desired_path_tables <- "figures/"
 desired_path <- "simulations_results/"
-
 
 sim_types <- c("student_t_16_cells", "location_outlier_16_cells", "precision_outlier_16_cells", "normal")
 
@@ -143,7 +143,7 @@ for (sim_type in sim_types) {
       
       # this little bit is J Huggins' genius set up #
       # some knobs we can tweak
-      chains <- 4
+      nchains <- 4
       iters <- 5000
       control <- list(adapt_t0 = 10,       # default = 10
                       stepsize = 1,        # default = 1
@@ -156,12 +156,9 @@ for (sim_type in sim_types) {
                              se_k = se_k_draws[s,],
                              K = K)
         
-        sflist_temp <-
-          mclapply(1:chains, mc.cores = chains,
-                   function(i) sampling(model, data = dataset_temp, seed = seed,
-                                        chains = 1, chain_id = i, # refresh = -1,
-                                        iter = iters, control = control))
-        stanfit_temp <- sflist2stanfit(sflist_temp)
+        stanfit_temp <- sampling(model, data = dataset_temp, seed = seed,
+                                 chains = nchains, chain_id = i, # refresh = -1,
+                                 iter = iters, control = control)
         
         summary_stanfit_temp <- summary(stanfit_temp)
         textable_stanfit_temp <- xtable(summary_stanfit_temp$summary)
@@ -202,10 +199,10 @@ for (sim_type in sim_types) {
   # Define the base filename for the tables
   base_filename <- paste0(sim_type, "_tables")
   
-  fe_pdf_path <- file.path(desired_path, paste0(base_filename, "_fe.pdf"))
+  fe_pdf_path <- file.path(desired_path_tables, paste0(base_filename, "_fe.pdf"))
   ggsave(fe_pdf_path, plot = fe_table, device = "pdf")
   
-  bhm_pdf_path <- file.path(desired_path, paste0(base_filename, "_bhm.pdf"))
+  bhm_pdf_path <- file.path(desired_path_tables, paste0(base_filename, "_bhm.pdf"))
   ggsave(bhm_pdf_path, plot = bhm_table, device = "pdf")
   
   # Save the simulation data as RData files
