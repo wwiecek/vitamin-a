@@ -1,6 +1,9 @@
-# Script to generate Meta analysis Monte Carlos Simulations
-# Author: Hannah Balikci, based on code by Rachael Meager
+# Script to generate meta analysis Monte Carlos Simulations
+# Author: Rachael Meager, code reorganised by Hannah Balikci
 # Date: August 2023
+
+# This code will require 64 x 5000 models, so you have to be very patient
+# It will probably take about a day, depending on a machine?
 
 # Running meta_analysis_monte_carlo_rubin_grid_simulations.R 
 # will save the relevant outputs in simulations_results/
@@ -49,18 +52,21 @@ sigma_max <- c(5,10,15,20)
 table_rownames <- c("Sigma : 0-5","5-10","10-15","15-20")
 table_colnames <- c("SE : 0-5","5-10","10-15","15-20")
 
-# Call the stan model "rubin_model_code.stan" which must be placed in same directory
-model_file <- file.path('simulations_results/rubin_model_code.stan')
-model <- stan_model(model_file)
+# Compile the stan model
+rstan_options(auto_write = TRUE)
+model <- stan_model('rubin_model_code.stan')
 
 # Define the desired file path for outputs
 desired_path_tables <- "figures/"
 desired_path <- "simulations_results/"
 
-sim_types <- c("student_t_16_cells", "location_outlier_16_cells", "precision_outlier_16_cells", "normal")
+sim_types <- c("student_t_16_cells", 
+               "location_outlier_16_cells", 
+               "precision_outlier_16_cells", 
+               "normal")
 
 # Loop through simulation types
-for (sim_type in sim_types) {
+for (i  in sim_types) {
   for(i in 1:4){
     for(j in 1:4){
       
@@ -129,7 +135,7 @@ for (sim_type in sim_types) {
       FE_means_mse <- mean(FE_means_error^2)
       
       fe_tau_error[i,j] <- FE_means_mse
-      print(fe_tau_error[i,j])
+      # print(fe_tau_error[i,j])
       
       ### BAYESIAN HIERARCHICAL ANALYSIS ###
       
@@ -157,7 +163,7 @@ for (sim_type in sim_types) {
                              K = K)
         
         stanfit_temp <- sampling(model, data = dataset_temp, seed = seed,
-                                 chains = nchains, chain_id = i, # refresh = -1,
+                                 chains = nchains, chain_id = i, refresh = 0,
                                  iter = iters, control = control)
         
         summary_stanfit_temp <- summary(stanfit_temp)
@@ -166,10 +172,9 @@ for (sim_type in sim_types) {
         posterior_sd_tau[s] <- textable_stanfit_temp[1,3]
         posterior_sigma_tau[s] <- textable_stanfit_temp[2,1]
         posterior_mean_tau_ks[s,] <- textable_stanfit_temp[3:(K+2),1] # adjusted to allow for higher K
-        print(textable_stanfit_temp)
+        # print(textable_stanfit_temp)
         stan_output_summaries[[s]] <- textable_stanfit_temp
         rm(stanfit_temp)
-        
       } # closes the forloop indexed by s
       
       # now compute errors
@@ -206,7 +211,8 @@ for (sim_type in sim_types) {
   ggsave(bhm_pdf_path, plot = bhm_table, device = "pdf")
   
   # Save the simulation data as RData files
-  filename <- paste0("meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma_", sim_type, ".RData")
+  cat("\n", i, j)
+  filename <- paste0(sim_type, ".RData")
   full_file_path <- file.path(desired_path, filename)
   save.image(file = full_file_path)
   
