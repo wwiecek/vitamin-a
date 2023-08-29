@@ -8,6 +8,7 @@
 # will save the relevant outputs in simulations_results/
 # and these are the only files that this script uses
 
+rm(list = ls())
 
 library(reshape2)
 library(ggplot2)
@@ -49,20 +50,12 @@ generate_heatmap <- function(data_path, title) {
 
 # List of data paths and corresponding titles
 
-data_paths <- c(
-  "simulations_results/meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma.RData",
-  "simulations_results/vitamin-A_dropbox/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_student_t_16_cells.RData",
-  "simulations_results/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_location_outlier_16_cells.RData",
-  "simulations_results/meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_precision_outlier_16_cells.RData"
-)
-
-data_paths <- paste0("simulations_results/", c(
-  "meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma.RData",
-  "meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_student_t_16_cells.RData",
-  "meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_location_outlier_16_cells.RData",
-  "meta_analysis_monte_carlo_rubin_grid_of_se_versus_sigma_precision_outlier_16_cells.RData"
+data_paths <- paste0("simulation_results/", c(
+  "meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma_normal.RData",
+  "meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma_student_t_16_cells.RData",
+  "meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma_location_outlier_16_cells.RData",
+  "meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma_precision_outlier_16_cells.RData"
 ))
-
 
 titles <- c(
   "Normal-Normal Simulations",

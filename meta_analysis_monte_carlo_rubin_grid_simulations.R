@@ -58,7 +58,7 @@ model <- stan_model('rubin_model_code.stan')
 
 # Define the desired file path for outputs
 desired_path_tables <- "figures/"
-desired_path <- "simulations_results/"
+desired_path <- "simulation_results/"
 
 sim_types <- c("student_t_16_cells", 
                "location_outlier_16_cells", 
@@ -66,7 +66,7 @@ sim_types <- c("student_t_16_cells",
                "normal")
 
 # Loop through simulation types
-for (i  in sim_types) {
+for (t  in sim_types) {
   for(i in 1:4){
     for(j in 1:4){
       
@@ -82,18 +82,18 @@ for (i  in sim_types) {
       for (s in 1:S) {
         seed <- 2*(i+1)*(j+1)
         
-        if (sim_type == "student_t_16_cells") {
+        if (t == "student_t_16_cells") {
           tau_k_draws[s,] <- tau_draws[s] + sqrt(sigma_tau_draws[s])*rt(n=K, df=3)
           se_k_draws[s,] <- runif(n=K, min=se_min[j], max = se_max[j])
-        } else if (sim_type == "location_outlier_16_cells") {
+        } else if (t == "location_outlier_16_cells") {
           tau_k_draws[s,] <- rnorm(n=K, mean=tau_draws[s], sd=sigma_tau_draws[s])
           tau_k_draws[s, 1] <- rnorm(n=1, mean=tau_draws[s]+10, sd=sigma_tau_draws[s])
           se_k_draws[s,] <- runif(n=K, min=se_min[j], max=se_max[j])
-        } else if (sim_type == "precision_outlier_16_cells") {
+        } else if (t == "precision_outlier_16_cells") {
           tau_k_draws[s,] <- rnorm(n=K, mean=tau_draws[s], sd=sigma_tau_draws[s])
           se_k_draws[s,] <- runif(n = K, min = se_min[j], max = se_max[j])
           se_k_draws[s, 1] <- runif(n=1, min=0.1*se_min[j], max=0.1*se_max[j])
-        } else if (sim_type == "normal") {
+        } else if (t == "normal") {
           tau_k_draws[s,] <- rnorm(n=K, mean=tau_draws[s], sd=sigma_tau_draws[s])
           se_k_draws[s,] <- runif(n=K, min=se_min[j], max=se_max[j])
         }
@@ -202,7 +202,7 @@ for (i  in sim_types) {
   bhm_table <- tableGrob(format(round(bhm_error_table, 3), nsmall = 3))
   
   # Define the base filename for the tables
-  base_filename <- paste0(sim_type, "_tables")
+  base_filename <- paste0(t, "_tables")
   
   fe_pdf_path <- file.path(desired_path_tables, paste0(base_filename, "_fe.pdf"))
   ggsave(fe_pdf_path, plot = fe_table, device = "pdf")
@@ -212,7 +212,7 @@ for (i  in sim_types) {
   
   # Save the simulation data as RData files
   cat("\n", i, j)
-  filename <- paste0(sim_type, ".RData")
+  filename <- paste0("meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma_", t, ".RData")
   full_file_path <- file.path(desired_path, filename)
   save.image(file = full_file_path)
   
