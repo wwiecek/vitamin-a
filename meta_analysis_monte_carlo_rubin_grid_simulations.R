@@ -212,7 +212,7 @@ for (t  in sim_types) {
   
   # Save the simulation data as RData files
   cat("\n", i, j)
-  filename <- paste0("meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma_", t, ".RData")
+  filename <- paste0(t, ".RData")
   full_file_path <- file.path(desired_path, filename)
   save.image(file = full_file_path)
   

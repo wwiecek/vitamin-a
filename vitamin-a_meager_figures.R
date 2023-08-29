@@ -51,10 +51,10 @@ generate_heatmap <- function(data_path, title) {
 # List of data paths and corresponding titles
 
 data_paths <- paste0("simulation_results/", c(
-  "meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma_normal.RData",
-  "meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma_student_t_16_cells.RData",
-  "meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma_location_outlier_16_cells.RData",
-  "meta_analysis_monte_carlo_rubin_grid_if_se_versus_sigma_precision_outlier_16_cells.RData"
+  "normal.RData",
+  "student_t_16_cells.RData",
+  "location_outlier_16_cells.RData",
+  "precision_outlier_16_cells.RData"
 ))
 
 titles <- c(
