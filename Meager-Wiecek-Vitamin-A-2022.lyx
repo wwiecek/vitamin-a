@@ -1,0 +1,5769 @@
+#LyX file created by tex2lyx 2.3
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin /Users/hbalikci/Documents/Chicago_Harris/Life Admin/DIL/Vitamin A/vitamin-a/
+\textclass article
+\begin_preamble
+\graphicspath{{figures/}}
+
+\usepackage{tabu}
+
+
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\title{\Large Vitamin A Supplements and Child Mortality:\\ Resolving A Controversy In Meta-Analysis\\
+%\Large \color{red} EMBARGOED COPY. \\
+%PLEASE DO NOT CIRCULATE. 
+}
+\author{Rachael Meager\footnote{The London School of Economics. Contact: R.Meager@lse.ac.uk.}, Witold WiÄcek\footnote{University of Chicago}\;\thanks{We thank Abhijit Banerjee, Esther Duflo, Anna Mikusheva, Victor Chernozhukov and Alfred Sommer for helpful discussions and suggestions. All remaining mistakes are our own. This is a working paper. Please send critiques and corrections via email.  }}
+
+
+
+\end_preamble
+\use_default_options false
+\begin_modules
+graphicboxes
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2.5cm
+\bottommargin 2.5cm
+\columnsep 1.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+maketitle
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+Vitamin A supplementation is considered one of the most effective interventions to reduce child mortality in developing nations. However, its estimated effect varies substantially across studies, making the results of meta-analyses in this literature highly sensitive to methodological choices.
+\end_layout
+
+\begin_layout Abstract
+We compare the theoretical properties and empirical performance of classical fixed-effects and random-effects meta-analysis models on simulated bodies of evidence. We consider Bayesian implementation using a hierarchical model. We find that using random effects either matches or substantially outperforms the fixed effects method in terms of mean squared error and is robust to misspecification of the likelihood.
+\end_layout
+
+\begin_layout Abstract
+Applied to a set of 17 studies, a Bayesian model estimates that vitamin A supplementation reduces mortality risk by 26% (95% interval 42% to 12%), compared to 12% under the fixed-effects model (95% interval 7% to 17%). The underlying heterogeneity across studies is large, with 83% of the cross-study variation attributable to genuine differences in treatment effects, but this is not precisely estimated. Fixed effects thus underestimate both the reduction in mortality and the uncertainty surrounding the general effect of supplementation.
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% vitamin A is a big deal - Sommer discovery and subsequent literature 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Public health researchers and international aid organisations consider vitamin A supplementation one of the most important and cost-effective interventions to reduce child mortality (Imbdad et al 2011, Bill and Melinda Gates Foundation 2011). UNICEF refers to vitamin A programming as a 
+\begin_inset Quotes eld
+\end_inset
+
+prerequisite
+\begin_inset Quotes erd
+\end_inset
+
+ for achieving Millenium Development Goal 4, the goal of child survival, particularly in countries with high vitamin A deficiency rates (UNICEF, 2007). The potential of large-scale vitamin A supplementation to effectively reduce child mortality was first established in Sommer et al (1986) using a randomized controlled trial in Sumatra, Indonesia; the program reduced child mortality by 34% of base risk. The literature that followed displayed substantial variation in results across different contexts, but often confirmed or strengthened the initial finding (see for example Vijayaraghavan et al 1990, Rahmathullah et al 1990, Herrera et al 1992, Arthur et al 1992, VAST 1993).
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: does this need a short paragraph explaining FE vs RE upfront? DEVTA trial meta-analysis may not make sense otherwise
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% - biological underpinnings 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+The biological mechanism by which vitamin A affects mortality is relatively well understood: retinoic acid has a specific role in visual system function and in the immune system where it improves T and B cell gut-homing capacity and enhances T cell proliferation (Mora et al, 2008 and Iwata et al 2004). This explains why vitamin A deficiency is often associated with greater mortality risk in longitudinal data (Sommer et al, 1983). While the effect of supplementation in the absence of vitamin A deficiency is unclear, this deficiency is prevalent in so many developing countries that the World Health Organisation recommends general supplementation (WHO, 2016). A meta-analysis performed in 2011 concludes that the average risk ratio of supplementation is 0.76 and thus recommends universal supplementation (Mayo-Wilson et al 2011, Imbdad et al 2011).
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% Then DEVTA is happen, by far the most precise, but perhaps a very different context 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+But more recent results from the largest ever randomised controlled trial (RCT) of vitamin A supplementation threaten to overturn this consensus (Awasthi et al, 2013). The study, performed in India, reported only a small and statistically insignificant reduction in child mortality (Awasthi et al, 2013). This was not the first time a study had found no effect of vitamin A, and one previous study even found a slight and insignificant increase in mortality (Herrera et al, 1996). But Awasthi et al (2013), often called the 
+\begin_inset Quotes eld
+\end_inset
+
+DEVTA trial
+\begin_inset Quotes erd
+\end_inset
+
+, studied millions of subjects and produced the most precise estimate of the risk ratio ever recorded. However, despite this impressive precision, the DEVTA trial was unusual in many ways: in particular, it had a different delivery mechanism and a lower rate of compliance relative to other studies (Awasthi et al 2013, Sommer et al 2013). As a result, some researchers remain unconvinced that the DEVTA trial should meaningfully overturn or alter the conclusions of the previous three decades of research on Vitamin A (Sommer et al, 2013, and Garner et al, 2013).
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% so how do we interpret this literature? It turns out to be sensitive to how we aggregate the results
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Faced with severe disagreements in the scientific community about the implications of a body of research, the methodological question of how to aggregate and interpret the evidence from seemingly-contradictory studies becomes crucially important. This question has material consequences for science and policy, because the conclusions of evidence aggregation exercises are often sensitive to the statistical methodologies chosen in these contexts. Both Imbdad et al (2011) and Awasthi et al (2013) fit a fixed-effects meta-analysis model and found a risk ratio of 0.89, a difference of more than ten percentage points from the previous meta-analysis (Mayo-Wilson et al 2011). But Sommer et al (2013) note the heterogeneity in the results and suggest that a random effects aggregation model would produce more reliable results. In the economics literature, terms 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+constant effects
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+random coefficients
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+ are used for fixed and random effects respectively. Awasthi et al (2013) claim that random effects meta-analytic techniques overweight small studies, and 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+conceal the reliability
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+ of large studies such as DEVTA; Sommer et al (2013) argue that fixed effects techniques underweight small studies and overweight large trials.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% this paper asks theoretically and empirically which method should be used in this literature 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+In this paper, we investigate which method should be used to aggregate the evidence in the vitamin A literature, and apply that method to perform a new meta-analysis. We review the theoretical properties of fixed and random effects estimators and investigate their empirical performance on simulated literatures. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: I don't understand the next point: the paper later states that our results don't change if (some sort of) MLE estimation is used to fit RE models, but we list "used non-Bayesian methods" (and their problems) as a motivation for this work
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: Rachael says let's add more explanation qualitatively when discussing the RE vs BHM split in Methods
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Earlier work by Hedges and Vevea (1998), Overton (1998), and Field (2001) reported simulation studies assuming that either the functional form of the FE model or the RE model was exactly correct, used non-Bayesian RE methods which are known to have problems (see Cornell et al 2014, Brockwell and Gordon 2001), and scored performance by type 1 error rate. By contrast, we examine performance on a wider range of data-generating processes for which neither meta-analytic model is correct, including distributions with fat tails and multi-modal mixture distributions. We evaluate performance by conducting a Monte Carlo simulation and measuring the mean squared error (MSE) of the two procedures for estimating the average treatment effect, rather than hypothesis test error rates. We do this because research communities are increasingly interested in getting an estimate as close as possible to the true effect size, not simply testing for the existence of a non-zero effect (Wasserstein and Lazar 2016).
+\end_layout
+
+\begin_layout Section
+Methodologies for Meta-Analysis
+\end_layout
+
+\begin_layout Subsection
+Fixed Effects
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% if we're confident the effects are the same, inv-var is optimal
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+The canonical fixed-effects meta-analysis model uses an inverse-variance weighted average of the studies' estimated effects to produce an estimate of a general or typical treatment effect (Higgins and Green, 2011, 9.4.3). For a set of 
+\begin_inset Formula $K$
+\end_inset
+
+ studies with estimated treatment effects and reported standard errors 
+\begin_inset Formula $\{\hat{\tau}_k, se_k\}_{k=1}^K$
+\end_inset
+
+, the FE estimator is
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+\label{fe_tau}
+\begin{aligned}
+\hat{\tau}_{FE} = \sum_{k=1}^K \hat{\tau}_k \frac{  (se^2_k)^{-1}   }{  \sum_{k=1}^K  (se^2_k)^{-1}  } \; \; .
+\end{aligned}
+\end{equation}
+\end_inset
+
+The standard error of this estimate is calculated as follows:
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+\label{fe_se}
+\begin{aligned}
+\hat{se}_{FE} = \sqrt{ \frac{ 1  }{  \sum_{k=1}^K  (se^2_k)^{-1}  }} \; \; .
+\end{aligned}
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If the studies are estimating the same underlying treatment effect 
+\begin_inset Formula $\tau$
+\end_inset
+
+, and each study's estimated effect 
+\begin_inset Formula $\hat{\tau}_k$
+\end_inset
+
+ is asymptotically normally distributed, then this method is optimal in the class of estimators produced by linear combinations of the 
+\begin_inset Formula $\{\hat{\tau}_k\}_{k=1}^K$
+\end_inset
+
+. This result is proved in Hedges and Vevea (1998) but had been established informally in the statistics literature years prior. We review it here: formally, assume that the point estimators are consistent and that each study has enough data and the empirical distributions have enough regularity such that, for all 
+\begin_inset Formula $k$
+\end_inset
+
+, 
+\begin_inset Formula $\hat{\tau}_k \sim N(\tau, se^2_{k})$
+\end_inset
+
+.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+An assumption of this sort is typically made during the calculation of most standard parametric confidence intervals and p-values in the medical and social science literature.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now consider the class of estimators for which 
+\begin_inset Formula $\hat{\tau} = \sum_{k=1}^{K} w_k \hat{\tau}_k$
+\end_inset
+
+ for for some positive weights, 
+\begin_inset Formula $\sum \{w_k\}_{k=1}^K =1$
+\end_inset
+
+. The sampling distribution of any such estimator will be
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+\begin{aligned}
+\hat{\tau} \sim N(\tau, \sum_{k=1}^{K} w_k^2 se^2_{k}) .
+\end{aligned}
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since all such estimators are consistent by construction, we seek estimator with the minimal mean squared error (MSE). Taking a first order condition with respect to the weights shows that
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}\label{fe}
+\begin{aligned}
+\left\{ \frac{(se^2_k)^{-1}}{\sum_{k=1}^K(se^2_k)^{-1}} \right\}_{k=1}^K = \; \argmin_{ \{w_k\}_{k=1}^K  } \sum_{k=1}^{K} w_k^2 se^2_{k}.
+\end{aligned}
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This result demonstrates the efficiency of the FE estimator in this class. Notice that the standard errors were ancillary statistics for 
+\begin_inset Formula $\tau$
+\end_inset
+
+, yet are necessary to construct the efficient estimator.
+\end_layout
+
+\begin_layout Standard
+The FE model can be implemented both or a frequentist or Bayesian. While the former approach is typically used, Bayesian framework allows for direct model comparison between fixed- and random-effects formulations, which we will discuss below.
+\end_layout
+
+\begin_layout Subsection
+Random Effects Methods
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: this is unclear; I'd say: consider data generated by a process such that tau_k ~ Normal(tau, ...)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: otherwise this assumption of normality just comes out of nowhere
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If each 
+\begin_inset Formula $\hat{\tau}_k$
+\end_inset
+
+ estimates a different 
+\begin_inset Formula $\tau_k$
+\end_inset
+
+ rather than one common 
+\begin_inset Formula $\tau$
+\end_inset
+
+, the FE estimator can be easily shown to diverge from the minimum-variance consistent estimator. To see this, consider a hypothetical case in which the 
+\begin_inset Formula $\{\hat{\tau}_k\}_{k=1}^K$
+\end_inset
+
+ are estimates of 
+\begin_inset Formula $K$
+\end_inset
+
+ distinct parameters according to the following hierarchical likelihood:
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}\label{rubin}
+\begin{aligned}
+\hat{\tau}_k &\sim N(\tau_k, se^2_{k}) \; \; \forall \;k\\
+\tau_k &\sim N(\tau, \sigma^2_{\tau}) \; \; \forall\; k.
+\end{aligned}
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this model, each 
+\begin_inset Formula $\hat{\tau}_k$
+\end_inset
+
+ actually measures a 
+\begin_inset Formula $k$
+\end_inset
+
+-specific underlying effect 
+\begin_inset Formula $\tau_k$
+\end_inset
+
+, but these are centered around a common 
+\begin_inset Formula $\tau$
+\end_inset
+
+ component. As before, we seek the minimum variance estimator of this 
+\begin_inset Formula $\tau$
+\end_inset
+
+ given the estimates 
+\begin_inset Formula $\{\hat{\tau}_k, se_k\}_{k=1}^K$
+\end_inset
+
+, in the class of estimators taking the form 
+\begin_inset Formula $\hat{\tau} = \sum_{k=1}^{K} w_k \hat{\tau}_k$
+\end_inset
+
+ for some positive weights, 
+\begin_inset Formula $\sum \{w_k\}_{k=1}^K =1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+By law of total variation and the properties of sum of normal distributions,
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+\begin{aligned}
+\hat{\tau} \sim N(\tau, \sum_{k=1}^{K} w_k^2( se^2_{k} + \sigma^2_{\tau})).
+\end{aligned}
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: Rachael to check my language
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Since the estimator is consistent, the combination of weights that minimises MSE will lead to an efficient estimator. By the same argument that produced the optimal weights in the FE model,
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}\label{efficient}
+\begin{aligned}
+\left\{ \frac{(se^2_k+ \sigma^2_{\tau})^{-1}}{\sum_{k=1}^K(se^2_k+ \sigma^2_{\tau})^{-1}} \right\}_{k=1}^K = \; \argmin_{ \{w_k\}_{k=1}^K  } \sum_{k=1}^{K} w_k^2 (se^2_{k}+ \sigma^2_{\tau}).
+\end{aligned}
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using these weights implements a random effects (RE) estimation method. Evidently, when 
+\begin_inset Formula $\sigma^2_{\tau} \neq 0$
+\end_inset
+
+, the FE estimator diverges from this estimator and has higher variance than this estimator: the FE method is thus inefficient for this case. This is why the FE method is sometimes referred to as a 
+\begin_inset Quotes eld
+\end_inset
+
+full pooling
+\begin_inset Quotes erd
+\end_inset
+
+ method: it is only optimal when the data from all 
+\begin_inset Formula $K$
+\end_inset
+
+ samples or studies estimates exactly the same effect.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%The more heterogeneous the study settings, the less likely this is to be true, all else equal. 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+When the true 
+\begin_inset Formula $\sigma^2_{\tau}$
+\end_inset
+
+ is very large, the FE estimate may be very misleading. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: I remove this strong claim on the next line, since it may need some sort of proof:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%When treatment effects are heterogeneous across studies is statistically inefficient to let any single estimate strongly affect the estimated general effect, since each study still represents only 1 data point from the underlying distribution of treatment effects. 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+The RE estimator accounts for the underlying heterogeneity and thus tempers the influence that any single study can have on the estimate of 
+\begin_inset Formula $\tau$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The RE estimator in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "efficient"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is optimal if 
+\begin_inset Formula $\sigma^2_{\tau}$
+\end_inset
+
+ is known and if the effects are independently, identically, and normally distributed around their common mean. In practice, even if this functional form is correctly specified, 
+\begin_inset Formula $\sigma^2_{\tau}$
+\end_inset
+
+ is not known and must be estimated. In fact this is the model described in Rubin (1981), which can be estimated via Bayesian inference or via Maximum Likelihood (which is often called 
+\begin_inset Quotes eld
+\end_inset
+
+Empirical Bayes
+\begin_inset Quotes erd
+\end_inset
+
+ in this case). For relatively simple models, such as 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "rubin"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the performance, computational complexity, and running time are similar for the two methods.
+\end_layout
+
+\begin_layout Standard
+In more complicated models, the ML estimation quickly becomes a challenging multivariate optimisation problem that further requires inversion of large matrices to calculate standard errors. In these more complex cases, the 
+\begin_inset Quotes eld
+\end_inset
+
+Empirical Bayes
+\begin_inset Quotes erd
+\end_inset
+
+ MLE is performed using a 2-step procedure that does not accurately quantify the uncertainty in the unknowns.
+\end_layout
+
+\begin_layout Subsubsection*
+Bayesian hierarchical model
+\end_layout
+
+\begin_layout Standard
+Our preferred alternative is to conduct inference on model 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "rubin"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ using fully Bayesian hierarchical model (BHM). We use diffuse priors which ensures proper posterior inference while (typically) leading to results extremely close to MLE.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+We have verified that the MLE produces virtually identical results in the simple applications and simulations provided in this paper.
+\end_layout
+
+\end_inset
+
+ As with all Bayesian models, using this type of inference also allows for incorporation of informative priors, improves model checking, and allows for generating posterior predictive quantities. In this paper we estimate BHM using Hamiltonian Monte Carlo with a No-U-Turn-Sampler using Stan software
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+Quality of approximation of the posterior distribution by the Monte Carlo methods depends not only on algorithm but also parameters such as the number of iterations (samples from the posterior). While in some cases this requires careful specification and troubleshooting, for meta-analysis models obtaining good convergence is easy to achieve. In this paper we use the standard Stan settings and check convergence via the 
+\begin_inset Formula $\hat{R}$
+\end_inset
+
+ statistic proposed by Gelman and Rubin (1992).
+\end_layout
+
+\end_inset
+
+. This Bayesian approach to meta-analysis is implemented in an accessible way in R package 
+\shape italic
+baggr
+\shape default
+, which in addition to model 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "rubin"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ also includes other commonly used meta-analysis models (WiÄcek and Meager, 2022). The package also includes fitting of FE models, calculation of pooling statistics, and model selection through cross-validation, which we describe below.
+\end_layout
+
+\begin_layout Subsubsection*
+Pooling metrics
+\end_layout
+
+\begin_layout Standard
+To formally quantify the heterogeneity in BHM we can compute the conventional pooling factor, as specified in Gelman et al (2004):
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+\omega(\tau_k) = \frac{\hat{se}^2_k }{\hat{se}^2_k + \hat{\sigma}_{\tau}^2 }
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When values of pooling metric are close to 1, sampling variation in studies is much larger than cross-site heterogeneity. When pooling is low, cross-site heterogeneity dominates. This metric is the formal complement of the often-used 
+\begin_inset Formula $I^2$
+\end_inset
+
+ metric (i.e. 
+\begin_inset Formula $I^2 = 1- \omega(\tau_k)$
+\end_inset
+
+), reviewed favourably by Higgins and Thompson (2002), and provides the same information.
+\end_layout
+
+\begin_layout Subsubsection*
+Posterior predictive distributions
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: Rachael to review this and edit
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Bayesian approach to meta-analysis also allows for straightforward calculation of posterior predictive distribution (p.p.d.) of the effect. Generically, p.p.d. tells the researcher what values the unobserved data could assume, conditional on observed data. In the case of meta-analysis, where we are interested in true treatment effects, this refers to prediction of the effect in 
+\begin_inset Quotes eld
+\end_inset
+
+one additional study
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Formula $\tau'$
+\end_inset
+
+, and therefore generalizability of intervention. Under the FE model p.p.d. is trivially equal to the distribution of mean treatment effect (since they are shared by each study). In other words, all of uncertainty in p.p.d. is uncertainty in estimate of common effect. Under the RE model, variance is a sum of this uncertainty and heterogeneity (
+\begin_inset Formula $\sigma_\tau^2$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsubsection*
+Cross validation approach to model selection
+\end_layout
+
+\begin_layout Standard
+Using p.p.d's calculated under Bayesian implementation of FE and RE models offers researchers a possibility to compare the two models. We follow Gelman et al. (2014) in implementing leave-one-out cross-validation, a method of estimating model's out-of-sample performance. This is done by excluding one study at the time, refitting the model to remaining studies, and calculating predictive performance in terms of expected log predictive density (elpd).
+\end_layout
+
+\begin_layout Subsubsection*
+Difficulty in choosing between RE and FE models
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: maybe this needs shortening? breaking into 2 paras?
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Even a researcher who is confident of heterogeneous effects cannot be certain of the distribution around the common effect 
+\begin_inset Formula $\tau$
+\end_inset
+
+. The possibility of model error in the specification of the hierarchical model introduces some concern about the actual efficiency of any chosen RE estimator.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+However, the RE estimator does have an important additional feature: 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: I think this footnote is hard to follow. Is shrinkage a term familiar to readers? uniform domination? James-Stein estimator?
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+it performs shrinkage which generates estimates of 
+\begin_inset Formula $\{{\tau}_k\}_{k=1}^K$
+\end_inset
+
+ that uniformly dominate 
+\begin_inset Formula $\{\hat{\tau}_k\}_{k=1}^K$
+\end_inset
+
+ when 
+\begin_inset Formula $K \geq 3$
+\end_inset
+
+ in terms of total mean-squared error even in the extreme case when the studies are statistically independent; this is proved in James and Stein (1961).
+\end_layout
+
+\end_inset
+
+ This problem does not imply that we should use the FE model instead, since if the underlying effects are heterogeneous then the FE estimator is also inefficient. Nor can we rely on popular tests of homogeneity in effects, as they typically have insufficient power to detect heterogeneity (Field, 2001). In practice, particularly for experiments performed in the field across different countries, researchers are often unwilling to rule out heterogeneity completely yet unhappy to draw inferences that are based on a potentially misleading specification of that heterogeneity. The relevant question then is which of the two meta-analytic approaches is likely to perform better in the presence of heterogeneity under a variety of conditions, and in particular, when the RE model misspecifies the distribution of treatment effects across studies.
+\end_layout
+
+\begin_layout Subsection
+Monte Carlo Simulations
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "section:simulations"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: old text (repeat of what was in the intro, hence removed) Previous studies of meta-analytic methodology have not examined the performance of Bayesian hierarchical models, instead focusing on other implementations; in addition, they have not studied cases where both estimators are substantially incorrect such when the true effect distribution across sites is fat tailed or otherwise subject to outliers (Field 2001, Hedges and Vevea 1998). We perform a Monte Carlo simulation study of bodies of evidence similar to the vitamin A literature in order to investigate this relative performance even in these adverse cases. We consider the mean squared error of the estimation of $
+\backslash
+tau$ as the performance metric, rather than type 1 error as has been used in previous literatures, since researchers are interested in getting an estimate as close as possible to the true effect size, not simply testing for the existence of a non-zero effect (Wasserstein and Lazar 2016). 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% these arguments suggest there should be substantial improvements in estimation from using RE models when the true underlying effects are heterogeneous. here are some simulations that prove that. 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Statistical models rarely describe the true generating process of any data set. In most cases neither the RE nor FE estimator will be exactly optimal for a meta-analytic problem. But one procedure could still outperform the other in certain conditions, and their relative performance in various settings should inform the choice of estimator. In this section we use the Monte Carlo method examine relative performance of RE and FE models on a variety of data-generating proccesses (DGPs).
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: simulations need re-running with appropriate number of studies (not Awasthi et al. but Mayo-Wilson et al.)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+We begin by generating data from the RE model with Gaussian distribution of true effects, at different values of standard errors and cross-study variations. We then gradually move away from this model by examining Student-t distributions of effects, then adding location outliers, and finally adding outliers in the standard error distribution as well. Further details of the DGPs are in Appendix B. For each DGP we run a total of 
+\begin_inset Formula $S = 5000$
+\end_inset
+
+ simulations. We set 
+\begin_inset Formula $K=9$
+\end_inset
+
+ to match the size of the vitamin A meta-analysis in Awasthi et al (2013).
+\end_layout
+
+\begin_layout Standard
+In each simulation, indexed by 
+\begin_inset Formula $s$
+\end_inset
+
+, we collect 
+\begin_inset Formula $\{\hat{\tau}_k^s, se_k^s\}_{k=1}^9$
+\end_inset
+
+, used for fitting models, and set aside true values of effect and heterogeneity, 
+\begin_inset Formula $(\tau^{s}, \sigma^{s})$
+\end_inset
+
+. We calculate the FE estimator using 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fe_tau"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fe_se"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+. For the RE estimation, we fit a BHM model implementing the likelihood in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "rubin"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ as described above, with diffuse priors.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+We make no adjustment to the BHM in any of the simulations. Indeed, to make the point that Bayesian hierarchical models do not require good prior information to perform well, the priors are all incorrect in our simulations - which is to say, they are not the distributions from which we draw the parameters in the simulation. However, these priors are so diffuse that this should not meaningfully impede the Bayesian model's performance (and nor do they).
+\end_layout
+
+\end_inset
+
+ We use Gaussian prior on the mean and uniform on the heterogeneity: 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: make sure this is described above!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% The squared error is computed as follows:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+begin{equation}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+begin{aligned}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+text{error}_{
+\backslash
+tau_{FE}} &= (
+\backslash
+tau^s -  
+\backslash
+hat{
+\backslash
+tau}_{FE}^s )^2
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% %
+\backslash
+text{error}_{
+\backslash
+sigma_{FE}} &= 
+\backslash
+sigma_{
+\backslash
+tau}^s - 
+\backslash
+hat{se}_{FE}^s
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+end{aligned}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+end{equation}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% The mean squared error for each is the mean of these over all $S$ simulations.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%With sufficiently diffuse priors this produces results extremely close to the maximum likelihood estimator on that likelihood, but specifying proper priors ensures proper posterior inference without any need to invert information matrices or integrate out nuisance parameters. |Thus, we run the following Bayesian hierarchical model on the data for each simulation $s$. The likelihood is:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+begin{equation}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+begin{aligned}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+hat{
+\backslash
+tau}_k^s &
+\backslash
+sim N(
+\backslash
+tau^s_k, 
+\backslash
+hat{se}_k^s) 
+\backslash
+; 
+\backslash
+forall 
+\backslash
+; k
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+tau_k^s &
+\backslash
+sim N(
+\backslash
+tau_k^s, (
+\backslash
+sigma_{
+\backslash
+tau}^s)^2) 
+\backslash
+; 
+\backslash
+forall 
+\backslash
+; k
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+end{aligned}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+end{equation}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% and in every case the priors we use are: 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+\begin{aligned}
+\tau^s &\sim N(0, 10000) \\
+\sigma_{\tau}^s &\sim U(0,1000) \\
+\end{aligned}
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% The squared error of the posterior mean $
+\backslash
+tilde{
+\backslash
+tau}^s$ for the true underlying $
+\backslash
+tau^s$ is as follows:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+begin{equation}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+begin{aligned}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+text{error}_{
+\backslash
+tau_{BHM}} &=( 
+\backslash
+tau^s -  
+\backslash
+tilde{
+\backslash
+tau}^s)^2 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% %
+\backslash
+text{error}_{
+\backslash
+sigma_{BHM}} &= 
+\backslash
+sigma_{
+\backslash
+tau}^s - 
+\backslash
+tilde{
+\backslash
+sigma}_{
+\backslash
+tau}^s .
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+end{aligned}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+end{equation}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The MSE for FE and RE (BHM) models is then calculated as the mean over 
+\begin_inset Formula $S$
+\end_inset
+
+ simulations. We summarize the results by looking at ratios of MSEs in FE and RE model. The full results are shown in the Appendix and summarized in graphs that follow. First, consider the normal-normal model as data-generating process (DGP), in which both the estimators and true effects are normally distributed. In this case the BHM has the correct functional form. Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "simulation_results_sigma_vs_se"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the ratio of the FE MSE to BHM MSE for 16 simulations, varying the average standard errors of the point estimates and the average standard deviation of the true effects (
+\begin_inset Formula $\sigma_{\tau}$
+\end_inset
+
+). Darker red values indicate a higher ratio, which means the FE MSE is much higher than the BHM MSE, an indicator of poor relative performance of the FE model.
+\end_layout
+
+\begin_layout Standard
+We find that RE model performs better than FE for the normal-normal DGP. A reasonable complaint about the exercise above is that the BHM's superior performance was potentially due to the correct functional form specification. Therefore we now consider deviations from the normal-normal DGP. Overall the BHM still out-performs the FE estimator on average despite the functional form misspecification.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: let's discuss: isn't this about SEs in relation to heterogeneity in true effects? Easy check is to scale heterogeneity up and down, then 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%see if the results stay constant. We should then say if this is the case!
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+The two methods perform similarly well when the point estimates have standard errors in the range [5,20]: the ratio of MSEs lies between 0.99 and 1.1 in this area, representing at most a 1% improvement from using the FE estimator which occurs when the standard deviation of effects 
+\begin_inset Formula $\sigma_{\tau}$
+\end_inset
+
+ lies in [0,5]. When 
+\begin_inset Formula $\sigma_{\tau}$
+\end_inset
+
+ lies in [5,20], we can achieve 10% improvement in MSE from using the BHM. However, when the standard errors lie in the range [0,5] the BHM is twice as efficient when 
+\begin_inset Formula $\sigma_{\tau}$
+\end_inset
+
+ is also in this range, and up to four times as efficient when 
+\begin_inset Formula $\sigma_{\tau}$
+\end_inset
+
+ is in [15,20]. This means that in these squares of the grid, the FE estimator has an increase in MSE of 300% relative to the BHM. By contrast, in any given square of the grid the BHM has at most a 1% increase in MSE relative to the FE when it is beaten by the FE method, which only occurs when 
+\begin_inset Formula $\sigma_{\tau}$
+\end_inset
+
+ is very low.
+\end_layout
+
+\begin_layout Standard
+It may seem surprising that the BHM obtains a much lower MSE than the FE Estimator in the case where 
+\begin_inset Formula $\sigma_{\tau}$
+\end_inset
+
+ lies in [0,5], which includes the case of no underlying heterogeneity. However, recall that the BHM nests the case of no heterogeneity: the model is perfectly capable of estimating 
+\begin_inset Formula $\sigma^2_{\tau}$
+\end_inset
+
+ to be essentially zero and then effectively implementing the FE model. The BHM uses up a degree of freedom to perform this estimation, but its overall performance is still close to that of the FE estimator in this case. Of course, as shown in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "table:simulations"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ in the Appendix, when 
+\begin_inset Formula $\sigma_{\tau} = 0$
+\end_inset
+
+ the FE estimator does have a lower MSE than the BHM estimator: it must do, because correctly setting 
+\begin_inset Formula $\sigma^2_{\tau} = 0$
+\end_inset
+
+ ex-ante is more efficient than estimating it to be 0. However the improvement is small in most of these simulations, and the largest relative improvement (a reduction by half) occurs when there is very little sampling error at all, so in practice this translates to very small absolute improvements. By contrast, the BHM can achieve major reductions in MSE when 
+\begin_inset Formula $\sigma_{\tau}$
+\end_inset
+
+ is in the range 
+\begin_inset Formula $(0,5]$
+\end_inset
+
+, so overall it has less than half the MSE of the FE on average in the range 
+\begin_inset Formula $[0,5]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A reasonable complaint about the exercise above is that the BHM's superior performance was potentially due to the correct functional form specification. Therefore we now consider deviations from the normal-normal DGP. First, we examine the case where the true effects are Student t distributed across sites with considerably heavy tails, although the sampling uncertainty is still Gaussian. Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "student_t_mse"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the results for a student t with 3 degrees of freedom, which has extremely fat tails relative to the normal (in fact the kurtosis is infinite).
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+The infinite kurtosis makes the simulations unstable. We tested several seeds and did not find major qualitative differences in the ratio of MSEs, although the raw MSEs did take different values even with large numbers of simulations.
+\end_layout
+
+\end_inset
+
+ The FE estimator now performs slightly less poorly in the area where the standard errors are in the range [0,5], although it still has double or triple the MSE of the BHM in this area. When the standard errors are in the range [5,20] the FE estimator can now attain up to a 10% reduction in MSE relative to the BHM in some areas of the grid, but the BHM still attains a 10% reduction in other areas. Overall the BHM still out-performs the FE estimator on average despite the functional form misspecification.
+\end_layout
+
+\begin_layout Standard
+We now consider an alternative specification error in which the underlying data-generating process is a mixture distribution with potentially multiple modes. We first use a mixture distribution to create a classical outlier problem, which occurs when one site's true effect takes a value very different from the rest of the sites' true effects. However, in meta-analysis there is another potential type of outlier: one site may have a standard error that is very much smaller or larger than the rest of the sites' standard errors. We refer to this second type of outlier using the terminology 
+\begin_inset Quotes eld
+\end_inset
+
+precision outliers
+\begin_inset Quotes erd
+\end_inset
+
+, to distinguish from the more classical 
+\begin_inset Quotes eld
+\end_inset
+
+location outliers
+\begin_inset Quotes erd
+\end_inset
+
+. To my knowledge this paper constitutes the first attempt to formalize this problem, although meta-analytic issues created by differential precision have been noted in Higgins and Green (2011). We examine both types of outliers separately in the following simulations.
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "location_outliers_mse"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the ratio of FE MSE to BHM MSE when the normal- normal DGP model has one site in which the true effect is generated by a normal that has been shifted away from the parent mean 
+\begin_inset Formula $\tau$
+\end_inset
+
+. The results look quite similar to the normal- normal DGP results, with only slightly worse performance from the FE estimator in the upper left quadrant.
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "precision_outliers_mse"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the ratio of FE MSE to BHM MSE when the normal- normal DGP model has one site in which the standard error is ten times smaller than the rest of the sites' standard errors on average. This makes a substantial difference in the relative performance of the FE estimator - it has double or triple the MSE of the BHM estimator in most of the grid area. In the worst case scenario for the FE it has MSE almost 6 times the size of the BHM estimator's MSE. In the worst case scenario for the BHM estimator, it still has roughly the same MSE as the FE estimator. Thus, in cases where one site is much more precise than all the others and there is no reason to believe effects are homogeneous, the BHM strongly outperforms the FE estimator.
+\end_layout
+
+\begin_layout Standard
+Why does the fixed effects method perform so poorly in this case? While precision is unequivocally a good thing in a single study, it can be problematic in meta-analysis because precision and generalizability are two distinct but related properties. An estimate can be precise - and thus contain a lot of information about the site it comes from - without containing 
+\emph on
+generalizable
+\emph default
+ information. In these simulations, the size of the effect which was much more precise was the same as the other effect sizes on average. All the site effects were a-priori equally generalizible, and ex-post equally likely to be good indicators of the general effect 
+\begin_inset Formula $\tau$
+\end_inset
+
+. But the highly precise effect was treated as more generalizable by the FE estimation process because this method has no way to distinguish precision and generalizability: indeed, if all effects are the same then precision actually is a perfect indicator of generalizability.
+\end_layout
+
+\begin_layout Standard
+By contrast, random effects methods can and must distinguish these two concepts because they must handle the possibility of heterogeneous effects. The BHM uses the concept of a parent distribution, and specifically the functional form of the parent distribution, to place each effect in context of the other effects. In the real world, the precision outlier is likely to be even more misleading for the FE estimator because that site's effect size is probably qualitatively different to the other sites. A study that is ten times more precise than all other studies may have a larger sample size because it is easier to collect data there, or it is more attractive to governments or NGOs to fund big studies there - these factors are probably correlated to the study's true effect size in some way. Thus, the relative reduction in MSE gained by using RE models in the presence of precision outliers is likely to be even greater than the results of these simulations suggest.
+\end_layout
+
+\begin_layout Section
+Vitamin A Supplements Reduce Child Mortality
+\end_layout
+
+\begin_layout Subsection
+Data
+\end_layout
+
+\begin_layout Standard
+In this section we repeat the meta-analysis of the impact of vitamin A supplementation on child mortality by using the same set of papers as Mayo-Wilson et al. (2011). Data are shown in Table
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "summary table"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+. As it is not easy to interpret a log standard error, we also display the upper and lower bounds of the confidence intervals implied by this log(se).
+\end_layout
+
+\begin_layout Standard
+In health literature, it is typical to model treatment effect on events data by using odds ratios (OR), risk ratios (RR), incidence risk ratios (IRR) or hazard ratios (HR). For example, in the vitamin A literature, including the meta-analysis model by Mayo-Wilson et al. (2011), risk ratios between treatment and control groups are modeled. Since RR is approximately normal on logarithmic scale, we can apply the BHM from 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "rubin"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+Mayo-Wilson et al. (2011) provide means and intervals on the raw scale, which we then use for calculating SEs on the logarithmic scale and use these values as inputs into the model.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: This goes earlier???
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%This paper studies the same set of papers as Awasthi et al (2013) to allow for direct comparison. Hence, we fit this model to the data shown in figure~
+\backslash
+ref{summary table}. As it is not easy to interpret a log standard error, we also display the upper and lower bounds of the confidence intervals implied by this log(se). 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Fixed-effects and random-effects models
+\end_layout
+
+\begin_layout Standard
+The previous theoretical analysis and simulation studies suggest that a random effects analysis using a Bayesian hierarchical model is typically a more appropriate choice of methodology for aggregating evidence relative to the FE model. While the FE estimator can beat the BHM when heterogeneity is small relative to sampling error, it rarely achieves a major reduction in MSE in the simulation study presented here. By contrast when the BHM beats the FE model it routinely achieves an MSE half as large, and in some cases can achieve an MSE less than 1/5th the size of its competitor's MSE. This is a very favourable efficiency versus robustness tradeoff, giving a strong argument to consider the RE model implemented via BHM as default choice for meta-analysis.
+\end_layout
+
+\begin_layout Standard
+The vitamin A literature is particularly suited to aggregation using RE because there is scientific and statistical evidence that underlying effects are heterogeneous across contexts and that this heterogeneity is likely large relative to the sampling error.
+\end_layout
+
+\begin_layout Standard
+Vitamin A studies we consider here differ in important ways, spanning several different countries, time periods, implementation and distribution methods and base rates of vitamin A deficiency in the populations studied. Because supplementation has only theoretically-grounded medical benefits for individuals with vitamin A deficiencies, the rate of deficiency in the population is likely to have major impact on the observed effect of supplementation on the population's risk ratio.
+\end_layout
+
+\begin_layout Standard
+There is also statistical evidence for heterogeneity, primarily that the 95% confidence intervals for the risk ratios do not overlap in many of the studies. Both the DEVTA (2013) study's interval and the Herrera (1992) interval do not overlap with both the Rahmathullah (1990) interval and the Arthur (1992) interval. Indeed, the 
+\begin_inset Formula $\chi^2$
+\end_inset
+
+ test results presented in Webtable 3 of Awasthi et al (2013) show strong evidence of heterogeneity: the authors do not discuss these results, but the low p-values in this context are indicative of heterogeneity (Cochrane Handbook Section 9.5.2). Moreover, the DEVTA study (Awasthi et al 2013) is almost an order of magnitude more precise than the other studies in the literature. This study is a precision outlier, and as we saw in the simulations, it is preferable to use an RE model in such a case.
+\end_layout
+
+\begin_layout Standard
+All of the above suggests that BHM is appropriate methodology to aggregate the evidence on the effect of Vitamin A supplements on all-cause child mortality. We therefore fit both FE and RE models using Bayesian inference, which in turns allows us to compare them in terms of expected log predictive density.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: cut this and move to Mayo-Wilson
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+subsection{Bayesian Hierarchical Analysis}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%The treatment effect in this literature is measured by a risk ratio that only takes positive values, so the Rubin (1981) model is not directly applicable to this case, but in the following sections we develop and apply an appropriate analogue.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%For the vitamin A literature, the empirical relative risk (RR) is the key object reported and used in the meta analyses in Imbdad et al (2011) and Awasthi et al (2013). The relative risk statistic is defined:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+begin{equation}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+begin{aligned}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+widehat{RR} = 
+\backslash
+frac{
+\backslash
+text{Empirical probability of event in treatment group}}{
+\backslash
+text{Empirical probability of event in control group}}.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+end{aligned}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+end{equation}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%This object only takes values on $R^+$ and thus cannot be modeled as normally distributed, but can be modeled as lognormally distributed around the true relative risk statistic with some sampling variation. Indeed, working with the RR on the log scale is considered the most suitable methodology in medical statistics according to Altman et al (1986) and  Gardner and Altman (1986, p750). Thus, Awasthi et al (2013) transform everything to the log scale to perform their meta-analysis, as shown in Webtable 3 of the supplementary appendix. In keeping with this approach, we use the following likelihood model for the Bayesian hierarchical meta-analysis:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+begin{equation} 
+\backslash
+label{lognormal model}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+begin{aligned}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+widehat{RR}_k 
+\backslash
+sim 
+\backslash
+text{lognormal}(log(RR_k) , 
+\backslash
+widehat{logSE}_k) 
+\backslash
+; 
+\backslash
+forall 
+\backslash
+; k 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%RR_k 
+\backslash
+sim  
+\backslash
+text{lognormal}( log(RR), 
+\backslash
+sigma^2_{log(RR)}) 
+\backslash
+; 
+\backslash
+forall 
+\backslash
+; k .
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+end{aligned}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+end{equation} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the BHM we use weakly informative priors centered at zero (no impact of the intervention):
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation} \label{lognormal priors}
+\begin{aligned}
+RR &\sim  \text{lognormal}(0,10) \\
+\sigma^2_{log(RR)} &\sim U[0,10].
+\end{aligned}
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+ Results 
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%We fit the model described in equations 
+\backslash
+ref{lognormal model} with the standard diffuse but proper priors centered at the null of no impact as in equations 
+\backslash
+ref{lognormal priors}. The result is that the 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The results for Bayesian models with fixed and random effects are reported in Tables 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "baggr-models-tab"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ (log scale) and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "baggr-tab-exp"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ (raw scale) and Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "baggr-density"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+. For the BHM of all studies we find the mean RR is 0.74 (95% interval from 0.58 to 0.88), compared to 0.88 under FE model (95% interval from 0.83 to 0.93), which is similar to the value reported by Mayo-Wilson et al. The effect under RE model is more diffuse than under the FE model, but both models suggest that (in the analysed sample of studies) vitamin A supplements have on average considerably reduced child mortality. The FE method gives a higher and more precise estimate of 
+\begin_inset Formula $RR$
+\end_inset
+
+ because it does not take into account the heterogeneity across sites. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%The BHM detects this heterogeneity and incorporates this into the dispersion of the posterior distribution of $
+\backslash
+tau$. The resultingly wider 95
+\backslash
+% interval shows that we should be much less confident in our specific point estimate of the general RR than the FE method suggests. 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Examining the posteriors for individual studies (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "baggr-re"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) shows that the effects are heterogeneous. This can also be seen based on summary statistics for the model: the average pooling factor is 0.17, suggesting that 83% of the observed variation in estimated treatment effects is due to genuine differences between effects across studies. However, heterogeneity is not precisely estimated, something that is typical to many meta-analyses of that size.
+\end_layout
+
+\begin_layout Standard
+This heterogeneity is also reflected in the posterior predictive distribution of risk ratios for the RE model. It has a mean of 0.77, with 95% interval ranging from 0.4 to 1.3. (For the FE model it is by definition the same as the average effect.) This indicates that while we can be confident in the vitamin A effects within the analysed sample of studies, posterior predictive probability of RR being below 1 is 88%.
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+We note that due to assumed normality of distribution of true effects the upper end of the distribution has a somewhat nonsensical interpretation: for example, the model implies a 2.5% change of 30% increase in the risk of mortality in a new study. Since we know that vitamin A supplementation is safe, a more appropriate model could consider a non-symmetrical distribution, with more probability mass concentrated around no effect rather than a harmful effect. Note, however, that this consideration is relevant for decision makers who are risk averse. In our case we focus on behaviour of the mean effect and do not consider the decision problem.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Uncovering substantial heterogeneity prompts the question of why the impact is different across settings. In principle this question can be answered using contextual variables that describe differences in both the study designs and local contexts. In the vitamin A literature, there is presumably substantial variation in baseline vitamin A deficiency and the public health infrastructure that supports the intervention. The design of the trials also varies, particularly in the delivery mechanism which was direct in most cases but done via regional health centers in Awasthi et al (2013), leading to lower compliance with the supplement regime. Additionally, only some of the trials were double-blinded, and the intensity of the monitoring of outcomes per child differed dramatically across studies.
+\end_layout
+
+\begin_layout Standard
+Unfortunately, the original papers do not report sufficient information to permit the construction of quantitative variables suitable for statistical analysis. For example, many studies did not collect data on the control group rates of vitamin A deficiency, since observing cases of xerophthalmia and nightblindness in the children of the communities being studied is indicative of a severe enough deficiency to plausibly justify intervention. This rationale makes sense within each individual study, but has lead to a situation in which it is now impossible to determine how much heterogeneity is due to characteristics of studied populations versus study design. This serves as a reminder that collecting data on contextual variables in field trials is important for the scientific process.
+\end_layout
+
+\begin_layout Subsection
+Robustness to exclusion of DEVTA trial
+\end_layout
+
+\begin_layout Standard
+The debate over the design of the DEVTA trial and the resulting difference in compliance rates relative to other studies has lead some researchers to suggest that it should not be included in meta-analyses. Sommer, West and Martorell (2013) dispute Awasthi et al.'s (2013) claims about the effectiveness of the DEVTA trial's supplement delivery mechanism and patient compliance, finally commenting 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+At best, DEVTA is but one unorthodox study, done in one remote population of one country.
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: The following is unclear. Why would you not include a program evaluation?
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+They also note that DEVTA is properly a program evaluation, and that it is further debatable whether it should be included Given the disagreement about whether DEVTA really belongs with the other studies.
+\end_layout
+
+\begin_layout Standard
+We report on the results of meta-analysis without DEVTA trial in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "baggr-models-tab"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "baggr-density"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+. While the FE model is highly sensitive to exclusion of DEVTA, the RE model is much less affected. This difference between FE and RE models is illustrated in Figure 1, which shows strong overlap in p.p.d.'s for RE, but not FE, models.
+\end_layout
+
+\begin_layout Standard
+Our result suggests that the DEVTA result does not substantially alter the evidence on typical effect of vitamin A supplements available from other studies and thus should not be taken as evidence that previous studies 
+\begin_inset Quotes eld
+\end_inset
+
+overestimated
+\begin_inset Quotes erd
+\end_inset
+
+ the effect in any major sense. Excluding DEVTA trial also doesn't meaningfully change the estimated heterogeneity or pooling metrics (Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "baggr-models-tab"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, columns 2 and 4).
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+This makes sense in the context of our simulations, since DEVTA is not a 
+\begin_inset Quotes eld
+\end_inset
+
+typical
+\begin_inset Quotes erd
+\end_inset
+
+ location outlier. Four other studies which we include in our analysis have found higher point estimates, associated with smaller positive effects and even negative effects on child mortality (Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "summary table"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, leftmost column).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+begin{figure}[h!]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+includegraphics[scale=0.7]{devta_no_devta_compare_means.pdf}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+caption{Comparing results with and without DEVTA for the BHM and fixed-effects method} 
+\backslash
+label{indep and bhm devta no devta}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+end{figure}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%Inclusion of DEVTA still has a small impact on the average effect in BHM because of substantial heterogeneity in the effects. Despite its high precision, the DEVTA estimate alone is not sufficient to overturn or outweigh the evidence in the previous cluster of results, which are symmetrically and quite widely dispersed around 0.75. 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%How heterogeneous are the effects across studies when DEVTA is excluded? The same pooling metric computed on the 8 remaining studies returns an average value of 0.31, indicating that substantial cross-study heterogeneity remains even without DEVTA. With DEVTA included, 71
+\backslash
+% of the observed variation in estimated effects was attributed to genuine underlying heterogeneity; without DEVTA this number is 69
+\backslash
+%, a minor reduction in heterogeneity. This makes sense because DEVTA is not a ``classical'' location outlier. Two other studies actually found higher point estimates, associated with smaller positive effects and even negative effects on child mortality, in the earlier literature (Vijayaraghavan et al 1990, Herrera 1992). 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: how do we support the claim about the normal fitting well? Maybe later part of this paragraph is not necessary
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Overall, the normal distribution of true effects seems to fit vitamin A studies we analysed very well and no single study appears pivotal to the result. The general pattern indicates that the typical effect should be somewhere in the region of RR=0.75, but the posterior predictive distribution of future impacts is not highly concentrated around this point, due to the heterogeneity.
+\end_layout
+
+\begin_layout Standard
+The DEVTA result is a precision outlier, a type of result which, as we have shown in our simulations, may have a detrimental effect on the performance of the FE estimator in presence of heterogeneity. Precision outliers do not heavily impede the performance of BHMs because they are designed to detect heterogeneity and reweight the evidence accordingly. It is not the case that highly precise studies are 
+\begin_inset Quotes eld
+\end_inset
+
+underweighted
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+overweighted
+\begin_inset Quotes erd
+\end_inset
+
+ in any given method. Rather, when true treatment effect are heterogeneous any single estimate should not heavily influence the general estimate no matter how precise it is. While high precision indicates high information about the site 
+\begin_inset Formula $k$
+\end_inset
+
+ in which the effect was estimated, this site is still just a singular data point in the set of 
+\begin_inset Formula $K$
+\end_inset
+
+ data points. High precision does not necessarily indicate highly generalizable information.
+\end_layout
+
+\begin_layout Subsection
+Formal model selection using cross validation
+\end_layout
+
+\begin_layout Standard
+While our simulations and the high estimated heterogeneity are perhaps sufficient justification to choose an RE model over an FE alternative, we can also quantify the differences between the models by using a LOO CV approach.
+\end_layout
+
+\begin_layout Standard
+For models without DEVTA trial, the performance of RE and FE models is comparable, with a slight preference for RE model (RE elpd of -13.8, compared to FE elpd of -14.0).
+\begin_inset Foot
+status collapsed
+
+
+\begin_layout Standard
+In this case, i.e. when DEVTA trial is excluded, the choice between FE and RE models in this purely data-driven way is difficult. While the elpd value is not interpretable, both models are evenly matched in terms of number of studies for which they offer a better out-of-sample prediction (eight studies each).
+\end_layout
+
+\end_inset
+
+ When DEVTA trial is included, RE model still performs similarly (elpd of -14.1) but the FE model cannot fit data anymore (elpd of -35.9). In summary, the LOO CV procedure justifies choice of an RE model regardless of whether the DEVTA trial is included in the set of meta-analysed studies.
+\end_layout
+
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Standard
+The controversy in the vitamin A literature arose in part because of disagreements over the validity of using FE to aggregate the evidence, and the suitability of the RE alternative in this setting. Although Awasthi et al (2013) argued that RE models 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+conceal the reliability
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+ of large trials and 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+give undue weight to small trials,
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+ the analysis presented in this paper shows that there are strong theoretical and empirical reasons to prefer the RE approach. While FE models are optimal under homogeneous treatment effects, RE models are optimal when the effects have underlying heterogeneity. When neither model describes the true data-generating structure, Monte Carlo simulation results show that the Bayesian hierarchical model either matches or outperforms the FE estimator by a wide margin in terms of MSE.
+\end_layout
+
+\begin_layout Standard
+Using the same input data as the meta-analysis by Mayo-Wilson et al. (2011), a BHM estimates a typical reduction in the risk of child deaths of 26%. We detected substantial heterogeneity in treatment effects, with 83% of the observed variation attributed to genuine underlying differences across sites, although heterogeneity is not precisely estimated. The BHM results are robust to the inclusion or exclusion of the DEVTA study: despite its precision, it is only one study in a heterogeneous literature. Without DEVTA, the risk reduction is 29%. Fundamentally, in the presence of heterogeneous treatment effects, precision in estimating average effect is not a sign of generalizability. Because the FE estimator cannot distinguish these two concepts, it underestimates the reduction in mortality risk, and is overly precise. This is in keeping with previous work showing the FE estimator typically overstates the precision of meta-analysis findings (Schmidt, Oh and Hayes, 2011) and thus the RE estimator is generally preferable when seeking to generalize beyond the set of studies in hand (Borenstein et al, 2010). 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%WW: How would you justify this next sentence?
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+This analysis also confirms the advantages of the Bayesian approach to meta-analysis (Smith, Spiegelhalter, and Thomas, 1995).
+\end_layout
+
+\begin_layout Standard
+The evidence shows that the general impact of vitamin A supplements on all-cause child mortality is substantial. However, it also suggests important differences in treatment effects across studies, and caution should be used before extrapolating from the studies in this literature into new settings. Given the biological mechanisms, vitamin A supplements should have a much larger effect on mortality when the population has a high rate of severe vitamin A deficiency, and this alone could account for the observed heterogeneity. However, study design could play an equally important role, given the major differences in delivery mechanism, compliance and monitoring across studies. Future work could explore the sources of this cross-site heterogeneity, and thus improve the effectiveness of the supplements in low-impact settings or target supplement programs more effectively to areas that need them most.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "A"
+literal "false"
+
+\end_inset
+
+ltman, Douglas G. , David Machin, Trevor N. Bryant (1986), 
+\begin_inset Quotes eld
+\end_inset
+
+Statistics with confidence : confidence intervals and statistical guidelines
+\begin_inset Quotes erd
+\end_inset
+
+, BMJ Books, Bristol UK.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "A"
+literal "false"
+
+\end_inset
+
+rthur, P., Kirkwood, B., Ross, D., Morris, S., Gyapong, J., Tomkins, A., & Addy, H. (1992). 
+\begin_inset Quotes eld
+\end_inset
+
+Impact of vitamin A supplementation on childhood morbidity in northern Ghana
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+The Lancet
+\emph default
+, 339(8789), 361-362.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "A"
+literal "false"
+
+\end_inset
+
+wasthi, S., Peto, R., Read, S., Clark, S., Pande, V., Bundy, D., & the DEVTA (Deworming and Enhanced Vitamin A) team. (2013). 
+\begin_inset Quotes eld
+\end_inset
+
+Vitamin A supplementation every 6 months with retinol in 1 million pre-school children in north India: DEVTA, a cluster-randomised trial
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\emph on
+Lancet
+\emph default
+, Vol 381.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "BillMelinda"
+literal "false"
+
+\end_inset
+
+ The Bill and Melinda Gates Foundation (2011) 
+\begin_inset Quotes eld
+\end_inset
+
+Nutritious Rice and Cassava Aim to Help Millions Fight Malnutrition
+\begin_inset Quotes erd
+\end_inset
+
+, Bill and Melinda Gates Foundation Press Release, accessed online at http://www.gatesfoundation.org/Media-Center/Press-Releases/2011/04/Nutritious-Rice-and-Cassava-Aim-to-Help-Millions-Fight-Malnutrition on March 15th 2016
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "boren"
+literal "false"
+
+\end_inset
+
+ Borenstein, M., Hedges, L. V., Higgins, J. P., & Rothstein, H. R. (2010). 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+A basic introduction to fixed?effect and random?effects models for meta?analysis.
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+ Research synthesis methods, 1(2), 97-111.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "brock"
+literal "false"
+
+\end_inset
+
+ Brockwell, S. E., & Gordon, I. R. (2001). 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+A comparison of statistical methods for meta?analysis
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+. Statistics in medicine, 20(6), 825-840.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "cornell"
+literal "false"
+
+\end_inset
+
+ Cornell JE, Mulrow CD, Localio R, Stack CB, Meibohm AR, Guallar E, et al. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+Random-Effects Meta-analysis of Inconsistent Effects: A Time for Change
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+. Ann Intern Med. ;160:267?270. doi: 10.7326/M13-2886
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "daualire"
+literal "false"
+
+\end_inset
+
+ Daulaire, N. M., Starbuck, E. S., Houston, R. M., Church, M. S., Stukel, T. A., & Pandey, M. R. (1992). 
+\begin_inset Quotes eld
+\end_inset
+
+Childhood mortality after a high dose of vitamin A in a high risk population
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+BMJ
+\emph default
+, 304(6821), 207-210.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "F"
+literal "false"
+
+\end_inset
+
+ield, A. P. (2001). 
+\begin_inset Quotes eld
+\end_inset
+
+Meta-analysis of correlation coefficients: a Monte Carlo comparison of fixed-and random-effects methods
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+Psychological methods
+\emph default
+, 6(2), 161.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "G"
+literal "false"
+
+\end_inset
+
+ardner and Altman (1986) 
+\begin_inset Quotes eld
+\end_inset
+
+Confidence intervals rather than P values: estimation rather than hypothesis testing
+\begin_inset Quotes erd
+\end_inset
+
+ , 
+\emph on
+British Medical Journal
+\emph default
+,Vol. 292.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "garner"
+literal "false"
+
+\end_inset
+
+Garner, Paul, David Taylor-Robinson, and Harshpal Singh Sachdev (2013) 
+\begin_inset Quotes eld
+\end_inset
+
+DEVTA: results from the biggest clinical trial ever
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\emph on
+Lancet
+\emph default
+ Comment, Vol. 382.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "bda"
+literal "false"
+
+\end_inset
+
+ Gelman, A., John B. Carlin, Hal S. Stern & Donald B. Rubin (2004) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+Bayesian Data Analysis: Second Edition
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+, Taylor & Francis.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "gelmanrubin"
+literal "false"
+
+\end_inset
+
+ Gelman, A., & Rubin, D. B. (1992).
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+ Inference from iterative simulation using multiple sequences
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+. Statistical science, 457-472.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "G"
+literal "false"
+
+\end_inset
+
+elman, Andrew, Jessica Hwang, and Aki Vehtari. 
+\begin_inset Quotes eld
+\end_inset
+
+Understanding Predictive Information Criteria for Bayesian Models
+\begin_inset Quotes erd
+\end_inset
+
+. Statistics and Computing 24, no. 6 (November 2014): 997â1016. https://doi.org/10.1007/s11222-013-9416-2.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "H"
+literal "false"
+
+\end_inset
+
+edges, L. V., & Vevea, J. L. (1998). 
+\begin_inset Quotes eld
+\end_inset
+
+Fixed-and random-effects models in meta-analysis
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+Psychological methods
+\emph default
+, 3(4), 486.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "H"
+literal "false"
+
+\end_inset
+
+errera, M. G., Nestel, P., Weld, L., El Amin, A., Mohamed, K. A., & Fawzi, W. W. (1992). 
+\begin_inset Quotes eld
+\end_inset
+
+Vitamin A supplementation and child survival
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+The Lancet
+\emph default
+, 340(8814), 267-271.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "cochrane"
+literal "false"
+
+\end_inset
+
+ Higgins, J. P. and Sally Green (Eds) (2011) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+Cochrane handbook for systematic reviews of interventions
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+ (Version 5.1.0). Chichester: Wiley-Blackwell.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "higgy"
+literal "false"
+
+\end_inset
+
+ Higgins, J. P., & Thompson, S. G. (2002). 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+Quantifying heterogeneity in a meta?analysis
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+. Statistics in medicine, 21(11), 1539-1558.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "I"
+literal "false"
+
+\end_inset
+
+mbdad et al (2011), 
+\begin_inset Quotes eld
+\end_inset
+
+Impact of Vitamin A supplmentation on infant and childhood mortality
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\emph on
+BMC Public Health
+\emph default
+, Vol. 11.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "I"
+literal "false"
+
+\end_inset
+
+wata, M., Hirakiyama, A., Eshima, Y., Kagechika, H., Kato, C., & Song, S. Y. (2004). 
+\begin_inset Quotes eld
+\end_inset
+
+Retinoic acid imprints gut-homing specificity on T cells
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+Immunity
+\emph default
+, 21(4), 527-538.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "J"
+literal "false"
+
+\end_inset
+
+ames, W. and C. Stein (1961) 
+\begin_inset Quotes eld
+\end_inset
+
+Estimation with Quadratic Loss
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\emph on
+Proc. Fourth Berkeley Symp. on Math. Statist. and Prob.
+\emph default
+, Vol. 1 (Univ. of Calif. Press, 1961), 361-379
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "M"
+literal "false"
+
+\end_inset
+
+ora, J. R., Iwata, M., & von Andrian, U. H. (2008). 
+\begin_inset Quotes eld
+\end_inset
+
+Vitamin effects on the immune system: vitamins A and D take centre stage
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+Nature Reviews Immunology
+\emph default
+, 8(9), 685-698.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "O"
+literal "false"
+
+\end_inset
+
+verton, R. C. (1998). 
+\begin_inset Quotes erd
+\end_inset
+
+A comparison of fixed-effects and mixed (random-effects) models for meta-analysis tests of moderator variable effects
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+Psychological methods
+\emph default
+, 3(3), 354.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "R"
+literal "false"
+
+\end_inset
+
+ahmathullah, L., Underwood, B. A., Thulasiraj, R. D., Milton, R. C., Ramaswamy, K., Rahmathullah, R., & Babu, G. (1990). 
+\begin_inset Quotes eld
+\end_inset
+
+Reduced mortality among children in southern India receiving a small weekly dose of vitamin A
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+New England journal of medicine
+\emph default
+, 323(14), 929-935.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "rubin81"
+literal "false"
+
+\end_inset
+
+ Rubin, D. B. (1981). 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+Estimation in parallel randomized experiments. Journal of Educational and Behavioral Statistics
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+, 6(4), 377-401.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "schmidt"
+literal "false"
+
+\end_inset
+
+ Schmidt, F. L., Oh, I. S., & Hayes, T. L. (2009). 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+Fixed?versus random?effects models in meta?analysis: Model properties and an empirical comparison of differences in results
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+"
+\end_layout
+
+\end_inset
+
+. British Journal of Mathematical and Statistical Psychology, 62(1), 97-128.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "smith"
+literal "false"
+
+\end_inset
+
+ Smith, T. C., Spiegelhalter, D. J., & Thomas, A. (1995). Bayesian approaches to random?effects meta?analysis: a comparative study. Statistics in medicine, 14(24), 2685-2699.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "S"
+literal "false"
+
+\end_inset
+
+ommer, Alfred, Keith P West Jr, and Reynaldo Martorell (2013) 
+\begin_inset Quotes eld
+\end_inset
+
+Vitamin A Supplementation in Indian Children
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\emph on
+Lancet
+\emph default
+ Comment, Vol. 382.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "sommer86"
+literal "false"
+
+\end_inset
+
+ Sommer, A., Djunaedi, E., Loeden, A. A., Tarwotjo, I., West, K., Tilden, R., ... & Aceh Study Group. (1986). 
+\begin_inset Quotes eld
+\end_inset
+
+Impact of vitamin A supplementation on childhood mortality: a randomised controlled community trial
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+The Lancet
+\emph default
+, 327(8491), 1169-1173.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "sommer83"
+literal "false"
+
+\end_inset
+
+ Sommer, A., Hussaini, G., Tarwotjo, I., & Susanto, D. (1983). 
+\begin_inset Quotes eld
+\end_inset
+
+Increased mortality in children with mild vitamin A deficiency
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+The Lancet
+\emph default
+, 322(8350), 585-588.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "unicef"
+literal "false"
+
+\end_inset
+
+ United Nations Childrens Fund (UNICEF) (2007) 
+\begin_inset Quotes eld
+\end_inset
+
+Vitamin A Supplementation: A Decade Of Progress
+\begin_inset Quotes erd
+\end_inset
+
+ , UNICEF Report.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "VAST"
+literal "false"
+
+\end_inset
+
+ Ross, D. A., Dollimore, N., Smith, P. G., Kirkwood, B. R., Arthur, P., Morris, S. S., ... & Ghana VAST Study Team. (1993). 
+\begin_inset Quotes eld
+\end_inset
+
+Vitamin A supplementation in northern Ghana: effects on clinic attendances, hospital admissions, and child mortality
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+The Lancet
+\emph default
+, 342(8862), 7-12.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "vij"
+literal "false"
+
+\end_inset
+
+ Vijayaraghavan, K., Radhaiah, G., Prakasam, B. S., Sarma, K. R., & Reddy, V. (1990). 
+\begin_inset Quotes eld
+\end_inset
+
+Effect of massive dose vitamin A on morbidity and mortality in Indian children
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+The Lancet
+\emph default
+, 336(8727), 1342-1345.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "W"
+literal "false"
+
+\end_inset
+
+asserstein, R. L., & Lazar, N. A. (2016).
+\begin_inset Quotes erd
+\end_inset
+
+The ASA's statement on p-values: context, process, and purpose
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+The American Statistician
+\emph default
+, (just-accepted), 00-00.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "W"
+literal "false"
+
+\end_inset
+
+est, K. P., Katz, J., LeClerq, S. C., Pradhan, E. K., Tielsch, J. M., Sommer, A., ... & Pandey, M. R. (1991). 
+\begin_inset Quotes eld
+\end_inset
+
+Efficacy of vitamin A in reducing preschool child mortality in Nepal
+\begin_inset Quotes erd
+\end_inset
+
+. 
+\emph on
+The Lancet
+\emph default
+, 338(8759), 67-71.
+\end_layout
+
+\begin_layout Bibliography
+
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label ""
+key "W"
+literal "false"
+
+\end_inset
+
+orld Health Organisation (2016) 
+\begin_inset Quotes eld
+\end_inset
+
+Nutrition: Micronutrient Deficiencies: Vitamin A
+\begin_inset Quotes erd
+\end_inset
+
+, accessed online at http://www.who.int/nutrition/topics/vad/en/ on March 15th 2016
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+begin{figure}[ht]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+includegraphics[scale=0.8]{vitamin_a_data_summary.pdf}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+caption{All input data for the meta-analysis of Awasthi et al (2013).}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+label{summary table}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+end{figure}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset CommandInset label
+LatexCommand label
+name "summary table"
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Input data and results for BHM based for studies included in Mayo-Wilson et al. (2011).
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular 
+<lyxtabular version="3" rows="19" columns="7">
+<features rotate="0" booktabs="true" tabularvalignment="top" tabularwidth="0pt">
+<column alignment="left" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<row>
+<cell multicolumn="1" alignment="none" valignment="top" topline="true" usebox="none" special="c">
+\begin_inset Text
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="none" valignment="top" topline="true" usebox="none" special="c">
+\begin_inset Text
+
+\begin_layout Standard
+Observed (risk ratio)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="none" valignment="top" topline="true" usebox="none" special="c">
+\begin_inset Text
+
+\begin_layout Standard
+Posterior (risk ratio)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+cmidrule
+\end_layout
+
+\end_inset
+
+(l
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+3pt
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+r
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+3pt
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+2-4
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+cmidrule
+\end_layout
+
+\end_inset
+
+(l
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+3pt
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+r
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+3pt
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+5-7
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+ Study 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+mean 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+LCI 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+UCI 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+mean 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+LCI 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+UCI
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Dibley 1996 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.33 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.01 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+7.99 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.72 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.37 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.27
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Barreto 1994 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.00 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.14 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+7.08 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.75 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.41 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.32
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Chowdhury 2002 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.14 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.03 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.62 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.61 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.29 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.01
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Venkatarao 1996 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.37 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.09 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.37 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.67 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.36 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.11
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Benn 1997 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.46 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.14 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.47 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.68 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.37 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+addlinespace
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Donnen 1998 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.60 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.23 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.55 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.70 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.41 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.11
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Ross 1993 (health) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.30 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.12 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.74 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.59 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.31 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.94
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Agarwal 1995 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.22 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.66 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+2.25 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.90 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.61 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.43
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Vilayaraghvan 1990 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.02 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.57 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.82 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.85 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.58 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.29
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Pant 1996 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.57 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.37 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.88 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.64 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.44 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.89
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+addlinespace
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Rahmatullah 1990 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.46 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.30 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.71 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.57 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.38 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.81
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Sommer 1986 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.74 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.54 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.00 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.74 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.57 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.96
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Daulaire 1992 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.74 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.55 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.99 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.74 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.57 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.96
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Herrera 1992 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.06 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.82 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.37 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.97 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.77 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.25
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+West 1991 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.70 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.56 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.88 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.71 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.57 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.87
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+addlinespace
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Ross 1993 (survival) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.81 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.67 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.97 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.80 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.67 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.95
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+DEVTA 2013 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.96 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.89 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.03 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.95 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.88 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1.03
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison of results of all four meta-analysis models fitted to our data, on log(RR) scale.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "baggr-models-tab"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Flex Resizebox
+status collapsed
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status collapsed
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+linewidth
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Argument 2
+status collapsed
+
+
+\begin_layout Standard
+!
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Tabular 
+<lyxtabular version="3" rows="5" columns="4">
+<features rotate="0" booktabs="true" tabularvalignment="top" tabularwidth="0pt">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Hypermean 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Hyper-SD 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+p.p.d.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Partial, all data
+\series default
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+-0.31 (-0.54, -0.13)
+\series default
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+0.27 (0.1, 0.53)
+\series default
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+-0.31 (-0.95, 0.28)
+\series default
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Partial, no DEVTA 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-0.34 (-0.58, -0.16) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.25 (0.038, 0.56) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-0.34 (-1, 0.24)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Full, all data 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-0.13 (-0.18, -0.068) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0 (0, 0) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-0.13 (-0.18, -0.068)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Full, no DEVTA 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-0.28 (-0.37, -0.18) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0 (0, 0) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+-0.28 (-0.37, -0.18)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison of results on the risk ratio (non-log) scale.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "baggr-tab-exp"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Tabular 
+<lyxtabular version="3" rows="5" columns="3">
+<features rotate="0" booktabs="true" tabularvalignment="top" tabularwidth="0pt">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Hypermean 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+p.p.d.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+Partial, all data
+\series default
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+0.74 (0.58, 0.88)
+\series default
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+
+\series bold
+0.77 (0.38, 1.3)
+\series default
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Partial, no DEVTA 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.71 (0.56, 0.85) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.74 (0.36, 1.3)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Full, all data 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.88 (0.83, 0.93) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.88 (0.83, 0.93)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Full, no DEVTA 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.76 (0.69, 0.83) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+0.76 (0.69, 0.83)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+placement h!
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset Graphics 
+	filename baggr-density.pdf
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Illustration of how marginal posterior of meta-analytic risk ratio changes with inclusion/exclusion of DEVTA trial, for random-effects models (left panel) and for fixed-effects models (right panel)
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "baggr-density"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+placement h!
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename baggr-re.pdf
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Marginal posteriors for the 9 RR values and originally reported RR statistics
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "baggr-re"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
