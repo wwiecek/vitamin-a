@@ -2,11 +2,11 @@
 # Author: Rachael Meager, code reorganised by Hannah Balikci
 # Date: August 2023
 
-# This code will require 64 x 5000 models, so you have to be very patient
+# This code will require 4x4x4x5000 Stan models, so you have to be very patient
 # It will probably take about a day, depending on a machine?
 
 # Running meta_analysis_monte_carlo_rubin_grid_simulations.R 
-# will save the relevant outputs in simulations_results/
+# will save the relevant outputs in simulation_results/
 
 ### PRELIMINARIES ###
 
@@ -37,8 +37,8 @@ stan2coda <- function(fit2) {
 set.seed(20)
 
 # meta-parameters and storage
-S <- 5000 # number of simulations
-K <- 9 # number of studies
+S <- 1000 # number of simulations
+K <- 19 # number of studies
 
 bhm_tau_error <- matrix(rep(NA,16),nrow=4,ncol=4)
 fe_tau_error <- matrix(rep(NA,16),nrow=4,ncol=4)
@@ -60,9 +60,9 @@ model <- stan_model('rubin_model_code.stan')
 desired_path_tables <- "figures/"
 desired_path <- "simulation_results/"
 
-sim_types <- c("student_t_16_cells", 
+sim_types <- c("student_t_16_cells",
                "location_outlier_16_cells", 
-               "precision_outlier_16_cells", 
+               "precision_outlier_16_cells",
                "normal")
 
 # Loop through simulation types
@@ -183,8 +183,9 @@ for (t  in sim_types) {
       BHM_means_mse <- mean(BHM_means_error^2)
       
       bhm_tau_error[i,j] <- BHM_means_mse
-      print(bhm_tau_error[i,j])
+      # print(bhm_tau_error[i,j])
       
+      print(paste(i, j, Sys.time()))
     } # close the j-loop
   } # close the i-loop
   
@@ -216,4 +217,5 @@ for (t  in sim_types) {
   full_file_path <- file.path(desired_path, filename)
   save.image(file = full_file_path)
   
+  print(paste("completed", t, Sys.time()))
 } #close sim_type loop

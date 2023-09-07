@@ -5,7 +5,7 @@
 # Run this script only after running simulations using script 
 # meta_analysis_monte_carlo_rubin_grid_simulations.R
 # Running meta_analysis_monte_carlo_rubin_grid_simulations.R 
-# will save the relevant outputs in simulations_results/
+# will save the relevant outputs in simulation_results/
 # and these are the only files that this script uses
 
 rm(list = ls())
