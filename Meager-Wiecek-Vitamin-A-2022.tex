@@ -91,7 +91,7 @@ The sampling distribution of any such estimator will be
 
 Since all such estimators are consistent by construction, we seek estimator with the minimal mean squared error (MSE). Taking a first order condition with respect to the weights shows that
 
- \begin{equation}\label{fe}
+\begin{equation}\label{fe}
 \begin{aligned}
 \left\{ \frac{(se^2_k)^{-1}}{\sum_{k=1}^K(se^2_k)^{-1}} \right\}_{k=1}^K = \; \argmin_{ \{w_k\}_{k=1}^K  } \sum_{k=1}^{K} w_k^2 se^2_{k}.
 \end{aligned}
@@ -189,7 +189,7 @@ it performs shrinkage which generates estimates of  $\{{\tau}_k\}_{k=1}^K$ that 
 %WW: old text (repeat of what was in the intro, hence removed) Previous studies of meta-analytic methodology have not examined the performance of Bayesian hierarchical models, instead focusing on other implementations; in addition, they have not studied cases where both estimators are substantially incorrect such when the true effect distribution across sites is fat tailed or otherwise subject to outliers (Field 2001, Hedges and Vevea 1998). We perform a Monte Carlo simulation study of bodies of evidence similar to the vitamin A literature in order to investigate this relative performance even in these adverse cases. We consider the mean squared error of the estimation of $\tau$ as the performance metric, rather than type 1 error as has been used in previous literatures, since researchers are interested in getting an estimate as close as possible to the true effect size, not simply testing for the existence of a non-zero effect (Wasserstein and Lazar 2016). 
 
 % these arguments suggest there should be substantial improvements in estimation from using RE models when the true underlying effects are heterogeneous. here are some simulations that prove that. 
-Statistical models rarely describe the true generating process of any data set. In most cases neither the RE nor FE estimator will be exactly optimal for a meta-analytic problem. But one procedure could still outperform the other in certain conditions, and their relative performance in various settings should inform the choice of estimator. In this section we use the Monte Carlo method examine relative performance of RE and FE models on a variety of data-generating proccesses (DGPs).
+Statistical models rarely describe the true generating process of any data set. In most cases neither the RE nor FE estimator will be exactly optimal for a meta-analytic problem. But one procedure could still outperform the other in certain conditions, and their relative performance in various settings should inform the choice of estimator. In this section we use the Monte Carlo method examine relative performance of RE and FE models on a variety of data-generating processes (DGPs).
 
 %WW: simulations need re-running with appropriate number of studies (not Awasthi et al. but Mayo-Wilson et al.)
 We begin by generating data from the RE model with Gaussian distribution of true effects, at different values of standard errors and cross-study variations. We then gradually move away from this model by examining Student-t distributions of effects, then adding location outliers, and finally adding outliers in the standard error distribution as well. Further details of the DGPs are in Appendix B. For each DGP we run a total of $S = 5000$ simulations. We set $K=9$ to match the size of the vitamin A meta-analysis in Awasthi et al (2013).
@@ -235,9 +235,9 @@ In each simulation, indexed by $s$, we collect $\{\hat{\tau}_k^s, se_k^s\}_{k=1}
 % \end{aligned}
 % \end{equation}
 
-The MSE for FE and RE (BHM) models is then calculated as the mean over $S$ simulations. We summarize the results by looking at ratios of MSEs in FE and RE model. The full results are shown in the Appendix and summarized in graphs that follow. First, consider the  normal-normal model as data-generating process (DGP), in which both the estimators and true effects are normally distributed. In this case the BHM has the correct functional form. Figure \ref{simulation_results_sigma_vs_se} shows the ratio of the FE MSE to BHM MSE for 16 simulations, varying the average standard errors of the point estimates and the average standard deviation of the true effects ($\sigma_{\tau}$). Darker red values indicate a higher ratio, which means the FE MSE is much higher than the BHM MSE, an indicator of poor relative performance of the FE model.
+The MSE for FE and RE (BHM) models is then calculated as the mean over $S$ simulations. We summarize the results by looking at ratios of MSEs in FE and RE model. The full results are shown in the Appendix and summarized in graphs that follow. First, consider the normal-normal model as data-generating process (DGP), in which both the estimators and true effects are normally distributed. In this case the BHM has the correct functional form. Figure \ref{heatmaps}.1 shows the ratio of the FE MSE to BHM MSE for 16 simulations, varying the average standard errors of the point estimates and the average standard deviation of the true effects ($\sigma_{\tau}$). Darker red values indicate a higher ratio, which means the FE MSE is much higher than the BHM MSE, an indicator of poor relative performance of the FE model.
 
-We find that RE model performs better than FE for the normal-normal DGP. A reasonable complaint about the exercise above is that the BHM's superior performance was potentially due to the correct functional form specification. Therefore we now consider deviations from the  normal-normal DGP. Overall the BHM still out-performs the FE estimator on average despite the functional form misspecification.
+We find that RE model performs better than FE for the normal-normal DGP. A reasonable complaint about the exercise above is that the BHM's superior performance was potentially due to the correct functional form specification. Therefore we now consider deviations from the normal-normal DGP. Overall the BHM still out-performs the FE estimator on average despite the functional form misspecification.
 
 %WW: let's discuss: isn't this about SEs in relation to heterogeneity in true effects? Easy check is to scale heterogeneity up and down, then 
 %see if the results stay constant. We should then say if this is the case!
@@ -245,13 +245,20 @@ The two methods perform similarly well when the point estimates have standard er
 
 It may seem surprising that the BHM obtains a much lower MSE than the FE Estimator in the case where $\sigma_{\tau}$ lies in [0,5], which includes the case of no underlying heterogeneity. However, recall that the BHM nests the case of no heterogeneity: the model is perfectly capable of estimating $\sigma^2_{\tau}$ to be essentially zero and then effectively implementing the FE model. The BHM uses up a degree of freedom to perform this estimation, but its overall performance is still close to that of the FE estimator in this case. Of course, as shown in table \ref{table:simulations} in the Appendix, when $\sigma_{\tau} = 0$ the FE estimator does have a lower MSE than the BHM estimator: it must do, because correctly setting $\sigma^2_{\tau} = 0$ ex-ante is more efficient than estimating it to be 0. However the improvement is small in most of these simulations, and the largest relative improvement (a reduction by half) occurs when there is very little sampling error at all, so in practice this translates to very small absolute improvements. By contrast, the BHM can achieve major reductions in MSE when $\sigma_{\tau}$ is in the range $(0,5]$, so overall it has less than half the MSE of the FE on average in the range $[0,5]$.
 
-A reasonable complaint about the exercise above is that the BHM's superior performance was potentially due to the correct functional form specification. Therefore we now consider deviations from the  normal-normal DGP. First, we examine the case where the true effects are Student t distributed across sites with considerably heavy tails, although the sampling uncertainty is still Gaussian. Figure \ref{student_t_mse} shows the results for a student t with 3 degrees of freedom, which has extremely fat tails relative to the  normal (in fact the kurtosis is infinite).\footnote{The infinite kurtosis makes the simulations unstable. We tested several seeds and did not find major qualitative differences in the ratio of MSEs, although the raw MSEs did take different values even with large numbers of simulations.} The FE estimator now performs slightly less poorly in the area where the standard errors are in the range [0,5], although it still has double or triple the MSE of the BHM in this area. When the standard errors are in the range [5,20] the FE estimator can now attain up to a 10\% reduction in MSE relative to the BHM in some areas of the grid, but the BHM still attains a 10\% reduction in other areas. Overall the BHM still out-performs the FE estimator on average despite the functional form misspecification.
+A reasonable complaint about the exercise above is that the BHM's superior performance was potentially due to the correct functional form specification. Therefore we now consider deviations from the normal-normal DGP. First, we examine the case where the true effects are Student t distributed across sites with considerably heavy tails, although the sampling uncertainty is still Gaussian. Figure \ref{heatmaps}.2 shows the results for a student t with 3 degrees of freedom, which has extremely fat tails relative to the normal (in fact the kurtosis is infinite).\footnote{The infinite kurtosis makes the simulations unstable. We tested several seeds and did not find major qualitative differences in the ratio of MSEs, although the raw MSEs did take different values even with large numbers of simulations.} The FE estimator now performs slightly less poorly in the area where the standard errors are in the range [0,5], although it still has double or triple the MSE of the BHM in this area. When the standard errors are in the range [5,20] the FE estimator can now attain up to a 10\% reduction in MSE relative to the BHM in some areas of the grid, but the BHM still attains a 10\% reduction in other areas. Overall the BHM still out-performs the FE estimator on average despite the functional form misspecification.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{heatmap_plots.pdf}
+\caption{Heat maps showing value of (FE MSE)/(BHM MSE) for each simulation type}
+\label{heatmaps}
+\end{figure}
 
 We now consider an alternative specification error in which the underlying data-generating process is a mixture distribution with potentially multiple modes. We first use a mixture distribution to create a classical outlier problem, which occurs when one site's true effect takes a value very different from the rest of the sites' true effects. However, in meta-analysis there is another potential type of outlier: one site may have a standard error that is very much smaller or larger than the rest of the sites' standard errors. We refer to this second type of outlier using the terminology ``precision outliers'', to distinguish from the more classical ``location outliers''. To my knowledge this paper constitutes the first attempt to formalize this problem, although meta-analytic issues created by differential precision have been noted in Higgins and Green (2011). We examine both types of outliers separately in the following simulations. 
 
-Figure \ref{location_outliers_mse} shows the ratio of FE MSE to BHM MSE when the  normal- normal DGP model has one site in which the true effect is generated by a  normal that has been shifted away from the parent mean $\tau$. The results look quite similar to the normal- normal DGP results, with only slightly worse performance from the FE estimator in the upper left quadrant.
+Figure \ref{heatmaps}.3 shows the ratio of FE MSE to BHM MSE when the normal-normal DGP model has one site in which the true effect is generated by a normal that has been shifted away from the parent mean $\tau$. The results look quite similar to the normal-normal DGP results, with only slightly worse performance from the FE estimator in the upper left quadrant.
 
-Figure \ref{precision_outliers_mse} shows the ratio of FE MSE to BHM MSE when the  normal- normal DGP model has one site in which the standard error is ten times smaller than the rest of the sites' standard errors on average. This makes a substantial difference in the relative performance of the FE estimator - it has double or triple the MSE of the BHM estimator in most of the grid area. In the worst case scenario for the FE it has MSE almost 6 times the size of the BHM estimator's MSE. In the worst case scenario for the BHM estimator, it still has roughly the same MSE as the FE estimator. Thus, in cases where one site is much more precise than all the others and there is no reason to believe effects are homogeneous, the BHM strongly outperforms the FE estimator.
+Figure \ref{heatmaps}.4 shows the ratio of FE MSE to BHM MSE when the normal-normal DGP model has one site in which the standard error is ten times smaller than the rest of the sites' standard errors on average. This makes a substantial difference in the relative performance of the FE estimator - it has double or triple the MSE of the BHM estimator in most of the grid area. In the worst case scenario for the FE it has MSE almost 6 times the size of the BHM estimator's MSE. In the worst case scenario for the BHM estimator, it still has roughly the same MSE as the FE estimator. Thus, in cases where one site is much more precise than all the others and there is no reason to believe effects are homogeneous, the BHM strongly outperforms the FE estimator.
 
 Why does the fixed effects method perform so poorly in this case? While precision is unequivocally a good thing in a single study, it can be problematic in meta-analysis because precision and generalizability are two distinct but related properties. An estimate can be precise - and thus contain a lot of information about the site it comes from - without containing \emph{generalizable} information. In these simulations, the size of the effect which was much more precise was the same as the other effect sizes on average. All the site effects were a-priori equally generalizible, and ex-post equally likely to be good indicators of the general effect $\tau$. But the highly precise effect was treated as more generalizable by the FE estimation process because this method has no way to distinguish precision and generalizability: indeed, if all effects are the same then precision actually is a perfect indicator of generalizability. 
 
@@ -387,11 +394,11 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 
 \begin{thebibliography}{99}
 
-\bibitem Altman,  Douglas G. , David Machin, Trevor N. Bryant (1986), ``Statistics with confidence : confidence intervals and statistical guidelines'', BMJ Books, Bristol UK. 
+\bibitem{altman} Altman,  Douglas G. , David Machin, Trevor N. Bryant (1986), ``Statistics with confidence : confidence intervals and statistical guidelines'', BMJ Books, Bristol UK. 
 
-\bibitem Arthur, P., Kirkwood, B., Ross, D., Morris, S., Gyapong, J., Tomkins, A., \& Addy, H. (1992). ``Impact of vitamin A supplementation on childhood morbidity in northern Ghana''. \emph{The Lancet}, 339(8789), 361-362.
+\bibitem{arthur} Arthur, P., Kirkwood, B., Ross, D., Morris, S., Gyapong, J., Tomkins, A., \& Addy, H. (1992). ``Impact of vitamin A supplementation on childhood morbidity in northern Ghana''. \emph{The Lancet}, 339(8789), 361-362.
 
-\bibitem Awasthi, S., Peto, R., Read, S., Clark, S., Pande, V., Bundy, D., \& the DEVTA (Deworming and Enhanced Vitamin A) team. (2013). ``Vitamin A supplementation every 6 months with retinol in 1 million pre-school children in north India: DEVTA, a cluster-randomised trial'' \emph{Lancet}, Vol 381.
+\bibitem{awasthi} Awasthi, S., Peto, R., Read, S., Clark, S., Pande, V., Bundy, D., \& the DEVTA (Deworming and Enhanced Vitamin A) team. (2013). ``Vitamin A supplementation every 6 months with retinol in 1 million pre-school children in north India: DEVTA, a cluster-randomised trial'' \emph{Lancet}, Vol 381.
 
 \bibitem{BillMelinda} The Bill and Melinda Gates Foundation (2011) ``Nutritious Rice and Cassava Aim to Help Millions Fight Malnutrition'', Bill and Melinda Gates Foundation Press Release, accessed online at http://www.gatesfoundation.org/Media-Center/Press-Releases/2011/04/Nutritious-Rice-and-Cassava-Aim-to-Help-Millions-Fight-Malnutrition on March 15th 2016 
 
@@ -403,37 +410,37 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 
 \bibitem{daualire} Daulaire, N. M., Starbuck, E. S., Houston, R. M., Church, M. S., Stukel, T. A., \& Pandey, M. R. (1992). ``Childhood mortality after a high dose of vitamin A in a high risk population''. \emph{BMJ}, 304(6821), 207-210.
 
-\bibitem Field, A. P. (2001). ``Meta-analysis of correlation coefficients: a Monte Carlo comparison of fixed-and random-effects methods''. \emph{Psychological methods}, 6(2), 161.
+\bibitem{field} Field, A. P. (2001). ``Meta-analysis of correlation coefficients: a Monte Carlo comparison of fixed-and random-effects methods''. \emph{Psychological methods}, 6(2), 161.
 
-\bibitem Gardner and Altman (1986) ``Confidence intervals rather than P values: estimation rather than hypothesis testing'' , \emph{British Medical Journal},Vol. 292.
+\bibitem{gardner} Gardner and Altman (1986) ``Confidence intervals rather than P values: estimation rather than hypothesis testing'' , \emph{British Medical Journal},Vol. 292.
 
-\bibitem{garner}Garner, Paul, David Taylor-Robinson, and Harshpal Singh Sachdev (2013) ``DEVTA: results from the biggest clinical trial ever'' \emph{Lancet} Comment, Vol. 382.
+\bibitem{garner} Garner, Paul, David Taylor-Robinson, and Harshpal Singh Sachdev (2013) ``DEVTA: results from the biggest clinical trial ever'' \emph{Lancet} Comment, Vol. 382.
 
 \bibitem{bda} Gelman, A., John B. Carlin, Hal S. Stern \& Donald B. Rubin (2004) "Bayesian Data Analysis: Second Edition", Taylor \& Francis.
 
 \bibitem{gelmanrubin} Gelman, A., \& Rubin, D. B. (1992)." Inference from iterative simulation using multiple sequences". Statistical science, 457-472.
 
-\bibitem Gelman, Andrew, Jessica Hwang, and Aki Vehtari. ``Understanding Predictive Information Criteria for Bayesian Models''. Statistics and Computing 24, no. 6 (November 2014): 997–1016. https://doi.org/10.1007/s11222-013-9416-2.
+\bibitem{gelman} Gelman, Andrew, Jessica Hwang, and Aki Vehtari. ``Understanding Predictive Information Criteria for Bayesian Models''. Statistics and Computing 24, no. 6 (November 2014): 997–1016. https://doi.org/10.1007/s11222-013-9416-2.
 
-\bibitem Hedges, L. V., \& Vevea, J. L. (1998). ``Fixed-and random-effects models in meta-analysis''. \emph{Psychological methods}, 3(4), 486.
+\bibitem{hedges} Hedges, L. V., \& Vevea, J. L. (1998). ``Fixed-and random-effects models in meta-analysis''. \emph{Psychological methods}, 3(4), 486.
 
-\bibitem Herrera, M. G., Nestel, P., Weld, L., El Amin, A., Mohamed, K. A., \& Fawzi, W. W. (1992). ``Vitamin A supplementation and child survival''. \emph{The Lancet}, 340(8814), 267-271.
+\bibitem{herrera} Herrera, M. G., Nestel, P., Weld, L., El Amin, A., Mohamed, K. A., \& Fawzi, W. W. (1992). ``Vitamin A supplementation and child survival''. \emph{The Lancet}, 340(8814), 267-271.
 
 \bibitem{cochrane} Higgins, J. P. and Sally Green (Eds) (2011) "Cochrane handbook for systematic reviews of interventions" (Version 5.1.0). Chichester: Wiley-Blackwell.
 
 \bibitem{higgy} Higgins, J. P., \& Thompson, S. G. (2002). "Quantifying heterogeneity in a meta?analysis". Statistics in medicine, 21(11), 1539-1558.
 
-\bibitem Imbdad et al (2011), ``Impact of Vitamin A supplmentation on infant and childhood mortality'' \emph{BMC Public Health}, Vol. 11.
+\bibitem{imdad} Imdad et al (2011), ``Impact of Vitamin A supplementation on infant and childhood mortality'' \emph{BMC Public Health}, Vol. 11.
 
-\bibitem Iwata, M., Hirakiyama, A., Eshima, Y., Kagechika, H., Kato, C., \& Song, S. Y. (2004). ``Retinoic acid imprints gut-homing specificity on T cells''. \emph{Immunity}, 21(4), 527-538.
+\bibitem{iwata} Iwata, M., Hirakiyama, A., Eshima, Y., Kagechika, H., Kato, C., \& Song, S. Y. (2004). ``Retinoic acid imprints gut-homing specificity on T cells''. \emph{Immunity}, 21(4), 527-538.
 
-\bibitem James, W. and C. Stein (1961) ``Estimation with Quadratic Loss'', \emph{Proc. Fourth Berkeley Symp. on Math. Statist. and Prob.}, Vol. 1 (Univ. of Calif. Press, 1961), 361-379
+\bibitem{james} James, W. and C. Stein (1961) ``Estimation with Quadratic Loss'', \emph{Proc. Fourth Berkeley Symp. on Math. Statist. and Prob.}, Vol. 1 (Univ. of Calif. Press, 1961), 361-379
 
-\bibitem Mora, J. R., Iwata, M., \& von Andrian, U. H. (2008). ``Vitamin effects on the immune system: vitamins A and D take centre stage''. \emph{Nature Reviews Immunology}, 8(9), 685-698.
+\bibitem{mora} Mora, J. R., Iwata, M., \& von Andrian, U. H. (2008). ``Vitamin effects on the immune system: vitamins A and D take centre stage''. \emph{Nature Reviews Immunology}, 8(9), 685-698.
 
-\bibitem Overton, R. C. (1998). ''A comparison of fixed-effects and mixed (random-effects) models for meta-analysis tests of moderator variable effects''. \emph{Psychological methods}, 3(3), 354.
+\bibitem{overton} Overton, R. C. (1998). ''A comparison of fixed-effects and mixed (random-effects) models for meta-analysis tests of moderator variable effects''. \emph{Psychological methods}, 3(3), 354.
 
-\bibitem Rahmathullah, L., Underwood, B. A., Thulasiraj, R. D., Milton, R. C., Ramaswamy, K., Rahmathullah, R., \& Babu, G. (1990). ``Reduced mortality among children in southern India receiving a small weekly dose of vitamin A''. \emph{New England journal of medicine}, 323(14), 929-935.
+\bibitem{rahmathullah} Rahmathullah, L., Underwood, B. A., Thulasiraj, R. D., Milton, R. C., Ramaswamy, K., Rahmathullah, R., \& Babu, G. (1990). ``Reduced mortality among children in southern India receiving a small weekly dose of vitamin A''. \emph{New England journal of medicine}, 323(14), 929-935.
 
 \bibitem{rubin81} Rubin, D. B. (1981). "Estimation in parallel randomized experiments. Journal of Educational and Behavioral Statistics", 6(4), 377-401.
 
@@ -441,7 +448,7 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 
 \bibitem{smith} Smith, T. C., Spiegelhalter, D. J., \& Thomas, A. (1995). Bayesian approaches to random?effects meta?analysis: a comparative study. Statistics in medicine, 14(24), 2685-2699.
 
-\bibitem  Sommer, Alfred, Keith P West Jr, and Reynaldo Martorell (2013) ``Vitamin A Supplementation in Indian Children'', \emph{Lancet} Comment, Vol. 382.
+\bibitem{sommer13} Sommer, Alfred, Keith P West Jr, and Reynaldo Martorell (2013) ``Vitamin A Supplementation in Indian Children'', \emph{Lancet} Comment, Vol. 382.
 
 \bibitem{sommer86} Sommer, A., Djunaedi, E., Loeden, A. A., Tarwotjo, I., West, K., Tilden, R., ... \& Aceh Study Group. (1986). ``Impact of vitamin A supplementation on childhood mortality: a randomised controlled community trial''. \emph{The Lancet}, 327(8491), 1169-1173.
 
@@ -453,11 +460,11 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 
 \bibitem{vij} Vijayaraghavan, K., Radhaiah, G., Prakasam, B. S., Sarma, K. R., \& Reddy, V. (1990). ``Effect of massive dose vitamin A on morbidity and mortality in Indian children''. \emph{The Lancet}, 336(8727), 1342-1345.
 
-\bibitem Wasserstein, R. L., \& Lazar, N. A. (2016).''The ASA's statement on p-values: context, process, and purpose''. \emph{The American Statistician}, (just-accepted), 00-00.
+\bibitem{wasserstein} Wasserstein, R. L., \& Lazar, N. A. (2016).''The ASA's statement on p-values: context, process, and purpose''. \emph{The American Statistician}, (just-accepted), 00-00.
 
-\bibitem West, K. P., Katz, J., LeClerq, S. C., Pradhan, E. K., Tielsch, J. M., Sommer, A., ... \& Pandey, M. R. (1991). ``Efficacy of vitamin A in reducing preschool child mortality in Nepal''. \emph{The Lancet}, 338(8759), 67-71.
+\bibitem{west} West, K. P., Katz, J., LeClerq, S. C., Pradhan, E. K., Tielsch, J. M., Sommer, A., ... \& Pandey, M. R. (1991). ``Efficacy of vitamin A in reducing preschool child mortality in Nepal''. \emph{The Lancet}, 338(8759), 67-71.
 
-\bibitem World Health Organisation (2016) ``Nutrition: Micronutrient Deficiencies: Vitamin A'', accessed online at http://www.who.int/nutrition/topics/vad/en/ on March 15th 2016
+\bibitem{WHO} World Health Organisation (2016) ``Nutrition: Micronutrient Deficiencies: Vitamin A'', accessed online at http://www.who.int/nutrition/topics/vad/en/ on March 15th 2016
 
 
 \end{thebibliography}
