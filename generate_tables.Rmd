@@ -13,15 +13,20 @@ library(tidyverse)
 library(patchwork)
 library(baggr)
 library(kableExtra)
-load("c:/github/vitamin-a/rerun.Rdata")
+load("fit_ma.Rdata")
 ```
 
 # Latex table for the main model
 
 ```{r}
 left_join(
-  select(mayo, group, RR, lci, uci),
-  group_effects(bg_mayo_partial, s=T, transform = exp)[,,1] %>%  
+  imdad %>% 
+    mutate(RR = exp(tau),
+           lci = exp(tau - 1.96*se),
+           uci = exp(tau + 1.96*se)) %>% 
+    select(group, RR, lci, uci, tau, se) %>% 
+    mutate_if(is.numeric, round, 2),
+  group_effects(bg_imdad_partial, s=T, transform = exp)[,,1] %>%  
     round(2) %>% 
     as.data.frame() %>% 
     rownames_to_column() %>% 
@@ -29,23 +34,23 @@ left_join(
   by = "group"
 ) %>% 
   kbl(booktabs = TRUE,
-      col.names = c("Study", "mean", "LCI", "UCI", "mean", "LCI", "UCI")) %>% 
-  add_header_above(c("", "Observed (risk ratio)" = 3, "Posterior (risk ratio)" = 3))
+      col.names = c("Study", "mean", "LCI", "UCI", "log(RR)", "SE(log(RR))", "mean", "LCI", "UCI")) %>% 
+  add_header_above(c("", "Observed (risk ratio)" = 5, "Posterior (risk ratio)" = 3))
 ```
 
 ```{r}
 library(wwmisc)
 bgc_all <- baggr_compare(
-  "Partial, all data" = bg_mayo_partial,
-  "Partial, no DEVTA" = bg_mayond_partial,
-  "Full, all data" = bg_mayo_full,
-  "Full, no DEVTA" = bg_mayond_full
+  "Partial, all data" = bg_imdad_partial,
+  "Partial, no DEVTA" = bg_imdadnd_partial,
+  "Full, all data" = bg_imdad_full,
+  "Full, no DEVTA" = bg_imdadnd_full
 )
 bgc_exp <- baggr_compare(
-  "Partial, all data" = bg_mayo_partial,
-  "Partial, no DEVTA" = bg_mayond_partial,
-  "Full, all data" = bg_mayo_full,
-  "Full, no DEVTA" = bg_mayond_full,
+  "Partial, all data" = bg_imdad_partial,
+  "Partial, no DEVTA" = bg_imdadnd_partial,
+  "Full, all data" = bg_imdad_full,
+  "Full, no DEVTA" = bg_imdadnd_full,
   transform = exp
 )
 bgc_table <- function(x, sd=TRUE,pooling = TRUE){

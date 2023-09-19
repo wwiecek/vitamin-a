@@ -13,6 +13,24 @@ mayo$group[mayo$group == "Rahmatullah 1990"] <- "Rahmathullah 1990"
 mayo$group[mayo$group == "Venkatarao 1996"] <- "Venkatrao 1996"
 mayo$group[mayo$group == "Vilayaraghvan 1990"] <- "Vijayaraghavan 1990"
 
+
+# Awasthi numbers are in Fig 4 here:
+# https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3647148/
+
+# Note, that for Dibley 1996 there is something going on,
+# probably this 0.01 is not precise enough
+# ggplot(mayo, aes(x = group, y = 0, ymin = lci, ymax=uci)) + 
+  # geom_point() + geom_errorbar() + coord_flip()
+
+# I think LCI for Dibley study should be 0.0044
+exp(-1.11 - 4.3)
+# but maybe they didn't want to round to 0.00...
+
+# You can see here how there is .01-.02 error in SE due to rounding off
+# of LCI/UCI... but for Dibley it is .07
+
+
+
 # Ross 1993 (survival) is also referred to as VAST 1993
 awasthi <- data.frame(
   group = c("Sommer 1986", "Vijayaraghavan 1990", "Rahmathullah 1990", 

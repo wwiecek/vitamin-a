@@ -26,6 +26,28 @@ rbind(
   theme(legend.position = "bottom")
 
 
+
+# Awasthi vs Imdad 2022 -----
+imdad <- imdad2022 %>%  #for convenience
+  filter(group != "Lin 2008")
+bg_imdad_full      <- baggr(imdad, pooling = "full", iter = 1e04)
+bg_imdad_partial   <- baggr(imdad, iter = 1e04)
+bg_awasthi_full    <- baggr(awasthi, pooling = "full", iter = 1e04)
+bg_awasthi_partial <- baggr(awasthi, iter = 1e04)
+
+bgc <- baggr_compare("Partial, all data" = bg_imdad_partial, 
+              "Full, all data"           = bg_imdad_full,
+              "Partial, Awasthi et al"   = bg_awasthi_partial,
+              "Full, Awasthi et al"      = bg_awasthi_full,
+              "No pooling"               = bg_imdad_nopool)
+
+plot(bgc,
+     compare = "effects") + ggtitle("Possible treatment effect (new implementation)",
+                    "Partial pooling only")
+
+
+
+
 # THE REST OF THIS SCRIPT IS UNFINISHED FOR NOW, BUT WE CAN SEE STRONG SIMILARITIES
 
 # How to define standard errors?
