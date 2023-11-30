@@ -1,4 +1,4 @@
-load("fit_ma.Rdata")
+load("meta-analysis/fit_ma.Rdata")
 library(tidyverse)
 library(baggr)
 library(metafor)
@@ -13,7 +13,9 @@ forest_plot(bg_imdad_partial, show = "both")
 
 
 # Figure: results of RE model -----
-baggr_plot(bg_imdad_partial, hyper = TRUE, transform = exp)
+baggr_plot(bg_imdad_partial, hyper = TRUE, transform = exp) + 
+  xlab("risk ratio") +
+  geom_vline(xintercept = 1, lty = "dashed")
 ggsave(file = "figures/baggr-re.pdf", width = 12, height = 12, units = "cm")
 
 baggr_compare("Partial, all data" = bg_imdad_partial, 
@@ -46,7 +48,7 @@ plot(bgc) +
   plot_layout() &
   theme(legend.position='bottom') &
   scale_x_continuous(limits = c(-2, 1)) &
-  xlab("Treatment effect (log RR)")
+  xlab("log(RR)")
 ggsave(file = "figures/baggr-density.pdf", width = 16, height = 9, units = "cm")
 
 
@@ -82,7 +84,8 @@ rbind(dt1 %>% mutate(model = "Fixed-effects model (p.p.d.)"), dt2 %>% mutate(mod
   geom_pointinterval(data = mutate(imdad_ci, model = "Input data")) +
   theme(legend.position = "bottom") +
   coord_cartesian(xlim = c(-1.5, 1)) +
-  xlab("Treatment effect (log RR)") + ylab("") +
+  xlab("log(RR)") + ylab("") +
+  ggtitle("Impact of excluding individual studies on FE and RE estimates") +
   scale_color_discrete(name = "")
 
 ggsave(file = "figures/baggr-oos-ppc.pdf", width = 16, height = 18, units = "cm")

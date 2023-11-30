@@ -482,12 +482,12 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 
 \begin{table}
 \label{summary table}
-\caption{Input data and study-level results for BHM based on studies included in Imdad et al (2022).}
+\caption{Input data and study-level results for BHM based on studies included in Imdad et al (2022). RR is mean risk ratio. LCI and UCI are lower and upper ends of the 95\% intervals. SE refers to standard error of the log(RR).}
 \begin{tabular}[t]{lrrrrrrrr}
 \toprule
-\multicolumn{1}{c}{} & \multicolumn{5}{c}{Inputs (risk ratio)} & \multicolumn{3}{c}{RE posterior (risk ratio)} \\
+\multicolumn{1}{c}{} & \multicolumn{5}{c}{Observed (risk ratio)} & \multicolumn{3}{c}{Posterior (risk ratio)} \\
 \cmidrule(l{3pt}r{3pt}){2-6} \cmidrule(l{3pt}r{3pt}){7-9}
-Study & mean & LCI & UCI & log(RR) & SE(log(RR)) & mean & LCI & UCI\\
+Study & RR & LCI & UCI & log(RR) & SE & RR & LCI & UCI\\
 \midrule
 Agarwal 1995 & 1.22 & 0.66 & 2.25 & 0.20 & 0.31 & 0.90 & 0.62 & 1.41\\
 Barreto 1994 & 1.00 & 0.14 & 7.08 & 0.00 & 1.00 & 0.76 & 0.42 & 1.31\\
@@ -534,14 +534,14 @@ Full, no DEVTA & -0.26 (-0.36, -0.17) & 0 (0, 0) & -0.26 (-0.36, -0.17) & 1 (1, 
 \begin{table}
 \caption{Comparison of results on the risk ratio (non-log) scale.}
 \label{baggr-tab-exp}
-\begin{tabular}[t]{lll}
+\begin{tabular}[t]{lrr}
 \toprule
-  & Hypermean & p.p.d.\\
+Pooling model & Hypermean & p.p.d.\\
 \midrule
-\textbf{Partial, all data} & \textbf{0.75 (0.6, 0.89)} & \textbf{0.78 (0.4, 1.3)}\\
-Partial, no DEVTA & 0.73 (0.59, 0.86) & 0.76 (0.39, 1.3)\\
+\textbf{Partial, all data} & \textbf{0.75 (0.60, 0.89)} & \textbf{0.78 (0.40, 1.30)}\\
+Partial, no DEVTA & 0.73 (0.58, 0.86) & 0.76 (0.40, 1.30)\\
 Full, all data & 0.88 (0.83, 0.93) & 0.88 (0.83, 0.93)\\
-Full, no DEVTA & 0.77 (0.7, 0.84) & 0.77 (0.7, 0.84)\\
+Full, no DEVTA & 0.77 (0.70, 0.84) & 0.77 (0.70, 0.84)\\
 \bottomrule
 \end{tabular}
 \end{table}

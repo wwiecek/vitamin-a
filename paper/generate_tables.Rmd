@@ -7,13 +7,13 @@ output:
       keep_tex: true
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(patchwork)
 library(baggr)
 library(kableExtra)
-load("fit_ma.Rdata")
+load("../meta-analysis/fit_ma.Rdata")
 ```
 
 # Latex table for the main model
@@ -34,7 +34,7 @@ left_join(
   by = "group"
 ) %>% 
   kbl(booktabs = TRUE,
-      col.names = c("Study", "mean", "LCI", "UCI", "log(RR)", "SE(log(RR))", "mean", "LCI", "UCI")) %>% 
+      col.names = c("Study", "RR", "LCI", "UCI", "log(RR)", "SE", "RR", "LCI", "UCI")) %>% 
   add_header_above(c("", "Observed (risk ratio)" = 5, "Posterior (risk ratio)" = 3))
 ```
 
@@ -79,7 +79,7 @@ bgc_table(bgc_all) %>%
   kable_styling(latex_options = c("scale_down"))
 
 bgc_table(bgc_exp,sd=FALSE,pooling=FALSE) %>% 
-  kbl(booktabs = TRUE) %>% 
+  kbl(booktabs = TRUE, col.names = c("Pooling model", "Hypermean", "p.p.d."), align = c("l", "r", "r")) %>% 
   row_spec(1, bold=T)
 
 ```

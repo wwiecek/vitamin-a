@@ -87,9 +87,9 @@ final_plot <- plot_grid(grid, legend, ncol = 2, rel_widths = c(0.9, 0.1))
 
 # Combine the combined plot with a common legend and common labels
 final_plot <- final_plot +
-  plot_annotation(
-    title = "Ratio of FE MSE to BHM MSE in Normal-Normal Simulations",
-    theme = theme(plot.title = element_text(hjust = 0.5))) +
+  # plot_annotation(
+    # title = "",
+    # theme = theme(plot.title = element_text(hjust = 0.5))) +
   theme(legend.title = element_blank()) +
   labs(fill = "Ratio")
 
