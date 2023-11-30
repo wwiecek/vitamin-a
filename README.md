@@ -2,8 +2,10 @@
 
 This is code and paper repository for the work-in-progress paper on vitamin A supplementation and child mortality.
 
-Project structure is very simple, there are two parts:
+The paper is in the main folder
 
-(1) simulations comparing perofrmance of FE and RE models: this is not yet included in the repo
-(2) meta-analysis: this is all done in `rerun.R` (not yet cleaned/finished script); there is also
-    `rerun_awasthi.R` which compares a couple of meta-analysis publications
+Code structure is very simple, there are three parts:
+
+(1) `simulation` (outputs in `simulation_results/`): simulations comparing performance of FE and RE models; this is not yet fully clean yet, but the code should run stand-alone in R
+(2) `meta-analysis`: the main script that replicates all analysis is `fit_ma.R`
+(3) `paper`: this has scripts used to generate tables, figures and some text (not fully cleaned yet)
