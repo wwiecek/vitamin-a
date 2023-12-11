@@ -157,15 +157,14 @@ In more complicated models, the ML estimation quickly becomes a challenging mult
 %JM: is "snap to boundary" (above) a technical term?
 
 \subsubsection*{Bayesian hierarchical model}
-Our preferred alternative is to conduct inference on model \eqref{rubin} using a Bayesian hierarchical model (BHM). As with all Bayesian models, using this type of inference improves model checking and allows for generating posterior predictive quantities. BHMs also avoid the boundary estimate problem faced by frequentist estimators, and can improve overall inference on heterogeneity by introducing informative or mildly informative priors (Chung et al, 2012). These priors can be derived from other meta-analyses in similar domains of study (Turner et al, 2015). We use diffuse priors which ensure proper posterior influence.
+Our preferred alternative is to conduct inference on model \eqref{rubin} using a Bayesian hierarchical model (BHM). 
 
-%JM:include the following line somewhere
-In the case of this meta-analysis, however, we find that the frequentist REML estimator agrees with our Bayesian meta-analytic defaults.
+As with all Bayesian models, using this type of inference improves model checking and allows for generating posterior predictive quantities.\footnote{BHMs also avoid the boundary estimate problem faced by frequentist estimators, and can improve overall inference on heterogeneity by introducing informative or mildly informative priors (Chung et al, 2012). These priors can be derived from other meta-analyses in similar domains of study (Turner et al, 2015).} 
+We use diffuse priors which ensure proper posterior influence. In the case of this meta-analysis, we find that our Bayesian meta-analytic defaults happen to agree with the frequentist REML estimator.
+%We use diffuse priors which ensures proper posterior inference while (typically) leading to results extremely close to MLE.\footnote{We have verified that the MLE produces virtually identical results in the simple applications and simulations provided in this paper.} 
+%JM: I don't think the above line should be included - seems confusing as BHM is supposed to be better than MLE but we're benchmarking it against MLE?
 
-We use diffuse priors which ensures proper posterior inference while (typically) leading to results extremely close to MLE.\footnote{We have verified that the MLE produces virtually identical results in the simple applications and simulations provided in this paper.} 
-%JM: I'm not sure the above line should be included - seems confusing as BHM is supposed to be better than MLE but we're benchmarking it against MLE?
-
-In this paper we estimate BHM using Hamiltonian Monte Carlo with a No-U-Turn-Sampler using Stan software\footnote{Quality of approximation of the posterior distribution by the Monte Carlo methods depends not only on algorithm but also parameters such as the number of iterations (samples from the posterior). While in some cases this requires careful specification and troubleshooting, for meta-analysis models obtaining good convergence is easy to achieve. In this paper we use the standard Stan settings and check convergence via the $\hat{R}$ statistic proposed by Gelman and Rubin (1992).}. This Bayesian approach to meta-analysis is implemented in an accessible way in the R package \textit{baggr}, which in addition to model \eqref{rubin} also includes other commonly used meta-analysis models (Więcek and Meager, 2022). The package also includes fitting of FE models, calculation of pooling statistics, and model selection through cross-validation, which we describe below.
+In this paper we estimate BHM using Hamiltonian Monte Carlo with a No-U-Turn-Sampler using Stan software.\footnote{Quality of approximation of the posterior distribution by the Monte Carlo methods depends not only on algorithm but also parameters such as the number of iterations (samples from the posterior). While in some cases this requires careful specification and troubleshooting, for meta-analysis models obtaining good convergence is easy to achieve. In this paper we use the standard Stan settings and check convergence via the $\hat{R}$ statistic proposed by Gelman and Rubin (1992).} This Bayesian approach to meta-analysis is implemented in an accessible way in the R package \textit{baggr}, which in addition to model \eqref{rubin} also includes other commonly used meta-analysis models (Więcek and Meager, 2022). The package also includes fitting of FE models, calculation of pooling statistics, and model selection through cross-validation, which we describe below.
 
 \subsubsection*{Pooling metrics}
 
@@ -418,6 +417,8 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 
 \bibitem{brock} Brockwell, S. E., \& Gordon, I. R. (2001). "A comparison of statistical methods for meta?analysis". Statistics in medicine, 20(6), 825-840.
 
+\bibitem{chung} Chung, Y., Rabe-Hesketh, S., Gelman, A., Liu, J., \& Dorie, V. (2012). ``Avoiding Boundary Estimates in Linear Mixed Models Through Weakly Informative Priors''. \emph{U.C. Berkeley Division of Biostatistics Working Paper Series}
+
 \bibitem{cornell} Cornell JE, Mulrow CD, Localio R, Stack CB, Meibohm AR, Guallar E, et al. "Random-Effects Meta-analysis of Inconsistent Effects: A Time for Change". Ann Intern Med. ;160:267?270. doi: 10.7326/M13-2886
 
 \bibitem{daualire} Daulaire, N. M., Starbuck, E. S., Houston, R. M., Church, M. S., Stukel, T. A., \& Pandey, M. R. (1992). ``Childhood mortality after a high dose of vitamin A in a high risk population''. \emph{BMJ}, 304(6821), 207-210.
@@ -467,6 +468,8 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 \bibitem{sommer86} Sommer, A., Djunaedi, E., Loeden, A. A., Tarwotjo, I., West, K., Tilden, R., ... \& Aceh Study Group. (1986). ``Impact of vitamin A supplementation on childhood mortality: a randomised controlled community trial''. \emph{The Lancet}, 327(8491), 1169-1173.
 
 \bibitem{sommer83} Sommer, A., Hussaini, G., Tarwotjo, I., \& Susanto, D. (1983). ``Increased mortality in children with mild vitamin A deficiency''. \emph{The Lancet}, 322(8350), 585-588.
+
+\bibitem{turner} Turner, R. M., Jackson, D., Wei, Y., Thompson, S. G., \& Higgins, J. P. T. (2015). ``Predictive Distributions for Between-Study Heterogeneity and Simple Methods for Their Application in Bayesian Meta-Analysis''. \emph{Statistics in Medicine} 34, no. 6 : 984–98.
 
 \bibitem{unicef} United Nations Childrens Fund (UNICEF) (2007) ``Vitamin A Supplementation: A Decade Of Progress'' , UNICEF Report. 
 
