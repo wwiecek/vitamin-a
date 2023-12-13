@@ -134,6 +134,7 @@ By law of total variation and the properties of sum of normal distributions,
 \end{equation}
 
 %WW: Rachael to check my language
+%JM: language looks good to me, but I may lack technical know-how
 Since the estimator is consistent, the combination of weights that minimises MSE will lead to an efficient estimator. By the same argument that produced the optimal weights in the FE model, 
 
  \begin{equation}\label{efficient}
@@ -142,13 +143,13 @@ Since the estimator is consistent, the combination of weights that minimises MSE
 \end{aligned}
 \end{equation}
 
-Using these weights implements a random effects (RE) estimation method. Evidently, when $\sigma^2_{\tau} \neq 0$, the FE estimator diverges from this estimator and has higher variance: the FE method is thus inefficient for this case. This is why the FE method is sometimes referred to as a ``full pooling'' method: it is only optimal when the data from all $K$ samples or studies estimates exactly the same effect. 
+Using these weights implements a random effects (RE) estimation method. When $\sigma^2_{\tau} \neq 0$, the FE estimator diverges from this estimator and has higher variance: the FE method is thus inefficient in this case. This is why the FE method is sometimes referred to as a ``full pooling'' method: it is only optimal when the data from all $K$ samples or studies estimates exactly the same effect. 
 
 %The more heterogeneous the study settings, the less likely this is to be true, all else equal. 
 When the true $\sigma^2_{\tau}$ is very large, the FE estimate may be very misleading. 
 %WW: I remove this strong claim on the next line, since it may need some sort of proof:
 %When treatment effects are heterogeneous across studies is statistically inefficient to let any single estimate strongly affect the estimated general effect, since each study still represents only 1 data point from the underlying distribution of treatment effects. 
-The RE estimator accounts for the underlying heterogeneity and thus tempers the influence that any single study can have on the estimate of $\tau$.
+The RE estimator accounts for underlying heterogeneity and thus tempers the influence that any single study can have on the estimate of $\tau$.
 
 The RE estimator in \eqref{efficient} is optimal if $\sigma^2_{\tau}$ is known and if the effects are independently, identically, and normally distributed around their common mean. 
 In practice, even if this functional form is correctly specified, $\sigma^2_{\tau}$ is not known and must be estimated. In fact this is the model described in Rubin (1981), which can be estimated via Bayesian inference or via Maximum Likelihood (which is often called ``Empirical Bayes'' in this case). For relatively simple models, such as \eqref{rubin}, the performance, computational complexity, and running time are similar for the two methods. 
@@ -168,25 +169,26 @@ In this paper we estimate BHM using Hamiltonian Monte Carlo with a No-U-Turn-Sam
 
 \subsubsection*{Pooling metrics}
 
-To formally quantify the heterogeneity in BHM we can compute the conventional pooling factor, as specified in Gelman et al (2004):
+To formally quantify the heterogeneity in BHM we can compute the conventional pooling factor, as specified in Gelman et al (2006):
 
 \begin{equation}
 \omega(\tau_k) = \frac{\hat{se}^2_k }{\hat{se}^2_k + \hat{\sigma}_{\tau}^2 }
 \end{equation}
 
-When values of the pooling metric are close to 1, sampling variation in studies is much larger than cross-site heterogeneity. When pooling is low, cross-site heterogeneity dominates. This metric is the formal complement of the often-used $I^2$ metric (i.e. $I^2 = 1- \omega(\tau_k)$), reviewed favourably by Higgins and Thompson (2002), and provides the same information. 
+When values of the pooling factor are close to 1, sampling variation in studies is much larger than cross-site heterogeneity. When pooling is low, cross-site heterogeneity dominates. This factor is the formal complement of the often-used $I^2$ metric (i.e. $I^2 = 1- \omega(\tau_k)$), reviewed favourably by Higgins and Thompson (2002), and provides the same information. 
 
 
 \subsubsection*{Posterior predictive distributions}
 
 %WW: Rachael to review this and edit
-Bayesian approach to meta-analysis also allows for straightforward calculation of posterior predictive distribution (p.p.d.) of the effect. Generically, p.p.d. tells the researcher what values the unobserved data could assume, conditional on observed data. In the case of meta-analysis, where we are interested in true treatment effects, this refers to prediction of the effect in ``one additional study'', $\tau'$, and therefore generalizability of intervention. Under the FE model p.p.d. is trivially equal to the distribution of mean treatment effect (since they are shared by each study). In other words, all of uncertainty in p.p.d. is uncertainty in estimate of common effect. Under the RE model, variance is a sum of this uncertainty and heterogeneity ($\sigma_\tau^2$). 
+%JM: have edited the language but Rachael may still need to review the information content
+The Bayesian approach to meta-analysis also allows for a straightforward calculation of the effect's posterior predictive distribution (p.p.d.). Generically, the p.p.d. tells the researcher what values the unobserved data could assume, conditional on observed data. In the case of meta-analyses, where we are interested in true treatment effects, this refers to a prediction of the effect in ``one additional study'', $\tau'$, and therefore the generalizability of the intervention. Under the FE model, the p.p.d. is trivially equal to the distribution of the mean treatment effect (since they are shared by each study). In other words, all of uncertainty in the p.p.d. is uncertainty in the estimate of the common effect. Under the RE model, variance is a sum of this uncertainty and heterogeneity ($\sigma_\tau^2$). 
 
 \subsubsection*{Cross validation approach to model selection}
 
 Using p.p.d's calculated under Bayesian implementation of FE and RE models offers researchers a possibility to compare the two models. We follow Gelman et al. (2014) in implementing leave-one-out cross-validation, a method of estimating model's out-of-sample performance. This is done by excluding one study at the time, refitting the model to remaining studies, and calculating predictive performance in terms of expected log predictive density (elpd).
 
-
+%%%%%%%%%%%%%%%%%JM TO PROOFREAD FROM HERE
 \subsubsection*{Difficulty in choosing between RE and FE models}
 %WW: maybe this needs shortening? breaking into 2 paras?
 Even a researcher who is confident of heterogeneous effects cannot be certain of the distribution around the common effect $\tau$. The possibility of model error in the specification of the hierarchical model introduces some concern about the actual efficiency of any chosen RE estimator.\footnote{However, the RE estimator does have an important additional feature: 
@@ -364,7 +366,7 @@ We report on the results of meta-analysis without DEVTA trial in Table \ref{bagg
 
 It is important to also note that the heterogeneity estimate is not driven by exclusion of DEVTA. Whereas for 18 trials we found mean $I^2$ of 66\%, for the model of 17 trials we have $I^2 = 50\%$ (95\% interval from 1\% to 86\%). Thus the estimate of heterogeneity is even less precise, but on average the model still supports our concluson of heterogeneous effects.
 
-Our result suggests that the DEVTA result does not substantially alter the evidence on typical effect of vitamin A supplements available from other studies and thus should not be taken as evidence that previous studies ``overestimated'' the effect in any major sense. Excluding DEVTA trial also doesn't meaningfully change the estimated heterogeneity or pooling metrics (Table \ref{baggr-models-tab}, columns 2 and 4).\footnote{This makes sense in the context of our simulations, since DEVTA is not a ``typical'' location outlier. Four other studies which we include in our analysis have found higher point estimates, associated with smaller positive effects and even negative effects on child mortality (Table \ref{summary table}, leftmost column).}
+Our result suggests that the DEVTA result does not substantially alter the evidence on typical effect of vitamin A supplements available from other studies and thus should not be taken as evidence that previous studies ``overestimated'' the effect in any major sense. Excluding DEVTA trial also doesn't meaningfully change the estimated heterogeneity or pooling factors (Table \ref{baggr-models-tab}, columns 2 and 4).\footnote{This makes sense in the context of our simulations, since DEVTA is not a ``typical'' location outlier. Four other studies which we include in our analysis have found higher point estimates, associated with smaller positive effects and even negative effects on child mortality (Table \ref{summary table}, leftmost column).}
 
 %Inclusion of DEVTA still has a small impact on the average effect in BHM because of substantial heterogeneity in the effects. Despite its high precision, the DEVTA estimate alone is not sufficient to overturn or outweigh the evidence in the previous cluster of results, which are symmetrically and quite widely dispersed around 0.75. 
 
@@ -429,7 +431,7 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 
 \bibitem{garner} Garner, Paul, David Taylor-Robinson, and Harshpal Singh Sachdev (2013) ``DEVTA: results from the biggest clinical trial ever'' \emph{Lancet} Comment, Vol. 382.
 
-\bibitem{bda} Gelman, A., John B. Carlin, Hal S. Stern \& Donald B. Rubin (2004) "Bayesian Data Analysis: Second Edition", Taylor \& Francis.
+\bibitem{gelmanpardoe} Gelman, Andrew, \& Iain Pardoe. ‘Bayesian Measures of Explained Variance and Pooling in Multilevel (Hierarchical) Models’. Technometrics 48, no. 2 (May 2006): 241–51. https://doi.org/10.1198/004017005000000517.
 
 \bibitem{gelmanrubin} Gelman, A., \& Rubin, D. B. (1992)." Inference from iterative simulation using multiple sequences". Statistical science, 457-472.
 
