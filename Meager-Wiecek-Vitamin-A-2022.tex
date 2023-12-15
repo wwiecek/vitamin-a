@@ -190,6 +190,7 @@ Using p.p.d's calculated under Bayesian implementation of FE and RE models offer
 
 \subsubsection*{Difficulty in choosing between RE and FE models}
 %WW: maybe this needs shortening? breaking into 2 paras?
+%JM: done, split into 2 paras
 Even a researcher who is confident of heterogeneous effects cannot be certain of the distribution around the common effect $\tau$. The possibility of model error in the specification of the hierarchical model introduces some concern about the actual efficiency of any chosen RE estimator.\footnote{However, the RE estimator does have an important additional feature: 
 %WW: I think this footnote is hard to follow. Is shrinkage a term familiar to readers? uniform domination? James-Stein estimator?
 %JM: these terms aren't familiar to me (but I asked ChatGPT :))
@@ -256,8 +257,8 @@ The MSE for FE and RE (BHM) models is then calculated as the mean over $S$ simul
 
 We find that RE model performs better than FE for the normal-normal DGP. A reasonable complaint about the exercise above is that the BHM's superior performance was potentially due to the correct functional form specification. Therefore we now consider deviations from the normal-normal DGP. Overall the BHM still out-performs the FE estimator on average despite the functional form misspecification.
 
-%WW: let's discuss: isn't this about SEs in relation to heterogeneity in true effects? Easy check is to scale heterogeneity up and down, then 
-%see if the results stay constant. We should then say if this is the case!
+%WW: let's discuss: isn't this about SEs in relation to heterogeneity in true effects? Easy check is to scale heterogeneity up and down, then see if the results stay constant. We should then say if this is the case!
+%JM: not sure if I understand this comment
 The two methods perform similarly well when the point estimates have standard errors in the range [5,20]: the ratio of MSEs lies between 0.99 and 1.1 in this area, representing at most a 1\% improvement from using the FE estimator which occurs when the standard deviation of effects $\sigma_{\tau}$ lies in [0,5]. When $\sigma_{\tau}$ lies in [5,20], we can achieve 10\% improvement in MSE from using the BHM. However, when the standard errors lie in the range [0,5] the BHM is twice as efficient when $\sigma_{\tau}$ is also in this range, and up to four times as efficient when $\sigma_{\tau}$ is in [15,20]. This means that in these squares of the grid, the FE estimator has an increase in MSE of 300\% relative to the BHM. By contrast, in any given square of the grid the BHM has at most a 1\% increase in MSE relative to the FE when it is beaten by the FE method, which only occurs when $\sigma_{\tau}$ is very low.
 
 It may seem surprising that the BHM obtains a much lower MSE than the FE Estimator in the case where $\sigma_{\tau}$ lies in [0,5], which includes the case of no underlying heterogeneity. However, recall that the BHM nests the case of no heterogeneity: the model is perfectly capable of estimating $\sigma^2_{\tau}$ to be essentially zero and then effectively implementing the FE model. The BHM uses up a degree of freedom to perform this estimation, but its overall performance is still close to that of the FE estimator in this case. Of course, as shown in table \ref{table:simulations} in the Appendix, when $\sigma_{\tau} = 0$ the FE estimator does have a lower MSE than the BHM estimator: it must do, because correctly setting $\sigma^2_{\tau} = 0$ ex-ante is more efficient than estimating it to be 0. However the improvement is small in most of these simulations, and the largest relative improvement (a reduction by half) occurs when there is very little sampling error at all, so in practice this translates to very small absolute improvements. By contrast, the BHM can achieve major reductions in MSE when $\sigma_{\tau}$ is in the range $(0,5]$, so overall it has less than half the MSE of the FE on average in the range $[0,5]$.
@@ -363,6 +364,7 @@ Unfortunately, the original papers do not report sufficient information to permi
 
 The debate over the design of the DEVTA trial and the resulting difference in compliance rates relative to other studies has lead some researchers to suggest that it should not be included in meta-analyses. Sommer, West and Martorell (2013) dispute Awasthi et al.'s (2013) claims about the effectiveness of the DEVTA trial's supplement delivery mechanism and patient compliance, finally commenting "At best, DEVTA is but one unorthodox study, done in one remote population of one country." 
 %WW: The following is unclear. Why would you not include a program evaluation?
+%JM: think this point still needs to be addressed
 They also note that DEVTA is properly a program evaluation, and that it is further debatable whether it should be included Given the disagreement about whether DEVTA really belongs with the other studies. 
 
 We report on the results of meta-analysis without DEVTA trial in Table \ref{baggr-models-tab} and Figure \ref{baggr-density}. While the FE model is highly sensitive to exclusion of DEVTA, the RE model is much less affected. This difference between FE and RE models is illustrated in Figure 1, which shows strong overlap in p.p.d.'s for RE, but not FE, models.
@@ -375,6 +377,7 @@ Our result suggests that the DEVTA result does not substantially alter the evide
 
 %How heterogeneous are the effects across studies when DEVTA is excluded? The same pooling metric computed on the 8 remaining studies returns an average value of 0.31, indicating that substantial cross-study heterogeneity remains even without DEVTA. With DEVTA included, 71\% of the observed variation in estimated effects was attributed to genuine underlying heterogeneity; without DEVTA this number is 69\%, a minor reduction in heterogeneity. This makes sense because DEVTA is not a ``classical'' location outlier. Two other studies actually found higher point estimates, associated with smaller positive effects and even negative effects on child mortality, in the earlier literature (Vijayaraghavan et al 1990, Herrera 1992). 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%JM to continue from here
 %WW: how do we support the claim about the normal fitting well? Maybe later part of this paragraph is not necessary
 Overall, the normal distribution of true effects seems to fit vitamin A studies we analysed very well and no single study appears pivotal to the result. The general pattern indicates that the typical effect should be somewhere in the region of RR=0.75, but the posterior predictive distribution of future impacts is not highly concentrated around this point, due to the heterogeneity.
 
