@@ -56,7 +56,7 @@ data.frame(
 
 
 
-# Understand differences between I^2 and average pooling metric -----
+# Understanding differences between I^2 and average pooling metric -----
 
 i2 <- pl <- list()
 df <- expand.grid(sigma_tau = c(.1, 1, 5),
@@ -72,5 +72,25 @@ for(i in 1:nrow(df)) {
   i2[[i]] <- summary(mf)$I2
 }
 
+
+# Saving outputs -----
+
+# Save summary statistics (for version control)
+bgc <- baggr_compare(
+  "Full" = bg_imdad_full,
+  "Partial" = bg_imdad_partial,
+  "Full, no DEVTA" = bg_imdadnd_full,
+  "Partial, no DEVTA" = bg_imdadnd_partial)
+
+
+
+write_csv(
+  rbind(
+    bgc$mean_trt %>% round(2) %>% as.data.frame() %>% mutate(measure = "mean"),
+    bgc$sd_trt %>% round(2)%>% as.data.frame() %>% mutate(measure = "sd"),
+    bgc$posteriorpd_trt %>% round(2)%>% as.data.frame() %>% mutate(measure = "ppc")
+  ),
+  "meta-analysis/main_results_check.csv")
+
 # save.image("c:/github/vitamin-a/rerun.Rdata")
-save.image("fit_ma.Rdata")
+save.image("meta-analysis/fit_ma.Rdata")
