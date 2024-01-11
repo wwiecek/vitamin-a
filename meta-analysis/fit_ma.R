@@ -86,9 +86,21 @@ bgc <- baggr_compare(
 
 write_csv(
   rbind(
-    bgc$mean_trt %>% round(2) %>% as.data.frame() %>% mutate(measure = "mean"),
-    bgc$sd_trt %>% round(2)%>% as.data.frame() %>% mutate(measure = "sd"),
-    bgc$posteriorpd_trt %>% round(2)%>% as.data.frame() %>% mutate(measure = "ppc")
+    bgc$mean_trt %>% 
+      round(2) %>% 
+      as.data.frame() %>% 
+      rownames_to_column() %>% 
+      mutate(measure = "mean"),
+    bgc$sd_trt %>% 
+      round(2)%>% 
+      as.data.frame() %>% 
+      rownames_to_column() %>% 
+      mutate(measure = "sd"),
+    bgc$posteriorpd_trt %>% 
+      round(2)%>% 
+      as.data.frame() %>% 
+      rownames_to_column() %>% 
+      mutate(measure = "ppc")
   ),
   "meta-analysis/main_results_check.csv")
 
