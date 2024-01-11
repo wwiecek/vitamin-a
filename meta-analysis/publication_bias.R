@@ -48,6 +48,17 @@ metastudies_estimation(
   bind_cols() %>%
   t() %>% 
   round(3)
+# no DEVTA: relatively similar result
+metastudies_estimation(
+  imdad_nd$tau, 
+  imdad_nd$se, 
+  cutoffs = 1.96, 
+  symmetric = TRUE, 
+  model = "normal"
+) %>%
+  bind_cols() %>%
+  t() %>% 
+  round(3)
 
 
 
