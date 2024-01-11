@@ -5,7 +5,7 @@ library(tidyverse)
 library(baggr)
 library(metafor)
 set.seed(1990)
-source("prepare_ma_data.R")
+source("meta-analysis/prepare_ma_data.R")
 imdad <- imdad2022 %>%  #for convenience
   filter(group != "Lin 2008")
 imdad_nd <- filter(imdad, group != "DEVTA 2013")

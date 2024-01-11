@@ -6,7 +6,7 @@ library(metafor)
 library(ggdist)
 theme_set(theme_minimal(base_size = 10))
 set.seed(1990)
-source("prepare_ma_data.R")
+source("meta-analysis/prepare_ma_data.R")
 
 # We find only minor disagreements between the three studies in terms of input data
 rbind(
