@@ -120,7 +120,7 @@ By law of total variation and the properties of sum of normal distributions,
 \end{aligned}
 \end{equation}
 
-%WW: Rachael to check my language
+
 Since the estimator is consistent, the combination of weights that minimises MSE will lead to an efficient estimator. By the same argument that produced the optimal weights in the FE model, 
 
  \begin{equation}\label{efficient}
@@ -134,7 +134,8 @@ Using these weights implements a random effects (RE) estimation method. When $\s
 %The more heterogeneous the study settings, the less likely this is to be true, all else equal. 
 When the true $\sigma^2_{\tau}$ is very large, the FE estimate may be very misleading. 
 %WW: I remove this strong claim on the next line, since it may need some sort of proof:
-%When treatment effects are heterogeneous across studies is statistically inefficient to let any single estimate strongly affect the estimated general effect, since each study still represents only 1 data point from the underlying distribution of treatment effects. 
+%RM: i reworded, if you approve then uncomment, if not then delete it 
+%When underlying treatment effects are genuinely heterogeneous across studies, it is typically undesirable to let any single estimated treatment effect have overwhelming influence on this average even if it is much more precise than the others, since each study still represents only one data point from the underlying distribution of treatment effects. 
 The RE estimator accounts for underlying heterogeneity and thus tempers the influence that any single study can have on the estimate of $\tau$.
 
 The RE estimator in \eqref{efficient} is optimal if $\sigma^2_{\tau}$ is known and if the effects are independently, identically, and normally distributed around their common mean. 
@@ -166,7 +167,8 @@ When values of the pooling factor are close to 1, sampling variation in studies 
 \subsubsection*{Posterior predictive distributions}
 
 %WW: Rachael to review this and edit
-The Bayesian approach to meta-analysis also allows for a straightforward calculation of the effect's posterior predictive distribution (p.p.d.). Generically, the p.p.d. tells the researcher what values the unobserved data could assume, conditional on observed data. In the case of meta-analyses, where we are interested in true treatment effects, this refers to a prediction of the effect in ``one additional study'', $\tau'$, and therefore the generalizability of the intervention. Under the FE model, the p.p.d. is trivially equal to the distribution of the mean treatment effect (since they are shared by each study). In other words, all of uncertainty in the p.p.d. is uncertainty in the estimate of the common effect. Under the RE model, variance is a sum of this uncertainty and heterogeneity ($\sigma_\tau^2$). 
+%RM: i did so, check it out, lmk if any issues or confusion 
+The Bayesian approach to meta-analysis also allows for a straightforward calculation of the effect's posterior predictive distribution (p.p.d.). Generically, the p.p.d. tells the researcher what values the future data may take, conditional on observed data. In the case of meta-analyses, where we are interested in true treatment effects, this refers to a prediction of the effect in ``one additional study'' or ``the next study'' , $\tau'$, and therefore the generalizability of the intervention. Under the FE model, the p.p.d. is trivially equal to the distribution of the mean treatment effect (since they are shared by each study). In other words, all of uncertainty in the p.p.d. is uncertainty in the estimate of the common effect. Under the RE model, variance is a sum of this uncertainty and the genuine heterogeneity across settings ($\sigma_\tau^2$). 
 
 \subsubsection*{Cross validation approach to model selection}
 
@@ -174,9 +176,7 @@ Using p.p.d's calculated under Bayesian implementation of FE and RE models offer
 
 \subsubsection*{Difficulty in choosing between RE and FE models}
 
-Even a researcher who is confident of heterogeneous effects cannot be certain of the distribution around the common effect $\tau$. The possibility of model error in the specification of the hierarchical model introduces some concern about the actual efficiency of any chosen RE estimator.\footnote{However, the RE estimator does have an important additional feature: 
-%WW: I find this footnote is hard to follow. Is shrinkage a term familiar to readers? uniform domination? James-Stein estimator?
-it performs shrinkage which generates estimates of  $\{{\tau}_k\}_{k=1}^K$ that uniformly dominate $\{\hat{\tau}_k\}_{k=1}^K$ when $K \geq 3$ in terms of total mean-squared error even in the extreme case when the studies are statistically independent; this is proved in James and Stein (1961).} This problem does not imply that we should use the FE model instead, since if the underlying effects are heterogeneous then the FE estimator is also inefficient. Nor can we rely on popular tests of homogeneity in effects, as they typically have insufficient power to detect heterogeneity (Field, 2001). 
+Even a researcher who is confident of heterogeneous effects cannot be certain of the distribution around the common effect $\tau$. The possibility of model error in the specification of the hierarchical model introduces some concern about the actual efficiency of any chosen RE estimator. This problem does not imply that we should use the FE model instead, since if the underlying effects are heterogeneous then the FE estimator is also inefficient. Nor can we typically rely on popular tests of homogeneity in effects, as they often have insufficient power to detect heterogeneity (Field, 2001). 
 
 In practice, particularly for experiments performed in the field across different countries, researchers are often unwilling to rule out heterogeneity completely yet unhappy to draw inferences that are based on a potentially misleading specification of that heterogeneity. The relevant question then is which of the two meta-analytic approaches is likely to perform better in the presence of heterogeneity under a variety of conditions and, in particular, when the RE model misspecifies the distribution of treatment effects across studies.
 
@@ -335,9 +335,7 @@ Unfortunately, the original papers do not report sufficient information to permi
 
 \subsection{Robustness to exclusion of DEVTA trial}
 
-The debate over the design of the DEVTA trial and the resulting difference in compliance rates relative to other studies has lead some researchers to suggest that it should not be included in meta-analyses. Sommer, West and Martorell (2013) dispute Awasthi et al.'s (2013) claims about the effectiveness of the DEVTA trial's supplement delivery mechanism and patient compliance, finally commenting ``At best, DEVTA is but one unorthodox study, done in one remote population of one country.'' 
-%WW: The following is unclear. Why would you not include a program evaluation? (Q to Rachael)
-They also note that DEVTA is properly a program evaluation. Given the disagreement about whether DEVTA really belongs with the other studies, it is debatable as to whether it should be included in the meta-analysis.
+The debate over the design of the DEVTA trial and the resulting difference in compliance rates relative to other studies has lead some researchers to suggest that it should not be included in meta-analyses. Sommer, West and Martorell (2013) dispute Awasthi et al.'s (2013) claims about the effectiveness of the DEVTA trial's supplement delivery mechanism and patient compliance, finally commenting ``At best, DEVTA is but one unorthodox study, done in one remote population of one country.'' Given the disagreement about whether DEVTA really belongs with the other studies, it is debatable as to whether it should be included in the meta-analysis.
 
 We report on the results of meta-analysis without the DEVTA trial in Table \ref{baggr-models-tab} and Figure \ref{baggr-density}. While the FE model is highly sensitive to exclusion of DEVTA, the RE model is affected much less. This difference between FE and RE models is illustrated in Figure 1, which shows strong overlap in p.p.d.'s for RE, but not FE, models.
 
@@ -350,6 +348,7 @@ Our result suggests that the DEVTA result does not substantially alter the evide
 %How heterogeneous are the effects across studies when DEVTA is excluded? The same pooling metric computed on the 8 remaining studies returns an average value of 0.31, indicating that substantial cross-study heterogeneity remains even without DEVTA. With DEVTA included, 71\% of the observed variation in estimated effects was attributed to genuine underlying heterogeneity; without DEVTA this number is 69\%, a minor reduction in heterogeneity. This makes sense because DEVTA is not a ``classical'' location outlier. Two other studies actually found higher point estimates, associated with smaller positive effects and even negative effects on child mortality, in the earlier literature (Vijayaraghavan et al 1990, Herrera 1992). 
 
 %WW: Q to Rachael: how do we support the claim about the normal fitting well? Maybe later part of this paragraph is not necessary
+%RM: yeah good point, I would delete this whole paragraph, unless you see some reason to keep it. 
 Overall, the normal distribution of true effects seems to fit vitamin A studies we analysed very well and no single study appears pivotal to the result. The general pattern indicates that the typical effect should be somewhere in the region of RR=0.75, but the posterior predictive distribution of future impacts is not highly concentrated around this point, due to the heterogeneity.
 
 The DEVTA result is a precision outlier, a type of result which, as we have shown in our simulations, may have a detrimental effect on the performance of the FE estimator in presence of heterogeneity. Precision outliers do not heavily impede the performance of BHMs because they are designed to detect heterogeneity and reweight the evidence accordingly. It is not the case that highly precise studies are ``underweighted'' or ``overweighted'' in any given method. Rather, when true treatment effect are heterogeneous any single estimate should not heavily influence the general estimate no matter how precise it is. While high precision indicates high information about the site $k$ in which the effect was estimated, this site is still just a singular data point in the set of $K$ data points. High precision does not necessarily indicate highly generalizable information. 
@@ -376,7 +375,7 @@ Fundamentally, in the presence of heterogeneous treatment effects, precision in 
 Because the FE estimator cannot distinguish these two concepts, it underestimates the reduction in mortality risk, and is overly precise. 
 Our findings are in keeping with previous work showing that the FE estimator typically overstates the precision of meta-analysis findings (Schmidt, Oh and Hayes, 2011) and thus the RE estimator is generally preferable when seeking to generalize beyond the set of studies in hand (Borenstein et al, 2010). 
 %WW: Q to Rachael: how would you justify this next sentence? Also, should we move references from the previous para to earlier in the text?
-This analysis also confirms the advantages of the Bayesian approach to meta-analysis (Smith, Spiegelhalter, and Thomas, 1995).
+%RM: I deleted the sentence, you were right. You can move the cites up, if you like, or can just delete them.
 
 The evidence shows that the general impact of vitamin A supplements on all-cause child mortality is substantial. However, it also suggests important differences in treatment effects across studies, and caution should be used before extrapolating from the studies in this literature into new settings. Given the biological mechanisms, vitamin A supplements should have a much larger effect on mortality when the population has a high rate of severe vitamin A deficiency, and this alone could account for the observed heterogeneity. However, study design could play an equally important role, given the major differences in delivery mechanism, compliance and monitoring across studies. Future work could explore the sources of this cross-site heterogeneity, and thus improve the effectiveness of the supplements in low-impact settings or target supplement programs more effectively to areas that need them most.
 
