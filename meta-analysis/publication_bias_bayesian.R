@@ -8,7 +8,7 @@ mod <- stan_model("meta-analysis/selection_rubin.stan")
 # Testing Bayesian model on simulated datasets -----
 
 sim <- replicate(100, {
-  df <- ma_generator(rel_pp = 0.9) 
+  df <- ma_generator(rel_pp = 1) 
   
   ak_result <- try(metastudies_estimation(
     df$yi,
@@ -23,7 +23,7 @@ sim <- replicate(100, {
   else
     ak_res <- ak_result %>% bind_cols() %>% t() %>% round(3)
   
-  fit <- sampling(mod, data = list(y = df$y, se = df$se, K = nrow(df), c = 1.96), refresh = 0)
+  fit <- sampling(mod, data = list(y = df$yi, se = df$sei, K = nrow(df), c = 1.96), refresh = 0)
   pars <- c("tau", "sigma_tau", "omega")
   x <- extract(fit, pars)
   bayes_res <- rbind(mean = sapply(x, mean), sd = sapply(x, sd))
@@ -32,6 +32,7 @@ sim <- replicate(100, {
 })
 
 validrows <- !is.na(sim[1,3,]) & (sim[1,3,] < 10)
+sum(validrows)
 # summary of point estimates mu, tau, Pr AK parameters:
 apply(sim[1,,validrows], 1, summary)
 # summary of mean Bayesian parameters
