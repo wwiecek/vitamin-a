@@ -4,6 +4,7 @@ library(baggr)
 library(metafor)
 set.seed(1990)
 source("meta-analysis/prepare_ma_data.R")
+
 imdad <- imdad2022 %>%  #for convenience
   filter(group != "Lin 2008")
 imdad_nd <- filter(imdad, group != "DEVTA 2013")
@@ -96,9 +97,11 @@ ma_generator <- function(se_sim = imdad$se,
   data.frame(yi, sei)
 }
 
-# par(mfrow = c(3,3))
-sim <- replicate(500, {
-  df <- ma_generator(mu = -0.131, tau = 0.085, rel_pp = 1) 
+# Now compare a few different settings (by hand!) for ma_generator():
+
+sim <- replicate(100, {
+  df <- ma_generator() 
+  # df <- ma_generator(mu = -0.131, tau = 0.085, rel_pp = 1) 
   # rm <- rma(yi=yi, sei=sei, data = df)
   # funnel(rm)
   # regtest(rm)
@@ -117,10 +120,12 @@ sim <- replicate(500, {
     round(3)
   
 })
-
 # summary of mu, tau, Pr:
 apply(sim[1,,], 1, summary)
 sim[1,3,] %>% hist(breaks = 100, xlim = c(0, 2))
+
+
+# This is what I saw:
 # it performs quite nicely given that it's only 18 studies
 # i.e. it retrieves the parameters quite well if the model is correctly specified
 
