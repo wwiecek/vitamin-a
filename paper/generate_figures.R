@@ -89,3 +89,16 @@ rbind(dt1 %>% mutate(model = "Fixed-effects model (p.p.d.)"), dt2 %>% mutate(mod
   scale_color_discrete(name = "")
 
 ggsave(file = "figures/baggr-oos-ppc.pdf", width = 16, height = 18, units = "cm")
+
+
+
+
+# Figure: funnel plot -----
+library(metafor)
+imdad <- imdad2022 %>%  #for convenience
+  filter(group != "Lin 2008")
+imdad_nd <- filter(imdad, group != "DEVTA 2013")
+metafor_re <- rma(data = imdad, yi = tau, sei = se)
+pdf("figures/funnel.pdf", width = 6.3, height = 5)
+funnel(metafor_re)
+dev.off()

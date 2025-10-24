@@ -30,6 +30,7 @@ Vitamin A supplementation is considered one of the most effective interventions 
 We compare the theoretical properties and empirical performance of classical fixed-effects and  random-effects meta-analysis models on simulated bodies of evidence. We consider Bayesian implementation using a hierarchical model. We find that using random effects either matches or substantially outperforms the fixed effects method in terms of mean squared error and is robust to misspecification of the likelihood. 
 
 Applied to a set of 18 studies, a Bayesian model estimates that vitamin A supplementation reduces mortality risk by 25\% (95\% interval 40\% to 11\%), compared to 12\% under the fixed-effects model (95\% interval 7\% to 17\%). 
+
 The model suggests that the underlying heterogeneity across studies is large (66\% of the cross-study variation attributable to genuine differences in treatment effects), but this is not precisely estimated (95\% interval 26\% to 91\%).
 Fixed effects thus underestimate both the reduction in mortality and the uncertainty surrounding the general effect of supplementation. 
 
@@ -42,14 +43,34 @@ Public health researchers and international aid organisations consider vitamin A
 The biological mechanism by which vitamin A affects mortality is relatively well understood: retinoic acid has a specific role in visual system function and in the immune system where it improves T and B cell gut-homing capacity and enhances T cell proliferation (Mora et al, 2008 and Iwata et al 2004). This explains why vitamin A deficiency is often associated with greater mortality risk in longitudinal data (Sommer et al, 1983). While the effect of supplementation in the absence of vitamin A deficiency is unclear, this deficiency is prevalent in so many developing countries that the World Health Organisation recommends general supplementation (WHO, 2016). 
 Recent meta-analyses have concluded that the average risk ratio of supplementation is 0.76 and thus recommend universal supplementation (Mayo-Wilson et al 2011, Imdad et al 2022). 
 
-However, some recent results from the largest ever randomised controlled trial (RCT) of vitamin A supplementation threaten to overturn this consensus (Awasthi et al, 2013). The study, performed in India, reported only a small and statistically insignificant reduction in child mortality. This was not the first time a study had found no effect of vitamin A, and one previous study even found a slight and insignificant increase in mortality (Herrera et al, 1996). But Awasthi et al (2013), often called the ``DEVTA trial'', studied millions of subjects and produced the most precise estimate of the risk ratio ever recorded. However, despite this impressive precision, the DEVTA trial was unusual in many ways: in particular, it had a different delivery mechanism and a lower rate of compliance relative to other studies (Awasthi et al 2013, Sommer et al 2013). As a result, some researchers remain unconvinced that the DEVTA trial should meaningfully overturn or alter the conclusions of the previous three decades of research on Vitamin A (Sommer et al, 2013, and Garner et al, 2013).
+However, results from the DEVTA trial, the largest ever randomised controlled trial (RCT) 
+of vitamin A supplementation, threaten to overturn this consensus (Awasthi et al, 2013). 
+The study, performed in India, reported only a small and statistically insignificant 
+reduction in child mortality. This was not the first time a study reported no effect 
+of vitamin A, and one previous study even found a slight and insignificant increase 
+in mortality (Herrera et al, 1996). But Awasthi et al (2013), studied millions of 
+subjects and produced the most precise estimate 
+of the risk ratio ever recorded. However, despite this impressive precision, the 
+DEVTA trial was unusual in many ways: in particular, it had a different delivery 
+mechanism and a lower rate of compliance relative to other studies 
+(Awasthi et al 2013, Sommer et al 2013). As a result, some researchers remain unconvinced 
+that the DEVTA trial should meaningfully overturn or alter the conclusions of the 
+previous three decades of research on Vitamin A (Sommer et al, 2013, and Garner et al, 2013).
 
-Faced with severe disagreements in the scientific community about the implications of a body of research, the methodological question of how to aggregate and interpret the evidence from seemingly-contradictory studies becomes crucially important. This question has material consequences for science and policy, because the conclusions of evidence aggregation exercises are often sensitive to the statistical methodologies chosen in these contexts. Both Imdad et al (2011) and Awasthi et al (2013) fit a fixed-effects meta-analysis model and found a risk ratio of 0.89, a difference of more than ten percentage points from the meta-analyses using random-effects (Mayo-Wilson et al 2011, Imdad et al 2022).\footnote{In the economics literature, terms "constant effects" and "random coefficients" are used for fixed and random effects respectively.} Sommer et al (2013) note the heterogeneity in the results and suggest that a random effects aggregation model would produce more reliable results. Awasthi et al (2013) claim that random effects meta-analytic techniques overweight small studies, and "conceal the reliability" of large studies such as DEVTA; Sommer et al (2013) argue that fixed effects techniques underweight small studies and overweight large trials.\footnote{Imdad et al. discuss the results as follows: ``We acknowledge that the addition of DEVTA trial 2013 results decreased the overall effect size for this outcome compared to previous analysis for this review. However, we consider that vitamin A has robust effects on mortality as the direction of effect is in favour of intervention in most of the studies and summary estimate remains statistically significant irrespective of the use of random‐ or fixed‐effect models''} 
+Faced with disagreements in the scientific community about the implications 
+of a body of research, the methodological question of how to aggregate and interpret 
+the evidence from seemingly-contradictory studies becomes crucially important. 
+This question has material consequences for science and policy, because the conclusions 
+of evidence aggregation exercises are often sensitive to the statistical methodologies 
+chosen in these contexts. Both Awasthi et al (2013) and a Cochrane review by Imdad et al (2022) fit a fixed-effects meta-analysis model and find reduction in risk of mortality of 11-12\%, a difference of more than ten percentage points from the meta-analyses using random-effects (reported as sensitivity analyses by Mayo-Wilson et al 2011, Imdad et al 2022).\footnote{In the economics literature, terms "constant effects" and "random coefficients" are used for fixed and random effects respectively.} Sommer et al (2013) note the heterogeneity in the results and suggest that a random effects aggregation model would produce more reliable results. 
 
-In this paper, we investigate which method should be used to aggregate the evidence in the vitamin A literature, and apply that method to perform a new meta-analysis. We review the theoretical properties of fixed and random effects estimators and investigate their empirical performance on simulated literatures. 
+Awasthi et al (2013) claim that random effects meta-analytic techniques overweigh small studies, and "conceal the reliability" of large studies such as DEVTA; Sommer et al (2013) argue that fixed effects techniques underweight small studies and overweight large trials.
+%\footnote{Imdad et al. discuss the results as follows: ``We acknowledge that the addition of DEVTA trial 2013 results decreased the overall effect size for this outcome compared to previous analysis for this review. However, we consider that vitamin A has robust effects on mortality as the direction of effect is in favour of intervention in most of the studies and summary estimate remains statistically significant irrespective of the use of random‐ or fixed‐effect models''}
+Giving more credence to smaller studies can be a problem in presence of publication bias towards positive or significant results. Consequently, this bias is corroborated by inspection of funnel plots in both Mayo-Wilson et al and Imdad et al meta-analyses, suggesting that a meta-analytic model should also consider adjustments for potential publication bias.
 
 Earlier work by Hedges and Vevea (1998), Overton (1998), and Field (2001) reported simulation studies assuming that the functional form of either the fixed-effects (FE) model or the random-effects (RE) model was exactly correct, and scored performance by type 1 error rate. By contrast, we examine performance on a wider range of data-generating processes for which neither meta-analytic model is exactly correct, including distributions with fat tails and multi-modal mixture distributions. To assess performance, we conduct a Monte Carlo simulation and compare the mean squared error (MSE) of both procedures in estimating the average treatment effect. This approach is chosen over evaluating hypothesis test error rates. We do this because research communities are increasingly interested in getting an estimate as close as possible to the true effect size, not simply testing for the existence of a non-zero effect (Wasserstein and Lazar 2016). We then fit both FE and RE models using data from the most recent meta-analysis by Imdad et al. (2022) and conduct a formal comparison of these two models.
 
+In this paper, we investigate which method should be used to aggregate the evidence in the vitamin A literature, and apply that method to perform a new meta-analysis. We review the theoretical properties of fixed and random effects estimators and investigate their empirical performance on simulated literatures. Lastly, we examine publication bias and apply adjustments to the overall effect sizes that take it into account.
 
 
 \section{Methodologies for Meta-Analysis}
@@ -174,6 +195,23 @@ In practice, particularly for experiments performed in the field across differen
 
 
 
+\subsection{Publication bias}
+
+Publication bias is likely based on what was reported by Imdad et al (2022) and Mayo-Wilson et al (2011) meta-analyses. The weight of evidence that we give to small studies is closely related to the issue of publication bias towards positive or significant results, which may lead to overrepresentation of small studies in our sample. Of course, even without these concerns the publication bias will bias the treatment effect estimates. Therefore we have two aims. First, we assess if the publication bias is present using qualitative and quantiative methods. Second, we calculate an ``adjusted'' treatment effect estimate: one obtained under a model which allows for publication bias.
+
+\subsubsection{Assessment of small‐study and publication bias}
+
+We first use graphical and formal diagnostics that are standard in meta‐analysis. Funnel plots display study‐level effect estimates against their standard errors. Visually apparent asymmetry can arise from selective non-reporting of small, non-significant studies, as well as from genuine relationship between effect size and study size.
+
+We use two established tests for funnel‐plot asymmetry by Egger (1997) and Begg-Mazdumar. The Egger regression test asks whether, across studies, effects systematically vary with their precision; a non-zero intercept is evidence that smaller, less precise studies tend to report different effects than larger, more precise studies. This pattern is consistent with small-study effects and selective reporting, and it matters because it implies the pooled estimate may be pulled away from what the largest, most informative trials indicate. The Begg–Mazumdar test complements this by checking whether there is a monotone association between study effects and their variances using rank correlation; a significant correlation likewise signals asymmetry of the funnel and potential small-study effects. Both tests are interpreted cautiously when heterogeneity is substantial or when the number of studies is small; we report them alongside the funnel plots.
+
+\subsubsection{Adjustment for publication bias}
+
+Where publication bias is plausible, it is often modeled as selection on statistical significance. In the simplest version, we parameterize selection with \(\omega \in (0,1]\), the \emph{relative} publication probability for studies whose test statistic is non-significant (conventionally \(|z| \equiv |\hat{\tau}_k| / se_k \le 1.96\), which corresponds to 5\% significance level) compared with significant studies (\(|z|>1.96\)). Thus \(\omega<1\) indicates that non-significant results are less likely to be observed. This is a selection (weight-function) model in the spirit of Hedges (1992), and we implement it using the frequentist identification strategy of Andrews and Kasy (2019). We assume a symmetric, two-sided threshold of 1.96 that does not favor the sign
+
+Under the selection model with random effects, we jointly estimate \(\omega\) along with \(\tau'\) and \(\sigma'_{\tau}\), the \emph{publication-bias–adjusted} hypermean and between-study standard deviation. Intuitively, the observed set of studies is a selectively sampled subset of all conducted studies; the observed-data likelihood is therefore proportional to the standard random-effects likelihood reweighted by the selection probabilities, with a normalizing constant that depends on \(\omega\). Following Andrews and Kasy maximum likelihood approach we obtain and report \((\hat\tau', \widehat{\sigma'_{\tau}}, \hat\omega)\). If $\omega < 1$, this adjustment will typically shrink the pooled effect toward zero and may reduce the estimated heterogeneity; however, the direction and magnitude are empirical and not guaranteed in finite samples. We compare the adjusted quantities to their unadjusted (Bayesian random-effects) counterparts.
+
+
 
 \subsection{Monte Carlo Simulations} \label{section:simulations}
 
@@ -268,13 +306,19 @@ Before proceeding, we note that an earlier meta-analysis by Mayo-Wilson et al. (
 
 The previous theoretical analysis and simulation studies suggest that a random effects analysis using a Bayesian hierarchical model is typically a more appropriate choice of methodology for aggregating evidence relative to the FE model. While the FE estimator can beat the BHM when heterogeneity is small relative to sampling error, it rarely achieves a major reduction in MSE in the simulation study presented here. By contrast when the BHM beats the FE model it routinely achieves an MSE half as large, and in some cases can achieve an MSE less than 1/5th the size of its competitor's MSE. This is a very favourable efficiency versus robustness tradeoff, giving a strong argument to consider the RE model implemented via BHM as default choice for meta-analysis. 
 
-The vitamin A literature is particularly suited to aggregation using RE because there is scientific and statistical evidence that underlying effects are heterogeneous across contexts and that this heterogeneity is likely large relative to the sampling error. 
-
-Vitamin A studies we consider here differ in important ways, spanning several different countries, time periods, implementation and distribution methods and base rates of vitamin A deficiency in the populations studied. Supplementation only has theoretically-grounded medical benefits for individuals with a vitamin A deficiency. As a result, the rate of deficiency in the population is likely to have a major impact on the observed effect of supplementation on the population's risk ratio. 
+The vitamin A literature is particularly suited to aggregation using RE because there is scientific and statistical evidence that underlying effects are heterogeneous across contexts and that this heterogeneity is likely large. Vitamin A studies we consider here differ in important ways, spanning several different countries, time periods, implementation and distribution methods and base rates of vitamin A deficiency in the populations studied. Supplementation only has theoretically-grounded medical benefits for individuals with a vitamin A deficiency. As a result, the rate of deficiency in the population is likely to have a major impact on the observed effect of supplementation on the population's risk ratio. 
 
 There is also statistical evidence for heterogeneity, primarily that the 95\% confidence intervals for the risk ratios do not overlap in many of the studies. Both the DEVTA (2013) study's interval and the Herrera (1992) interval do not overlap with both the Rahmathullah (1990) interval and the Arthur (1992) interval. Indeed, the $\chi^2$ test results presented in Webtable 3 of Awasthi et al (2013) show strong evidence of heterogeneity: the authors do not discuss these results, but the low p-values in this context are indicative of heterogeneity (Cochrane Handbook Section 9.5.2). Moreover, the DEVTA study (Awasthi et al 2013) is almost an order of magnitude more precise than the other studies in the literature. This study is a precision outlier, and as we saw in the simulations, it is preferable to use an RE model in such a case.
 
-All of the above suggests that BHM is appropriate methodology to aggregate the evidence on the effect of Vitamin A supplements on all-cause child mortality. We therefore fit both FE and RE models using Bayesian inference, which in turns allows us to compare them in terms of expected log predictive density.
+All of the above suggests that a random-effects model is an appropriate choice. We therefore fit both FE and RE models using Bayesian inference, which in turns allows us to compare them in terms of expected log predictive density. We use weakly informative priors centered at zero (no impact of the intervention):
+
+\begin{equation} \label{lognormal priors}
+\begin{aligned}
+\log{RR} &\sim  \mathcal{N}(0,10^2) \\
+\sigma^2_{\log{RR}} &\sim U[0,10].
+\end{aligned}
+\end{equation}
+
 
 
 %\subsection{Bayesian Hierarchical Analysis}
@@ -297,20 +341,11 @@ All of the above suggests that BHM is appropriate methodology to aggregate the e
 %\end{aligned}
 %\end{equation} 
 
-For the BHM we use weakly informative priors centered at zero (no impact of the intervention):
-
-\begin{equation} \label{lognormal priors}
-\begin{aligned}
-\log{RR} &\sim  \mathcal{N}(0,10^2) \\
-\sigma^2_{\log{RR}} &\sim U[0,10].
-\end{aligned}
-\end{equation}
-
 
 
 \subsection{ Results  }
 
-The results for Bayesian models with fixed and random effects are reported in Tables \ref{baggr-models-tab} (log scale) and \ref{baggr-tab-exp} (raw scale) and Figure \ref{baggr-density}. For the BHM of all studies we find the mean RR is 0.75 (95\% interval from 0.60 to 0.89), compared to 0.88 under FE model (95\% interval from 0.83 to 0.93). Our FE result is identical to the value reported by Imdad et al (2022), whereas for RE we find a marginally higher benefits than the original meta-analysis.\footnote{The difference is likely due to using BHM which, as we discussed earlier, tends to  estimate higher heterogeneity than typical frequentist implementations of RE models in statistical software.}
+The results for Bayesian models with fixed and random effects are reported in rows 1 and 3 of Tables \ref{baggr-models-tab} (log scale) and \ref{baggr-tab-exp} (raw scale) and in Figure \ref{baggr-density}. For the BHM of all studies we find the mean RR is 0.75 (95\% interval from 0.60 to 0.89), compared to 0.88 under FE model (95\% interval from 0.83 to 0.93). Our FE result is identical to the value reported by Imdad et al (2022), whereas for RE we find a marginally higher benefits than the original meta-analysis.\footnote{The difference is likely due to using BHM which, as we discussed earlier, tends to  estimate higher heterogeneity than typical frequentist implementations of RE models in statistical software.}
 The effect under RE model is more diffuse than under the FE model, but both models suggest that in the analysed sample of studies vitamin A supplements have on average considerably reduced child mortality. As we discussed in detail, the FE method gives a higher and more precise estimate of $RR$ because it does not take into account the heterogeneity across sites. 
 %The BHM detects this heterogeneity and incorporates this into the dispersion of the posterior distribution of $\tau$. The resultingly wider 95\% interval shows that we should be much less confident in our specific point estimate of the general RR than the FE method suggests. 
 
@@ -321,6 +356,20 @@ This heterogeneity is also reflected in the posterior predictive distribution of
 Uncovering substantial heterogeneity prompts the question of why the impact is different across settings. In principle this question can be answered using contextual variables that describe differences in both the study designs and local contexts. In the vitamin A literature, there is presumably substantial variation in baseline vitamin A deficiency and the public health infrastructure that supports the intervention. The design of the trials also varies, particularly in the delivery mechanism which was direct in most cases but done via regional health centers in Awasthi et al (2013), leading to lower compliance with the supplement regime. Additionally, only some of the trials were double-blinded, and the intensity of the monitoring of outcomes per child differed dramatically across studies. 
 
 Unfortunately, the original papers do not report sufficient information to permit the construction of quantitative variables suitable for statistical analysis. For example, many studies did not collect data on the control group rates of vitamin A deficiency, since observing cases of xerophthalmia and nightblindness in the children of the communities being studied is indicative of a severe enough deficiency to plausibly justify intervention. This rationale makes sense within each individual study, but has lead to a situation in which it is now impossible to determine how much heterogeneity is due to characteristics of studied populations versus study design. This serves as a reminder that collecting data on contextual variables in field trials is important for the scientific process. 
+
+
+\subsection{Publication bias}
+
+Similarly to previous authors, we find signs of publication bias and small0study effects in the vitamin A supplementation and child mortality literature. The funnel plot (which mirrors Figure 5 in Imdad et al 2022) is Figure \ref{funnel}. Visual inspections suggests some asymmetry.
+This is further supported by the Egger regression, where intercept is significant under the random‐effects specification (two‐sided \(p=0.0067\), \texttt{metafor} in \textsf{R}), and also under a fixed‐effect specification (two‐sided \(p<0.0001\)). By contrast, Begg–Mazumdar’s rank correlation test is not statistically significant, and a simple regression of effects on (co)variance likewise does not reject symmetry. We interpret the overall pattern as indicative of small‐study effects while noting that such diagnostics have limited power with \(K\approx 18\) and can be confounded by genuine effect modification.
+
+We then quantify the potential impact of selection using the Andrews–Kasy selection model with a symmetric significance threshold at \(|z|=1.96\). For the full set of trials (including DEVTA), the frequentist maximum‐likelihood fit yields an estimated relative publication probability of \(\hat\omega=0.17\) (SE \(0.12\)), together with bias‐adjusted random‐effects parameters \(\hat\tau'=-0.13\) (SE \(0.07\)) and \(\widehat{\sigma'_{\tau}}=0.09\) (SE \(0.07\)). This corresponds to a pooled 12\% reduction in mortality risk.
+Excluding DEVTA leads to similar results. These estimates are reported in Tables~\ref{baggr-models-tab} (log scale) and~\ref{baggr-tab-exp} (risk‐ratio scale; rows 5–6).
+
+Relative to the unadjusted Bayesian random‐effects fit $(\tau =  -0.29)$, the selection adjustment attenuates the pooled effect and substantially lowers the estimated between‐study heterogeneity, consistent with the hypothesis of lower probability of reporting of non-significant results. 
+
+Given the modest number of studies and the identification limits of two‐region selection models, we treat these adjusted estimates as likely evidence of need to shrink the RE estimates rather than dispositive corrections on the magnitude of effects. To further examine this, we ran an additional Monte Carlo simulations on simulated data. Our 
+goal was to assess whether the Andrews–Kasy estimator can recover parameters in settings like ours. We chose the same $K = 18$ and same set of standard errors as in Imdad et al 2022, but with effect sizes drawn from the distribution estimated by BHM and with selection determined by reaching significance. In the presence of strong selection, $\omega = 0.17$, the procedure recovered both \(\tau'\) and \(\omega\) reasonably well on average (with \(\hat\omega\) right‐skewed but median close to the truth), and the induced attenuation in the pooled effect was similar to what we find empirically. However, when bias is absent (\(\omega=1\)) the estimator was unstable with wide intervals and frequent near‐boundary estimates.
 
 
 \subsection{Robustness to exclusion of DEVTA trial}
@@ -354,6 +403,8 @@ In summary, the LOO CV procedure justifies choice of an RE model regardless of w
 
 
 
+
+
 \section{Conclusion}
 
 The controversy in the vitamin A literature arose in part because of disagreements over the validity of using FE to aggregate the evidence, and the suitability of the RE alternative in this setting. Although Awasthi et al (2013) argued that RE models "conceal the reliability" of large trials and "give undue weight to small trials," the analysis presented in this paper shows that there are strong theoretical and empirical reasons to prefer the RE approach. While FE models are optimal under homogeneous treatment effects, RE models are optimal when the effects have underlying heterogeneity. When neither model describes the true data-generating structure, Monte Carlo simulation results show that the Bayesian hierarchical model either matches or outperforms the FE estimator by a wide margin in terms of MSE.
@@ -371,6 +422,8 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 \begin{thebibliography}{99}
 
 \bibitem{altman} Altman,  Douglas G. , David Machin, Trevor N. Bryant (1986), ``Statistics with confidence : confidence intervals and statistical guidelines'', BMJ Books, Bristol UK. 
+
+\bibitem{andrewskasy2019} Andrews, I., \& Kasy, M. (2019). ``Identification of and Correction for Publication Bias''. \emph{American Economic Review} 109(8), 2766--2794.
 
 \bibitem{arthur} Arthur, P., Kirkwood, B., Ross, D., Morris, S., Gyapong, J., Tomkins, A., \& Addy, H. (1992). ``Impact of vitamin A supplementation on childhood morbidity in northern Ghana''. \emph{The Lancet}, 339(8789), 361-362.
 
@@ -400,7 +453,10 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 
 \bibitem{gelman} Gelman, Andrew, Jessica Hwang, and Aki Vehtari. ``Understanding Predictive Information Criteria for Bayesian Models''. Statistics and Computing 24, no. 6 (November 2014): 997–1016. https://doi.org/10.1007/s11222-013-9416-2.
 
-\bibitem{hedges} Hedges, L. V., \& Vevea, J. L. (1998). ``Fixed-and random-effects models in meta-analysis''. \emph{Psychological methods}, 3(4), 486.
+\bibitem{hedges1992} Hedges, L. V. (1992). ``Modeling Publication Selection Effects in Meta-Analysis''. \emph{Statistical Science} 7(2), 246--255.
+
+\bibitem{hedges1998} Hedges, L. V., \& Vevea, J. L. (1998). ``Fixed-and random-effects models in meta-analysis''. \emph{Psychological methods}, 3(4), 486.
+
 
 \bibitem{herrera} Herrera, M. G., Nestel, P., Weld, L., El Amin, A., Mohamed, K. A., \& Fawzi, W. W. (1992). ``Vitamin A supplementation and child survival''. \emph{The Lancet}, 340(8814), 267-271.
 
@@ -508,6 +564,8 @@ West 1991 & 0.70 & 0.56 & 0.88 & -0.36 & 0.12 & 0.71 & 0.58 & 0.87\\
 Partial, no DEVTA & -0.32 (-0.53, -0.15) & 0.23 (0.025, 0.51) & -0.32 (-0.92, 0.22) & 0.5 (0.015, 0.86)\\
 Full, all data & -0.13 (-0.18, -0.068) & 0 (0, 0) & -0.13 (-0.18, -0.068) & 1 (1, 1)\\
 Full, no DEVTA & -0.26 (-0.36, -0.17) & 0 (0, 0) & -0.26 (-0.36, -0.17) & 1 (1, 1)\\
+A\&K-adjusted, all data & -0.13 (-0.28, 0.01) & 0.08 (0.00, 0.21) & --- & ---\\
+A\&K-adjusted, no DEVTA & -0.16 (-0.28, -0.04) & 0.06 (0.00, 0.25) & --- & ---\\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -523,6 +581,8 @@ Pooling model & Hypermean & p.p.d.\\
 Partial, no DEVTA & 0.73 (0.58, 0.86) & 0.76 (0.40, 1.30)\\
 Full, all data & 0.88 (0.83, 0.93) & 0.88 (0.83, 0.93)\\
 Full, no DEVTA & 0.77 (0.70, 0.84) & 0.77 (0.70, 0.84)\\
+A\&K-adjusted, all data & 0.88 (0.76, 1.01) & ---\\
+A\&K-adjusted, no DEVTA & 0.85 (0.76, 0.96) & ---\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -543,6 +603,12 @@ Full, no DEVTA & 0.77 (0.70, 0.84) & 0.77 (0.70, 0.84)\\
 \centering
 \includegraphics{baggr-oos-ppc.pdf}
 \caption{Posterior predictive distributions (in blue and red) compared to treatment effect estimates reported in each study (green). Each row shows fixed-effects (red) and random-effects (red) models fit to data where we exclude that particular study. The interval represents posterior predictive distribution, which can be thought of as the distribution of effects for an unobserved study. Note how in some cases the FE p.p.d. does not overlap with studies; in particular for the DEVTA study. Note that the estimates for FE model change when we exclude DEVTA trial, but this does not occur for the RE model.} \label{baggr-oos-ppc}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics{funnel.pdf}
+\caption{Funnel plot for the 18 analysed studies.} \label{funnel}
 \end{figure}
 
 \end{document}
