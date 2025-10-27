@@ -3,12 +3,15 @@ library(tidybayes)
 rstan_options(auto_write = TRUE)
 
 mod <- stan_model("meta-analysis/selection_rubin.stan")
-
+mod2 <- stan_model("meta-analysis/selection_ak.stan")
+source("meta-analysis/prepare_ma_data.R")
+imdad <- imdad2022 %>%  #for convenience
+  filter(group != "Lin 2008")
 
 # Testing Bayesian model on simulated datasets -----
 
 sim <- replicate(100, {
-  df <- ma_generator(rel_pp = 1) 
+  df <- ma_generator(rel_pp = 0.2) 
   
   ak_result <- try(metastudies_estimation(
     df$yi,
@@ -62,3 +65,23 @@ fit2 <- baggr(imdad)
 print(fit, c("tau", "sigma_tau", "omega"))
 fit2
 
+fit3 <- sampling(mod2, refresh = 0,
+                 data = compose_data(transmute(imdad, y = tau, se), N = nrow(imdad), c = 1.96))
+fit3
+
+
+# Fun test of water m-a datasets:
+load("~/github/water-ma/data/final/ma_datasets.Rdata")
+df_main_ma_adj
+fitw <- sampling(mod2, refresh = 0,
+                 data = compose_data(transmute(df_main_ma_adj, y = tau_f, se = se_f), 
+                                     N = nrow(df_main_ma_adj), c = 1.96))
+fitw
+metastudies_estimation(
+  df_main_ma_adj$tau_f,
+  df_main_ma_adj$se_f,
+  cutoffs = 1.96,
+  symmetric = TRUE,
+  model = "normal"
+) %>% bind_cols() %>% t() %>% round(3)
+as.matrix(fitw)[,"omega"] %>% density %>% plot 
