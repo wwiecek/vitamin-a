@@ -1,6 +1,6 @@
 \documentclass[12pt]{article}
 \usepackage[a4paper]{geometry}
-\usepackage[utf8]{inputenc}
+%\usepackage[utf8]{inputenc}
 % Let's add some line spacing to make it readable
 \renewcommand{\baselinestretch}{1.15}
 
@@ -11,6 +11,7 @@
 \usepackage{amsmath}
 \usepackage{tabu}
 \usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
 
 
 \DeclareMathOperator*{\argmin}{arg\,min}
@@ -19,21 +20,21 @@
 %\Large \color{red} EMBARGOED COPY. \\
 %PLEASE DO NOT CIRCULATE. 
 }
-\author{Rafe "Rachael" Meager\footnote{University of New South Wales. Contact: r.meager@unsw.edu.au.}, \quad Witold Więcek\footnote{Development Innovation Lab, University of Chicago}\;\thanks{We thank Abhijit Banerjee, Esther Duflo, Anna Mikusheva, Victor Chernozhukov and Alfred Sommer for helpful discussions and suggestions. We also thank Joshua Muthu for research assistance. All remaining mistakes are our own. This is a perpetual working paper. Please send critiques and corrections via email.}}
+\author{Rafe "Rachael" Meager\footnote{University of New South Wales. Contact: r.meager@unsw.edu.au.}, \quad Witold Więcek
+\thanks{Development Innovation Lab, University of Chicago}\;\thanks{We thank Abhijit Banerjee, Esther Duflo, Anna Mikusheva, Victor Chernozhukov and Alfred Sommer for helpful discussions and suggestions. We also thank Joshua Muthu for research assistance. All remaining mistakes are our own. This is a perpetual working paper. Please send critiques and corrections via email.}}
 
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Vitamin A supplementation is considered one of the most effective interventions to reduce child mortality in developing nations. However, its estimated effect varies substantially across studies, making the results of meta-analyses in this literature highly sensitive to methodological choices. 
+Vitamin A supplementation (VAS) is considered one of the most effective interventions to reduce child mortality in developing nations. However, its estimated effect varies substantially across studies, making the results of meta-analyses in this literature highly sensitive to methodological choices. 
 
-We compare the theoretical properties and empirical performance of classical fixed-effects and  random-effects meta-analysis models on simulated bodies of evidence. We consider Bayesian implementation using a hierarchical model. We find that using random effects either matches or substantially outperforms the fixed effects method in terms of mean squared error and is robust to misspecification of the likelihood. 
+We compare the theoretical properties and empirical performance of classical fixed-effects and random-effects meta-analysis models on simulated bodies of evidence. We find that using random effects either matches or substantially outperforms the fixed effects method in terms of mean squared error and is robust to misspecification of the likelihood. 
 
-Applied to a set of 18 studies, a Bayesian model estimates that vitamin A supplementation reduces mortality risk by 25\% (95\% interval 40\% to 11\%), compared to 12\% under the fixed-effects model (95\% interval 7\% to 17\%). 
+Our preferred Bayesian model estimates that vitamin A supplementation reduced mortality risk across 18 studies by 25\% (RR = 0.75, 95\% CrI 0.60 to 0.89), compared to 12\% under the fixed-effects model (RR = 0.88, 95\% CrI 0.83 to 0.93). The model suggests that the underlying heterogeneity across studies is large and fixed effects this likely underestimate both the reduction in mortality and the uncertainty surrounding the general effect of supplementation. 
 
-The model suggests that the underlying heterogeneity across studies is large (66\% of the cross-study variation attributable to genuine differences in treatment effects), but this is not precisely estimated (95\% interval 26\% to 91\%).
-Fixed effects thus underestimate both the reduction in mortality and the uncertainty surrounding the general effect of supplementation. 
+However, there is likely publication bias in VAS literature and adjusting for it yields an estimate that is smaller than RE and more uncertain than FE models without correction, with RR = 0.88, 95\% CrI 0.76 to 1.01.
 
 \end{abstract}
 
@@ -67,6 +68,8 @@ of evidence aggregation exercises are often sensitive to the statistical methodo
 chosen in these contexts. The most recent Cochrane review by Imdad et al (2022) uses a fixed-effects meta-analysis model and finds reduction in risk of mortality of 12\% with narrow confidence intervals (RR = 0.88, 95\% CI 0.83 to 0.93). This is similar in magnitude to the meta-analytic result by Awasthi et al (2013) of 11\%, which combined DEVTA with prior trials, but a difference of more than ten percentage points from the meta-analyses using random-effects (reported as sensitivity analyses by Mayo-Wilson et al 2011, Imdad et al 2022).\footnote{In the economics literature, terms "constant effects" and "random coefficients" are used for fixed and random effects respectively.} 
 
 Even though both models directionally agree and yield statistically significant results, that is still a two-fold difference in magnitude, which is presumably of major importance to public health decision makers. Which model is appropriate for this setting? While Awasthi et al (2013) claim that random effects meta-analytic techniques overweigh small studies, and "conceal the reliability" of large studies such as DEVTA, Sommer et al (2013) argue that given the heterogeneity in the results a random-effects aggregation model is more appropriate. \emph{A~priori} there are clear reasons to expect heterogeneity in effects; for example, some trials use vitamin A single megadose, while others use weekly low-doses; baseline levels of VAD and compliance levels also vary widely.
+
+%However, the choice between RE and FE is also affected by the presence of non-i.i.d or non-exchangeable studies. In this paper we will examine how the presence of outliers, publication bias and related econometric concerns affects each method's performance. Because FE assigns higher weight to more precise studies irrespective of their cohesion with the rest of the effect distribution, it can be more affected by certain types of outliers. But because RE assigns higher weights to less precise studies, it can be more affected by publication bias, which tends to affect smaller, noisier settings.
 
 However, because RE assigns higher weights to small studies, its results can clearly be biased in presence of some small-study effects. In other words, while smaller studies may systematically have larger effects due to real heterogeneity (e.g. plausible mechanisms as to why smaller RCTs conducted in areas where potential treatment effect is higher), which makes RE model a more appropriate choice, small-study effects may also arise due to publication bias towards positive or significant results in VAS literature. Inspection of funnel plots in two previous meta-analyses by Mayo-Wilson et al and Imdad et al does suggest asymmetry, which can be indicative of this problem. While both meta-analyses conclude (in light of funnel plot inspection and risk of bias assessments) that the positive results on mortality reductions are not nullified by that finding, any meta-analytic model should also consider adjustments for potential publication bias.
 
@@ -166,9 +169,9 @@ In more complicated models, the ML estimation quickly becomes a challenging mult
 
 Our preferred alternative is to conduct inference on model \eqref{rubin} using a Bayesian hierarchical model (BHM). 
 
-As with all Bayesian models, using this type of inference improves model checking and allows for generating posterior predictive quantities. BHMs also avoid the boundary estimate problem faced by frequentist estimators, and can improve overall inference on heterogeneity by introducing informative or mildly informative priors (Chung et al, 2012). \footnote{These priors can be derived from other meta-analyses in similar domains of study. See, for example, work by Turner et al, 2015 on deriving such priors for medical interventions based on Cochrane database of systematic reviews.} 
+As with all Bayesian models, using this type of inference improves model checking and allows for generating posterior predictive quantities. BHMs also avoid the boundary estimate problem faced by frequentist estimators, and can improve overall inference on heterogeneity by introducing informative or mildly informative priors (Chung et al, 2012). \footnote{These priors can be derived from other meta-analyses in similar domains of study. See, for example, work by Turner et al, 2015 and van Zwet 2025 on deriving such priors for medical interventions based on Cochrane database of systematic reviews.} 
 
-In this paper we estimate BHM using Hamiltonian Monte Carlo with a No-U-Turn-Sampler using Stan software.\footnote{Quality of approximation of the posterior distribution by the Monte Carlo methods depends not only on algorithm but also parameters such as the number of iterations (samples from the posterior). While in some cases this requires careful specification and troubleshooting, for meta-analysis models such as in this paper obtaining good convergence is typically easy to achieve. In this paper we use the standard Stan settings and check convergence via the $\hat{R}$ statistic proposed by Gelman and Rubin (1992).} This Bayesian approach to meta-analysis is implemented in an accessible way in the R package \textit{baggr}, which in addition to model \eqref{rubin} also includes other commonly used meta-analysis models (Więcek and Meager, 2022). The package also includes fitting of FE models, calculation of pooling statistics, and model selection through cross-validation, which we describe below.
+In this paper we estimate BHM using Hamiltonian Monte Carlo with a No-U-Turn-Sampler using Stan software.\footnote{Quality of approximation of the posterior distribution by the Monte Carlo methods depends not only on algorithm but also parameters such as the number of iterations (samples from the posterior). While in some cases this requires careful specification and troubleshooting, for meta-analysis models such as in this paper obtaining good convergence is typically easy to achieve. In this paper we use the standard Stan settings and check convergence via the $\hat{R}$ statistic proposed by Gelman and Rubin (1992).} This Bayesian approach to meta-analysis is implemented in an accessible way in the R package \textit{baggr}, which in addition to model \eqref{rubin} also includes other commonly used meta-analysis models (Więcek and Meager, 2022). The package also includes fitting of FE models, calculation of pooling statistics, and model selection through cross-validation, which we describe below. All of the analysis code is available at \url{https://github.com/wwiecek/vitamin-a/tree/main/meta-analysis}.
 
 
 
@@ -207,7 +210,7 @@ Publication bias is likely based on what was reported by Imdad et al (2022) and 
 
 We first use graphical and formal diagnostics that are standard in meta‐analysis. Funnel plots display study‐level effect estimates against their standard errors. Visually apparent asymmetry can arise from selective non-reporting of small, non-significant studies, as well as from genuine relationship between effect size and study size, as well as from large unexplained heterogeneity in treatment effects. Noting asymmetry in funnel plots does not allow us to conclude which of these mechanisms may be present, but it may be indicative of the problems we listed.
 
-We use two established tests for funnel‐plot asymmetry by Egger (1997) and Begg-Mazdumar. The Egger regression test asks whether, across studies, effects systematically vary with their precision; a non-zero intercept is evidence that smaller, less precise studies tend to report different effects than larger, more precise studies. This pattern is consistent with both small-study effects and selective reporting, and it matters because it implies the pooled estimate may be pulled away from what the largest, most informative trials indicate. The Begg–Mazumdar test complements this by checking whether there is a monotone association between study effects and their variances using rank correlation; a significant correlation likewise signals asymmetry of the funnel and potential small-study effects. Both tests are interpreted cautiously when heterogeneity is substantial or when the number of studies is small; we report them alongside the funnel plots.
+We use two established tests for funnel‐plot asymmetry by Egger (1997) and Begg-Mazudmar. The Egger regression test asks whether, across studies, effects systematically vary with their precision; a non-zero intercept is evidence that smaller, less precise studies tend to report different effects than larger, more precise studies. This pattern is consistent with both small-study effects and selective reporting, and it matters because it implies the pooled estimate may be pulled away from what the largest, most informative trials indicate. The Begg–Mazumdar test complements this by checking whether there is a monotone association between study effects and their variances using rank correlation; a significant correlation likewise signals asymmetry of the funnel and potential small-study effects. Both tests are interpreted cautiously when heterogeneity is substantial or when the number of studies is small; we report them alongside the funnel plots.
 
 \subsubsection{Adjustment for publication bias}
 
@@ -222,7 +225,11 @@ Under the selection model with random effects, we jointly estimate \(\omega\) al
 % arguments from our intro suggest there should be substantial improvements in estimation from using RE models when the true underlying effects are heterogeneous. here are some simulations that prove that. 
 Statistical models rarely describe the true generating process of any data set. For most meta-analytic problems, neither the RE nor the FE estimator will be exactly optimal. But one procedure could still outperform the other under certain conditions, and their relative performance in various settings should inform the choice of estimator. In this section we use a Monte Carlo method to examine the relative performance of RE and FE models on a variety of data-generating processes (DGPs).
 
-We begin by generating data from the RE model with Gaussian distribution of true effects, at different values of standard errors and cross-study variations. We then gradually move away from this model by examining Student-t distributions of effects, then adding location outliers, and finally adding outliers in the standard error distribution as well. Further details of the DGPs are in Appendix B. For each DGP we run a total of $S = 5000$ simulations. We set $K=18$ to match the size of the vitamin A meta-analysis in Imdad et al (2022).\footnote{Repeating the simulations using $K=9$, which is the number of trials in Awasthi et al (2011), leads to similar results.}
+The code for all of the simulations is available at \url{https://github.com/wwiecek/vitamin-a/tree/main/simulation}.
+
+We begin by generating data from the RE model with Gaussian distribution of true effects, at different values of standard errors and cross-study variations. We then gradually move away from this model by examining Student-t distributions of effects, then adding location outliers, and finally adding outliers in the standard error distribution as well. 
+%Further details of the DGPs are in Appendix B. 
+For each DGP we run a total of $S = 5000$ simulations. We set $K=18$ to match the size of the vitamin A meta-analysis in Imdad et al (2022).\footnote{Repeating the simulations using $K=9$, which is the number of trials in Awasthi et al (2011), leads to similar results.}
 
 In each simulation, indexed by $s$, we collect $\{\hat{\tau}_k^s, se_k^s\}_{k=1}^18$, used for fitting models, and set aside true values of effect and heterogeneity, $(\tau^{s}, \sigma^{s})$. We calculate the FE estimator using \eqref{fe_tau} and \eqref{fe_se}. For the RE estimation, we fit a BHM model implementing the likelihood in \eqref{rubin} as described above, with diffuse priors.\footnote{We make no adjustment to the BHM in any of the simulations. Indeed, to make the point that Bayesian hierarchical models do not require good prior information to perform well, the priors are all incorrect in our simulations - which is to say, they are not the distributions from which we draw the parameters in the simulation. However, these priors are so diffuse that this should not meaningfully impede the Bayesian model's performance (and nor do they).} We use a Gaussian prior on the mean and a uniform prior on the heterogeneity:
 
@@ -262,7 +269,9 @@ In each simulation, indexed by $s$, we collect $\{\hat{\tau}_k^s, se_k^s\}_{k=1}
 % \end{aligned}
 % \end{equation}
 
-The MSE for FE and RE (BHM) models is then calculated as the mean over $S$ simulations. We summarize the results by looking at ratios of MSEs in FE and RE model. The full results are shown in the Appendix and summarized in graphs that follow. First, consider the normal-normal model as data-generating process (DGP), in which both the estimators and true effects are normally distributed. In this case the BHM has the correct functional form. Figure~\ref{heatmaps} shows the ratio of the FE MSE to BHM MSE for 16 simulations, varying the average standard errors of the point estimates and the average standard deviation of the true effects ($\sigma_{\tau}$). Darker red values indicate a higher ratio, which means the FE MSE is much higher than the BHM MSE, an indicator of poor relative performance of the FE model.
+The MSE for FE and RE (BHM) models is then calculated as the mean over $S$ simulations. We summarize the results by looking at ratios of MSEs in FE and RE model. 
+%The full results are shown in the Appendix and summarized in graphs that follow. 
+First, consider the normal-normal model as data-generating process (DGP), in which both the estimators and true effects are normally distributed. In this case the BHM has the correct functional form. Figure~\ref{heatmaps} shows the ratio of the FE MSE to BHM MSE for 16 simulations, varying the average standard errors of the point estimates and the average standard deviation of the true effects ($\sigma_{\tau}$). Darker red values indicate a higher ratio, which means the FE MSE is much higher than the BHM MSE, an indicator of poor relative performance of the FE model.
 
 We find that RE model performs better than FE for the normal-normal DGP (Figure~\ref{heatmaps}, top-left panel). A reasonable complaint about the exercise above is that the BHM's superior performance was potentially due to the correct functional form specification. Therefore we now consider deviations from the normal-normal DGP. Overall the BHM still out-performs the FE estimator on average despite the functional form misspecification.
 
@@ -270,7 +279,9 @@ We find that RE model performs better than FE for the normal-normal DGP (Figure~
 %RM: i think you may be right. i'm happy for you to spend some time checking this and put it in, but since this is a perpetual pre-print, we could also just footnote this and move on with our lives 
 The two methods perform similarly well when the point estimates have standard errors in the range [5,20]: the ratio of MSEs lies between 0.99 and 1.1 in this area, representing at most a 1\% improvement from using the FE estimator which occurs when the standard deviation of effects $\sigma_{\tau}$ lies in [0,5]. When $\sigma_{\tau}$ lies in [5,20], we can achieve 10\% improvement in MSE from using the BHM. However, when the standard errors lie in the range [0,5] the BHM is twice as efficient when $\sigma_{\tau}$ is also in this range, and up to four times as efficient when $\sigma_{\tau}$ is in [15,20]. This means that in these squares of the grid, the FE estimator has an increase in MSE of 300\% relative to the BHM. By contrast, in any given square of the grid the BHM has at most a 1\% increase in MSE relative to the FE when it is beaten by the FE method, which only occurs when $\sigma_{\tau}$ is very low.
 
-It may seem surprising that the BHM obtains a much lower MSE than the FE Estimator in the case where $\sigma_{\tau}$ lies in [0,5], which includes the case of no underlying heterogeneity. However, recall that the BHM nests the case of no heterogeneity: the model is perfectly capable of estimating $\sigma^2_{\tau}$ to be essentially zero and then effectively implementing the FE model. The BHM uses up a degree of freedom to perform this estimation, but its overall performance is still close to that of the FE estimator in this case. Of course, as shown in table \ref{table:simulations} in the Appendix, when $\sigma_{\tau} = 0$ the FE estimator does have a lower MSE than the BHM estimator: it must do, because correctly setting $\sigma^2_{\tau} = 0$ ex-ante is more efficient than estimating it to be 0. However the improvement is small in most of these simulations, and the largest relative improvement (a reduction by half) occurs when there is very little sampling error at all, so in practice this translates to very small absolute improvements. By contrast, the BHM can achieve major reductions in MSE when $\sigma_{\tau}$ is in the range $(0,5]$, so overall it has less than half the MSE of the FE on average in the range $[0,5]$.
+It may seem surprising that the BHM obtains a much lower MSE than the FE Estimator in the case where $\sigma_{\tau}$ lies in [0,5], which includes the case of no underlying heterogeneity. However, recall that the BHM nests the case of no heterogeneity: the model is perfectly capable of estimating $\sigma^2_{\tau}$ to be essentially zero and then effectively implementing the FE model. The BHM uses up a degree of freedom to perform this estimation, but its overall performance is still close to that of the FE estimator in this case. 
+%Of course, as shown in table \ref{table:simulations} in the Appendix, 
+When $\sigma_{\tau} = 0$ the FE estimator does have a lower MSE than the BHM estimator: it must do, because correctly setting $\sigma^2_{\tau} = 0$ ex-ante is more efficient than estimating it to be 0. However the improvement is small in most of these simulations, and the largest relative improvement (a reduction by half) occurs when there is very little sampling error at all, so in practice this translates to very small absolute improvements. By contrast, the BHM can achieve major reductions in MSE when $\sigma_{\tau}$ is in the range $(0,5]$, so overall it has less than half the MSE of the FE on average in the range $[0,5]$.
 
 A reasonable complaint about the exercise above is that the BHM's superior performance was potentially due to the correct functional form specification. Therefore we now consider deviations from the normal-normal DGP. First, we examine the case where the true effects are Student t distributed across sites with considerably heavy tails, although the sampling uncertainty is still Gaussian. Figure \ref{heatmaps}.2 shows the results for a student t with 3 degrees of freedom, which has extremely fat tails relative to the normal (in fact the kurtosis is infinite).\footnote{The infinite kurtosis makes the simulations unstable. We tested several seeds and did not find major qualitative differences in the ratio of MSEs, although the raw MSEs did take different values even with large numbers of simulations.} The FE estimator now performs slightly less poorly in the area where the standard errors are in the range [0,5], although it still has double or triple the MSE of the BHM in this area. When the standard errors are in the range [5,20] the FE estimator can now attain up to a 10\% reduction in MSE relative to the BHM in some areas of the grid, but the BHM still attains a 10\% reduction in other areas. Overall the BHM still out-performs the FE estimator on average despite the functional form misspecification.
 
@@ -288,12 +299,12 @@ By contrast, random effects methods can and must distinguish these two concepts 
 
 \subsection{Data}
 
-In this section we repeat the meta-analysis of the impact of vitamin A supplementation on child mortality by using the same set of papers as the most recent study by Imdad et al (2022). Data are shown in Table~\ref{summary table}. 
+In this section we repeat the meta-analysis of the impact of vitamin A supplementation on child mortality by using the same set of papers as the most recent study by Imdad et al (2022). Data are shown in Table~\ref{tab:summary}. 
 As it is not easy to interpret a log standard error, we also display the upper and lower bounds of the confidence intervals implied by this log(se). 
 
 
 
-In health literature, it is typical to model treatment effect on events data by using odds ratios (OR), risk ratios (RR), incidence risk ratios (IRR) or hazard ratios (HR). For example, in the vitamin A literature, including the meta-analysis models we cited, risk ratios between treatment and control groups are modeled. Since RR is approximately normal on logarithmic scale, we can apply the BHM from Equation \eqref{rubin}. Data are shown in Table~\ref{summary table}. As it is not easy to interpret a log standard error, we also display the upper and lower bounds of the confidence intervals implied by this log(se).
+In health literature, it is typical to model treatment effect on events data by using odds ratios (OR), risk ratios (RR), incidence risk ratios (IRR) or hazard ratios (HR). For example, in the vitamin A literature, including the meta-analysis models we cited, risk ratios between treatment and control groups are modeled. Since RR is approximately normal on logarithmic scale, we can apply the BHM from Equation \eqref{rubin}. Data are shown in Table~\ref{tab:summary}. As it is not easy to interpret a log standard error, we also display the upper and lower bounds of the confidence intervals implied by this log(se).
 
 
 Before proceeding, we note that an earlier meta-analysis by Mayo-Wilson et al. (2011) contains a very similar set of studies. Awasthi et al (2013) include only nine papers. We also repeated our analysis using the inputs from that paper to allow for direct comparison. The results for both RE and FE models are similar to Imdad et al. (2022) and we reach the same conclusions, therefore we do not show them here.
@@ -309,11 +320,12 @@ There is also statistical evidence for heterogeneity, primarily that the 95\% co
 
 All of the above suggests that a random-effects model is an appropriate choice. We therefore fit both FE and RE models using Bayesian inference, which in turns allows us to compare them in terms of expected log predictive density. We use weakly informative priors centered at zero (no impact of the intervention):
 
-\begin{equation} \label{lognormal priors}
+\begin{equation} 
 \begin{aligned}
 \log{RR} &\sim  \mathcal{N}(0,10^2) \\
 \sigma^2_{\log{RR}} &\sim U[0,10].
 \end{aligned}
+\label{lognormal priors}
 \end{equation}
 
 
@@ -357,10 +369,11 @@ Unfortunately, the original papers do not report sufficient information to permi
 
 \subsection{Publication bias}
 
-Similarly to previous authors, we find signs of publication bias and small0study effects in the vitamin A supplementation and child mortality literature. The funnel plot (which mirrors Figure 5 in Imdad et al 2022) is Figure \ref{funnel}. Visual inspections suggests some asymmetry.
+Similarly to previous authors, we find signs of publication bias and small-study effects in the vitamin A supplementation and child mortality literature. The funnel plot (which mirrors Figure 5 in Imdad et al 2022) is Figure \ref{funnel}. Visual inspections suggests some asymmetry.
 This is further supported by the Egger regression, where intercept is significant under the random‐effects specification (two‐sided \(p=0.0067\), \texttt{metafor} in \textsf{R}), and also under a fixed‐effect specification (two‐sided \(p<0.0001\)). By contrast, Begg–Mazumdar’s rank correlation test is not statistically significant, and a simple regression of effects on (co)variance likewise does not reject symmetry. We interpret the overall pattern as indicative of small‐study effects while noting that such diagnostics have limited power with \(K\approx 18\) and can be confounded by genuine effect modification.
 
-We then quantify the potential impact of selection using the Andrews–Kasy selection model with a symmetric significance threshold at \(|z|=1.96\). For the full set of trials (including DEVTA), the frequentist maximum‐likelihood fit yields an estimated relative publication probability of \(\hat\omega=0.17\) (SE \(0.12\)), together with bias‐adjusted random‐effects parameters \(\hat\tau'=-0.13\) (SE \(0.07\)) and \(\widehat{\sigma'_{\tau}}=0.09\) (SE \(0.07\)). This corresponds to a pooled 12\% reduction in mortality risk.
+We then quantify the potential impact of selection using the Andrews–Kasy selection model with a symmetric significance threshold at \(|z|=1.96\). For the full set of trials (including DEVTA), the frequentist maximum‐likelihood fit yields an estimated relative publication probability of \(\hat\omega=0.17\) (SE \(0.12\)), together with bias‐adjusted random‐effects parameters \(\hat\tau'=-0.13\) (SE \(0.07\)) and \(\widehat{\sigma'_{\tau}}=0.09\) (SE \(0.07\)). This corresponds to a pooled 12\% reduction in mortality risk, same as the FE model, but with a much wider 95\% interval for risk ratio, 0.76 to 1.01.
+
 Excluding DEVTA leads to similar results. These estimates are reported in Tables~\ref{baggr-models-tab} (log scale) and~\ref{baggr-tab-exp} (risk‐ratio scale; rows 5–6).
 
 Relative to the unadjusted Bayesian random‐effects fit $(\tau =  -0.29)$, the selection adjustment attenuates the pooled effect and substantially lowers the estimated between‐study heterogeneity, consistent with the hypothesis of lower probability of reporting of non-significant results. 
@@ -373,11 +386,11 @@ goal was to assess whether the Andrews–Kasy estimator can recover parameters i
 
 The debate over the design of the DEVTA trial and the resulting difference in compliance rates relative to other studies has lead some researchers to suggest that it should not be included in meta-analyses. Sommer, West and Martorell (2013) dispute Awasthi et al.'s (2013) claims about the effectiveness of the DEVTA trial's supplement delivery mechanism and patient compliance, finally commenting ``At best, DEVTA is but one unorthodox study, done in one remote population of one country.'' Given the disagreement about whether DEVTA really belongs with the other studies, it is debatable as to whether it should be included in the meta-analysis.
 
-We report on the results of meta-analysis without the DEVTA trial in Table \ref{baggr-models-tab} and Figure \ref{baggr-density}. While the FE model is highly sensitive to exclusion of DEVTA, the RE model is affected much less. This difference between FE and RE models is illustrated in Figure 2, which shows strong overlap in p.p.d.'s for RE, but not FE, models.
+We report on the results of meta-analysis without the DEVTA trial in Table \ref{baggr-models-tab} and Figure \ref{baggr-density}. While the FE model is highly sensitive to exclusion of DEVTA, the RE model is affected much less. This difference between FE and RE models is illustrated in Figure~\ref{baggr-density}, which shows strong overlap in p.p.d.'s for RE, but not FE, models.
 
 It is important to also note that the heterogeneity estimate is not driven by exclusion of DEVTA. Whereas for 18 trials we found mean $I^2$ of 66\%, for the model of 17 trials we have $I^2 = 50\%$ (95\% interval from 1\% to 86\%). Thus the estimate of heterogeneity is even less precise, but on average the model still supports our concluson of heterogeneous effects.
 
-Our result suggests that the DEVTA result does not substantially alter the evidence on typical effect of vitamin A supplements available from other studies and thus should not be taken as evidence that previous studies ``overestimated'' the effect in any major sense. Excluding the DEVTA trial also doesn't meaningfully change the estimated heterogeneity or pooling factors (Table \ref{baggr-models-tab}, columns 2 and 4).\footnote{This makes sense in the context of our simulations, since DEVTA is not a ``typical'' location outlier. Four other studies which we include in our analysis have found higher point estimates, associated with smaller positive effects and even negative effects on child mortality (Table \ref{summary table}, leftmost column).}
+Our result suggests that the DEVTA result does not substantially alter the evidence on typical effect of vitamin A supplements available from other studies and thus should not be taken as evidence that previous studies ``overestimated'' the effect in any major sense. Excluding the DEVTA trial also doesn't meaningfully change the estimated heterogeneity or pooling factors (Table \ref{baggr-models-tab}, columns 2 and 4).\footnote{This makes sense in the context of our simulations, since DEVTA is not a ``typical'' location outlier. Four other studies which we include in our analysis have found higher point estimates, associated with smaller positive effects and even negative effects on child mortality (Table \ref{tab:summary}, leftmost column).}
 
 %Inclusion of DEVTA still has a small impact on the average effect in BHM because of substantial heterogeneity in the effects. Despite its high precision, the DEVTA estimate alone is not sufficient to overturn or outweigh the evidence in the previous cluster of results, which are symmetrically and quite widely dispersed around 0.75. 
 
@@ -409,11 +422,8 @@ The methodological contribution of this paper to resolving that debate is two-fo
 
 Second, we aim to address selective-reporting concerns.We screen for small-study effects using funnel plots and regression tests, then fit a selection model that allows for lower publication probability of non-significant results. Specifically, we implement the Andrews–Kasy estimator with a symmetric two-sided threshold at $\lvert z\rvert = 1.96$, and jointly estimate the selection parameter and the RE hyperparameters to provide bias-adjusted pooled and heterogeneity estimate.
 
-Using the Imdad et al.\ (2022) dataset, 
-After adjusting for selective reporting with a selection (weight–function) model, the pooled point estimate attenuates and the 95\% interval widens further. In contrast to the latest FE–based meta–analysis, our RE and bias–adjusted analyses therefore temper certainty: they preserve the direction of benefit while avoiding the overconfidence induced by assuming a common effect.\footnote{Insert a sentence with your actual numbers: e.g., “the RE 95\% interval is $x$ times wider than FE; the bias–adjusted interval is $y$ times wider than FE.”}
-
 Using the same input data as the meta-analysis by Imdad et al (2022), our preferred random–effects Bayesian hierarchical model (BHM) estimates a materially larger average mortality reduction than a fixed–effects (FE) model, with VAS reducing mortality by a quarter on average. More importantly, RE produces substantially wider 95\% intervals than FE, reflecting genuine between–study heterogeneity rather than sampling error alone. 
-However, adjusting for publication bias the reduction is only 12\% and the interval remains wide compared to FE ($RR = 0.88$, 95\% CI 0.76 to 1.01).
+However, adjusting for publication bias the reduction is only 12\% and the interval remains wide compared to FE ($RR = 0.88$, 95\% CI 0.76 to 1.01). In other words, the pooled effects under this model are smaller than the uncorrected RE estimates and more uncertain than the FE estimates. 
 
 While the publication bias adjustment is likely a necessary adjustment to make any VAS meta-analysis robust, it is important to not treat its conclusions as definite. Our selection–model adjustment relies on a particular assumption of functional form and, more importantly, identification can be weak in a dataset of our size, something we confirmed through simulations. More broadly, diagnostics for small–study effects have low power and are confounded by genuine effect modification correlated with study size; therefore any residual asymmetry cannot be cleanly attributed to publication bias.\footnote{We also did not conduct any new risk–of–bias assessment; we inherit study–level assessments from Imdad et al.\ (2022).}
 
@@ -427,7 +437,9 @@ Our findings are in keeping with previous work showing that the FE estimator typ
 
 \section{Conclusion}
 
-The evidence shows that the general impact of vitamin A supplements on all-cause child mortality in the 18 RCTs is substantial. However, the way that aggregation of evidence is done impacts these results  a lot. A random-effects, study-level model, with some adjustment for publication bias, is likely the most appropriate choice in this heterogeneous literature. The bias-adjusted RE estimate we obtain has similar magnitude to the previous FE estimates, but much wider uncertainty intervals ($RR = 0.88$, 95\% CI 0.76 to 1.01). Potentially large heterogeneity also suggests important differences in treatment effects across studies, and caution should be used before extrapolating from the studies in this literature into new settings. Given the biological mechanisms, vitamin A supplements should have a much larger effect on mortality when the population has a high rate of severe vitamin A deficiency, and this alone could account for the observed heterogeneity. However, study design could play an equally important role, given the major differences in delivery mechanism, compliance and monitoring across studies. Future work could explore the sources of this cross-site heterogeneity, and thus improve the effectiveness of the supplements in low-impact settings or target supplement programs more effectively to areas that need them most.
+The evidence shows that the general impact of vitamin A supplements on all-cause child mortality in the 18 RCTs is substantial. 
+However, the way that the results of these studies are aggregated greatly affects the meta-analytic conclusions. Our analysis suggests that the random-effects, study-level model, with some adjustment for publication bias, is likely the most appropriate choice in this heterogeneous literature. 
+The bias-adjusted RE estimate we obtain has similar magnitude to the previous FE estimates, but much wider uncertainty intervals ($RR = 0.88$, 95\% CI 0.76 to 1.01). Potentially large heterogeneity also suggests important differences in treatment effects across studies, and caution should be used before extrapolating from the studies in this literature into new settings. Given the biological mechanisms, vitamin A supplements should have a much larger effect on mortality when the population has a high rate of severe vitamin A deficiency, and this alone could account for the observed heterogeneity. However, study design could play an equally important role, given the major differences in delivery mechanism, compliance and monitoring across studies. Future work could explore the sources of this cross-site heterogeneity, and thus improve the effectiveness of the supplements in low-impact settings or target supplement programs more effectively to areas that need them most.
 
 \clearpage
 
@@ -443,15 +455,15 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 
 \bibitem{awasthi} Awasthi, S., Peto, R., Read, S., Clark, S., Pande, V., Bundy, D., \& the DEVTA (Deworming and Enhanced Vitamin A) team. (2013). ``Vitamin A supplementation every 6 months with retinol in 1 million pre-school children in north India: DEVTA, a cluster-randomised trial'' \emph{Lancet}, Vol 381.
 
-\bibitem{BillMelinda} The Bill and Melinda Gates Foundation (2011) ``Nutritious Rice and Cassava Aim to Help Millions Fight Malnutrition'', Bill and Melinda Gates Foundation Press Release, accessed online at http://www.gatesfoundation.org/Media-Center/Press-Releases/2011/04/Nutritious-Rice-and-Cassava-Aim-to-Help-Millions-Fight-Malnutrition on March 15th 2016 
+%\bibitem{BillMelinda} The Bill and Melinda Gates Foundation (2011) ``Nutritious Rice and Cassava Aim to Help Millions Fight Malnutrition'', Bill and Melinda Gates Foundation Press Release, accessed online at http://www.gatesfoundation.org/Media-Center/Press-Releases/2011/04/Nutritious-Rice-and-Cassava-Aim-to-Help-Millions-Fight-Malnutrition on March 15th 2016 
 
 \bibitem{boren} Borenstein, M., Hedges, L. V., Higgins, J. P., \& Rothstein, H. R. (2010). "A basic introduction to fixed-effect and random-effects models for meta-analysis." Research synthesis methods, 1(2), 97-111.
 
-\bibitem{brock} Brockwell, S. E., \& Gordon, I. R. (2001). "A comparison of statistical methods for meta-analysis". Statistics in medicine, 20(6), 825-840.
+%\bibitem{brock} Brockwell, S. E., \& Gordon, I. R. (2001). "A comparison of statistical methods for meta-analysis". Statistics in medicine, 20(6), 825-840.
 
 \bibitem{chung} Chung, Y., Rabe-Hesketh, S., Gelman, A., Liu, J., \& Dorie, V. (2012). ``Avoiding Boundary Estimates in Linear Mixed Models Through Weakly Informative Priors''. \emph{U.C. Berkeley Division of Biostatistics Working Paper Series}
 
-\bibitem{cornell} Cornell JE, Mulrow CD, Localio R, Stack CB, Meibohm AR, Guallar E, et al. "Random-Effects Meta-analysis of Inconsistent Effects: A Time for Change". Ann Intern Med. ;160:267-270. doi: 10.7326/M13-2886
+%\bibitem{cornell} Cornell JE, Mulrow CD, Localio R, Stack CB, Meibohm AR, Guallar E, et al. "Random-Effects Meta-analysis of Inconsistent Effects: A Time for Change". Ann Intern Med. ;160:267-270. doi: 10.7326/M13-2886
 
 \bibitem{daualire} Daulaire, N. M., Starbuck, E. S., Houston, R. M., Church, M. S., Stukel, T. A., \& Pandey, M. R. (1992). ``Childhood mortality after a high dose of vitamin A in a high risk population''. \emph{BMJ}, 304(6821), 207-210.
 
@@ -486,7 +498,7 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 
 \bibitem{iwata} Iwata, M., Hirakiyama, A., Eshima, Y., Kagechika, H., Kato, C., \& Song, S. Y. (2004). ``Retinoic acid imprints gut-homing specificity on T cells''. \emph{Immunity}, 21(4), 527-538.
 
-\bibitem{james} James, W. and C. Stein (1961) ``Estimation with Quadratic Loss'', \emph{Proc. Fourth Berkeley Symp. on Math. Statist. and Prob.}, Vol. 1 (Univ. of Calif. Press, 1961), 361-379
+%\bibitem{james} James, W. and C. Stein (1961) ``Estimation with Quadratic Loss'', \emph{Proc. Fourth Berkeley Symp. on Math. Statist. and Prob.}, Vol. 1 (Univ. of Calif. Press, 1961), 361-379
 
 \bibitem{mora} Mora, J. R., Iwata, M., \& von Andrian, U. H. (2008). ``Vitamin effects on the immune system: vitamins A and D take centre stage''. \emph{Nature Reviews Immunology}, 8(9), 685-698.
 
@@ -498,7 +510,7 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 
 \bibitem{schmidt} Schmidt, F. L., Oh, I. S., \& Hayes, T. L. (2009). "Fixed-versus random-effects models in meta-analysis: Model properties and an empirical comparison of differences in results". British Journal of Mathematical and Statistical Psychology, 62(1), 97-128.
 
-\bibitem{smith} Smith, T. C., Spiegelhalter, D. J., \& Thomas, A. (1995). Bayesian approaches to random-effects meta-analysis: a comparative study. Statistics in medicine, 14(24), 2685-2699.
+%\bibitem{smith} Smith, T. C., Spiegelhalter, D. J., \& Thomas, A. (1995). Bayesian approaches to random-effects meta-analysis: a comparative study. Statistics in medicine, 14(24), 2685-2699.
 
 \bibitem{sommer13} Sommer, Alfred, Keith P West Jr, and Reynaldo Martorell (2013) ``Vitamin A Supplementation in Indian Children'', \emph{Lancet} Comment, Vol. 382.
 
@@ -509,6 +521,9 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 \bibitem{turner} Turner, R. M., Jackson, D., Wei, Y., Thompson, S. G., \& Higgins, J. P. T. (2015). ``Predictive Distributions for Between-Study Heterogeneity and Simple Methods for Their Application in Bayesian Meta-Analysis''. \emph{Statistics in Medicine} 34, no. 6 : 984–98.
 
 \bibitem{unicef} United Nations Childrens Fund (UNICEF) (2007) ``Vitamin A Supplementation: A Decade Of Progress'' , UNICEF Report. 
+
+\bibitem{vanZwet2025}
+van Zwet, E., Więcek, W., \& Gelman, A. (2025). ‘‘Meta-analysis with a single study’’. \emph{Statistical Methods in Medical Research.} \url{https://doi.org/10.1177/09622802251380628}
 
 \bibitem{VAST} Ross, D. A., Dollimore, N., Smith, P. G., Kirkwood, B. R., Arthur, P., Morris, S. S., ... \& Ghana VAST Study Team. (1993). ``Vitamin A supplementation in northern Ghana: effects on clinic attendances, hospital admissions, and child mortality''. \emph{The Lancet}, 342(8862), 7-12.
 
@@ -530,7 +545,7 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 % \begin{figure}[ht]
 % \includegraphics[scale=0.8]{vitamin_a_data_summary.pdf}
 % \caption{All input data for the meta-analysis of Awasthi et al (2013).}
-% \label{summary table}
+% \label{tab:summary}
 % \end{figure}
 
 
@@ -542,8 +557,8 @@ The evidence shows that the general impact of vitamin A supplements on all-cause
 \end{figure}
 
 \begin{table}
-\label{summary table}
 \caption{Input data and study-level results for BHM based on studies included in Imdad et al (2022). RR is mean risk ratio. LCI and UCI are lower and upper ends of the 95\% intervals. SE refers to standard error of the log(RR).}
+\label{tab:summary}
 \begin{tabular}[t]{lrrrrrrrr}
 \toprule
 \multicolumn{1}{c}{} & \multicolumn{5}{c}{Observed (risk ratio)} & \multicolumn{3}{c}{Posterior (risk ratio)} \\
@@ -620,7 +635,8 @@ A\&K-adjusted, no DEVTA & 0.85 (0.76, 0.96) & ---\\
 \begin{figure}[h!]
 \centering
 \includegraphics{baggr-re.pdf}
-\caption{Marginal posteriors for the 9 RR values and originally reported RR statistics} \label{baggr-re}
+\caption{Marginal posteriors for the 9 RR values and originally reported RR statistics} 
+\label{baggr-re}
 \end{figure}
 
 \begin{figure}[h!]
